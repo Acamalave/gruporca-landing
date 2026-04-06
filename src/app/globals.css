@@ -2,26 +2,134 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #22232e;
+  background: #fafaf8;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Custom scrollbar — industrial gold accent */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #e8e8e4; }
+::-webkit-scrollbar-thumb { background: #bfb304; border-radius: 3px; }
+
+/* === GRUPO RCA UNIQUE DESIGN SYSTEM === */
+
+/* Horizontal slide reveal (not vertical like Uniparts) */
+.rca-reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rca-reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rca-reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.rca-reveal-left.visible,
+.rca-reveal-right.visible,
+.rca-reveal-scale.visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* Industrial accent bar (left border cards) */
+.rca-card {
+  position: relative;
+  border-left: 4px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.rca-card:hover {
+  border-left-color: #bfb304;
+  box-shadow: 0 8px 30px rgba(34,35,46,0.12);
+  transform: translateY(-3px);
+}
+
+/* Gold underline links (not underline expand like Uniparts) */
+.rca-link {
+  position: relative;
+  display: inline-block;
+}
+.rca-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #bfb304;
+  transition: width 0.3s ease;
+}
+.rca-link:hover::after {
+  width: 100%;
+}
+
+/* Gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #bfb304 0%, #d4c91e 50%, #bfb304 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Diagonal section divider */
+.rca-diagonal {
+  clip-path: polygon(0 0, 100% 4%, 100% 100%, 0 96%);
+}
+
+/* Stagger children — faster industrial feel */
+.rca-stagger > *:nth-child(1) { animation-delay: 0s; }
+.rca-stagger > *:nth-child(2) { animation-delay: 0.08s; }
+.rca-stagger > *:nth-child(3) { animation-delay: 0.16s; }
+.rca-stagger > *:nth-child(4) { animation-delay: 0.24s; }
+.rca-stagger > *:nth-child(5) { animation-delay: 0.32s; }
+.rca-stagger > *:nth-child(6) { animation-delay: 0.4s; }
+
+/* Section tag — horizontal line before text */
+.rca-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.rca-tag::before {
+  content: '';
+  width: 40px;
+  height: 2px;
+  background: #bfb304;
+}
+
+/* Number highlight — large stat display */
+.rca-stat {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Blueprint grid background */
+.rca-blueprint {
+  background-image:
+    linear-gradient(rgba(191,179,4,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(191,179,4,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Industrial stripe pattern */
+.rca-stripe {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    rgba(191,179,4,0.04) 8px,
+    rgba(191,179,4,0.04) 16px
+  );
 }
