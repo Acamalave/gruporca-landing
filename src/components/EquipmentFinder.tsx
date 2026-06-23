@@ -4,41 +4,89 @@ import { useInView } from "@/hooks/useInView";
 
 const WA = "584241700600";
 
-const steps = [
-  {
-    question: "¿Qué tipo de equipo necesitas?",
-    options: [
-      { label: "Montacargas", value: "montacargas", icon: "M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.18L18 8v8l-6 3.82L6 16V8l6-3.82z" },
-      { label: "Apilador", value: "apilador", icon: "M7 2v11h3v9l7-12h-4l4-8H7z" },
-      { label: "Transpaleta", value: "transpaleta", icon: "M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z" },
-      { label: "No estoy seguro", value: "no-seguro", icon: "M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" },
-    ],
-  },
-  {
-    question: "¿Condición del equipo?",
-    options: [
-      { label: "Nuevo", value: "nuevo", icon: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" },
-      { label: "Usado certificado", value: "usado", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" },
-      { label: "Alquiler", value: "alquiler", icon: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" },
-      { label: "Cualquier opción", value: "cualquiera", icon: "M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" },
-    ],
-  },
-  {
-    question: "¿Capacidad de carga?",
-    options: [
-      { label: "Hasta 2.5 ton", value: "hasta-2.5t", icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" },
-      { label: "2.5 a 5 ton", value: "2.5-5t", icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" },
-      { label: "Más de 5 ton", value: "mas-5t", icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" },
-      { label: "Por definir", value: "por-definir", icon: "M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" },
-    ],
-  },
-];
+type Option = { label: string; value: string; icon: string };
+type Step = { question: string; options: Option[] };
+
+// Reusable icons
+const CAP_ICON = "M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.991.991 0 013 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9z";
+const NEW_ICON = "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
+const USED_ICON = "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z";
+const RENT_ICON = "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z";
+const ANY_ICON = "M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z";
+const Q_ICON = "M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z";
+const BOLT_ICON = "M13 10V3L4 14h7v7l9-11h-7z";
+const COG_ICON = "M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z";
+
+const EQUIPMENT_STEP: Step = {
+  question: "¿Qué tipo de equipo necesitas?",
+  options: [
+    { label: "Montacargas", value: "montacargas", icon: "M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.18L18 8v8l-6 3.82L6 16V8l6-3.82z" },
+    { label: "Apilador", value: "apilador", icon: "M7 2v11h3v9l7-12h-4l4-8H7z" },
+    { label: "Transpaleta", value: "transpaleta", icon: "M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z" },
+    { label: "No estoy seguro", value: "no-seguro", icon: Q_ICON },
+  ],
+};
+
+const COND_FULL: Step = {
+  question: "¿Condición del equipo?",
+  options: [
+    { label: "Nuevo", value: "nuevo", icon: NEW_ICON },
+    { label: "Usado certificado", value: "usado", icon: USED_ICON },
+    { label: "Alquiler", value: "alquiler", icon: RENT_ICON },
+    { label: "Cualquier opción", value: "cualquiera", icon: ANY_ICON },
+  ],
+};
+
+// Apiladores: no se venden usados
+const COND_NO_USED: Step = {
+  question: "¿Condición del equipo?",
+  options: [
+    { label: "Nuevo", value: "nuevo", icon: NEW_ICON },
+    { label: "Alquiler", value: "alquiler", icon: RENT_ICON },
+    { label: "Cualquier opción", value: "cualquiera", icon: ANY_ICON },
+  ],
+};
+
+const TRANSPALETA_TYPE: Step = {
+  question: "¿Manual o eléctrica?",
+  options: [
+    { label: "Manual", value: "manual", icon: COG_ICON },
+    { label: "Eléctrica", value: "electrica", icon: BOLT_ICON },
+  ],
+};
+
+const CAP_GENERIC: Step = {
+  question: "¿Capacidad de carga?",
+  options: [
+    { label: "Hasta 2.5 ton", value: "hasta-2.5t", icon: CAP_ICON },
+    { label: "2.5 a 5 ton", value: "2.5-5t", icon: CAP_ICON },
+    { label: "Más de 5 ton", value: "mas-5t", icon: CAP_ICON },
+    { label: "Por definir", value: "por-definir", icon: Q_ICON },
+  ],
+};
+
+const capacityStep = (tons: string[]): Step => ({
+  question: "¿Capacidad de carga?",
+  options: tons.map((t) => ({ label: `${t} ton`, value: `${t}t`, icon: CAP_ICON })),
+});
+
+function buildSteps(type?: string): Step[] {
+  if (type === "apilador") {
+    return [EQUIPMENT_STEP, COND_NO_USED, capacityStep(["1", "1.2", "1.5", "1.6", "2.0"])];
+  }
+  if (type === "transpaleta") {
+    return [EQUIPMENT_STEP, TRANSPALETA_TYPE, capacityStep(["1", "1.2", "1.5", "1.6", "2.0", "2.5", "3.0", "3.5"])];
+  }
+  return [EQUIPMENT_STEP, COND_FULL, CAP_GENERIC];
+}
 
 export default function EquipmentFinder() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [done, setDone] = useState(false);
   const { ref, visible } = useInView();
+
+  const steps = buildSteps(answers[0]);
 
   const select = (v: string) => {
     const next = [...answers, v];
@@ -50,7 +98,7 @@ export default function EquipmentFinder() {
   const reset = () => { setStep(0); setAnswers([]); setDone(false); };
 
   const waMsg = () => encodeURIComponent(
-    `¡Hola! Busco:\n- Equipo: ${answers[0]}\n- Condición: ${answers[1]}\n- Capacidad: ${answers[2]}\n\n¿Me pueden asesorar?`
+    `¡Hola! Busco:\n- Equipo: ${answers[0]}\n- Opción: ${answers[1]}\n- Capacidad: ${answers[2]}\n\n¿Me pueden asesorar?`
   );
 
   return (
