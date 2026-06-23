@@ -5,12 +5,12 @@ import { useInView } from "@/hooks/useInView";
 const WA = "584241700600";
 
 const equipment = [
-  { name: "Contrabalanceado Litio 2.5T", brand: "Megalift", capacity: "2.5 Ton", type: "Electrico Litio", condition: "Nuevo", image: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=600&q=80", badge: "NUEVO", features: ["Bateria de litio", "Carga rapida 1.5h", "Cero emisiones"] },
-  { name: "Montacargas Diesel 5T", brand: "Mitsubishi", capacity: "5.0 Ton", type: "Diesel", condition: "Usado", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80", badge: "CERTIFICADO", features: ["Motor Mitsubishi", "3,200 horas", "Garantia 6 meses"] },
-  { name: "Apilador Electrico 1.6T", brand: "Megalift", capacity: "1.6 Ton", type: "Electrico", condition: "Nuevo", image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=600&q=80", badge: "EN STOCK", features: ["5.5m elevacion", "Pasillo angosto", "Operacion silenciosa"] },
-  { name: "Contrabalanceado GLP 3T", brand: "Doosan", capacity: "3.0 Ton", type: "GLP", condition: "Usado", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80", badge: "OFERTA", features: ["Doble combustible", "4,100 horas", "Cabina cerrada"] },
-  { name: "Transpaleta Electrica 2T", brand: "Megalift", capacity: "2.0 Ton", type: "Electrica", condition: "Nuevo", image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=600&q=80", badge: "NUEVO", features: ["Compacta", "Facil operacion", "Bajo mantenimiento"] },
-  { name: "Reach Truck 1.5T", brand: "Narrow Aisle", capacity: "1.5 Ton", type: "Electrico", condition: "Nuevo", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80", badge: "DISPONIBLE", features: ["10m elevacion", "Retractil", "Alta precision"] },
+  { name: "Contrabalanceado Litio 2.5T", brand: "Megalift", capacity: "2.5 Ton", type: "Eléctrico Litio", condition: "Nuevo", image: "/img/equipment/ec20-litio-4w.png", badge: "NUEVO", features: ["Batería de litio", "Carga rápida 1.5h", "Cero emisiones"] },
+  { name: "Montacargas Diésel 5T", brand: "Andino", capacity: "5.0 Ton", type: "Diésel", condition: "Usado", image: "/img/equipment/diesel-andino.jpg", badge: "CERTIFICADO", features: ["Motor industrial", "3,200 horas", "Garantía 6 meses"] },
+  { name: "Apilador Eléctrico 1.6T", brand: "Megalift", capacity: "1.6 Ton", type: "Eléctrico", condition: "Nuevo", image: "/img/equipment/apilador-litio.jpg", badge: "EN STOCK", features: ["5.5m elevación", "Pasillo angosto", "Operación silenciosa"] },
+  { name: "Contrabalanceado Diésel 4x4", brand: "Andino", capacity: "3.0 Ton", type: "Diésel 4x4", condition: "Usado", image: "/img/equipment/diesel-4x4.jpg", badge: "OFERTA", features: ["Tracción 4x4", "Todo terreno", "Cabina cerrada"] },
+  { name: "Transpaleta Eléctrica 2T", brand: "Megalift", capacity: "2.0 Ton", type: "Eléctrica", condition: "Nuevo", image: "/img/equipment/transpaleta-litio.jpg", badge: "NUEVO", features: ["Compacta", "Fácil operación", "Bajo mantenimiento"] },
+  { name: "Reach Truck 1.5T", brand: "Narrow Aisle", capacity: "1.5 Ton", type: "Eléctrico", condition: "Nuevo", image: "/img/equipment/reach-truck.jpg", badge: "DISPONIBLE", features: ["10m elevación", "Retráctil", "Alta precisión"] },
 ];
 
 const filters = ["Todos", "Nuevo", "Usado"];
@@ -77,7 +77,7 @@ export default function EquipmentGrid() {
                   ))}
                 </ul>
                 <a
-                  href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hola, me interesa el ${item.name} (${item.brand}, ${item.capacity}, ${item.condition}). Me pueden enviar precio y condiciones?`)}`}
+                  href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hola, me interesa el ${item.name} (${item.brand}, ${item.capacity}, ${item.condition}). ¿Me pueden enviar precio y condiciones?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 w-full bg-brand-navy hover:bg-brand-gold hover:text-brand-navy text-white font-semibold py-2.5 rounded-lg text-sm transition-all flex items-center justify-center gap-2"

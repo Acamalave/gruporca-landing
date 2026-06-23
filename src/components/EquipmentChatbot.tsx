@@ -12,24 +12,24 @@ type Message = {
 type ConversationState = "start" | "use" | "environment" | "capacity" | "budget" | "condition" | "result";
 
 const recommendations: Record<string, { name: string; type: string; why: string }> = {
-  "interior-ligero-economico": { name: "Transpaleta Electrica 2T", type: "Megalift", why: "Ideal para trabajo ligero en interiores. Bajo costo de operacion y facil manejo." },
-  "interior-ligero-premium": { name: "Apilador Electrico 1.6T", type: "Megalift", why: "Elevacion de hasta 5.5m en pasillos angostos. Silencioso y cero emisiones." },
-  "interior-medio-economico": { name: "Contrabalanceado Electrico 2.5T", type: "Megalift", why: "Potencia litio con carga rapida. Cero emisiones para trabajo en almacen." },
-  "interior-medio-premium": { name: "Reach Truck 1.5T", type: "Narrow Aisle", why: "Maxima precision y 10m de elevacion. Para almacenes de alta densidad." },
-  "interior-pesado-economico": { name: "Contrabalanceado Electrico 2.5T", type: "Megalift", why: "Robusto y eficiente. Litio para operaciones de alta demanda en interiores." },
-  "interior-pesado-premium": { name: "Contrabalanceado Electrico 3.5T", type: "Megalift", why: "Maxima capacidad electrica. Ideal para cargas pesadas en espacios cerrados." },
-  "exterior-ligero-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Versatil y economico. Dual combustible para flexibilidad operativa." },
-  "exterior-ligero-premium": { name: "Contrabalanceado Diesel 3T", type: "Mitsubishi", why: "Fiabilidad Mitsubishi para exteriores. Robusto y bajo mantenimiento." },
-  "exterior-medio-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Balance perfecto entre potencia y economia. Ideal para patios y exteriores." },
-  "exterior-medio-premium": { name: "Contrabalanceado Diesel 5T", type: "Mitsubishi", why: "Motor Mitsubishi de alta durabilidad. Para operaciones exigentes." },
-  "exterior-pesado-economico": { name: "Contrabalanceado Diesel 5T", type: "Mitsubishi", why: "Potencia bruta para cargas pesadas. Rendimiento comprobado en campo." },
-  "exterior-pesado-premium": { name: "Contrabalanceado Diesel 7T", type: "Mitsubishi", why: "El mas potente de la linea. Para las operaciones mas demandantes." },
-  "mixto-ligero-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Dual combustible funciona en interiores y exteriores. Muy versatil." },
-  "mixto-ligero-premium": { name: "Contrabalanceado Electrico 2.5T", type: "Megalift", why: "Litio de carga rapida. Funciona en cualquier ambiente sin emisiones." },
-  "mixto-medio-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Buena potencia para uso mixto. Economico en combustible." },
-  "mixto-medio-premium": { name: "Contrabalanceado Diesel 5T", type: "Mitsubishi", why: "Versatilidad premium. Funciona bien en cualquier terreno." },
-  "mixto-pesado-economico": { name: "Contrabalanceado Diesel 5T", type: "Mitsubishi", why: "Resistente y potente para uso intensivo en cualquier ambiente." },
-  "mixto-pesado-premium": { name: "Contrabalanceado Diesel 7T", type: "Mitsubishi", why: "Maxima potencia y versatilidad. Sin limites de terreno o carga." },
+  "interior-ligero-economico": { name: "Transpaleta Eléctrica 2T", type: "Megalift", why: "Ideal para trabajo ligero en interiores. Bajo costo de operación y fácil manejo." },
+  "interior-ligero-premium": { name: "Apilador Eléctrico 1.6T", type: "Megalift", why: "Elevación de hasta 5.5m en pasillos angostos. Silencioso y cero emisiones." },
+  "interior-medio-economico": { name: "Contrabalanceado Eléctrico 2.5T", type: "Megalift", why: "Potencia litio con carga rápida. Cero emisiones para trabajo en almacén." },
+  "interior-medio-premium": { name: "Reach Truck 1.5T", type: "Narrow Aisle", why: "Máxima precisión y 10m de elevación. Para almacenes de alta densidad." },
+  "interior-pesado-economico": { name: "Contrabalanceado Eléctrico 2.5T", type: "Megalift", why: "Robusto y eficiente. Litio para operaciones de alta demanda en interiores." },
+  "interior-pesado-premium": { name: "Contrabalanceado Eléctrico 3.5T", type: "Megalift", why: "Máxima capacidad eléctrica. Ideal para cargas pesadas en espacios cerrados." },
+  "exterior-ligero-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Versátil y económico. Dual combustible para flexibilidad operativa." },
+  "exterior-ligero-premium": { name: "Contrabalanceado Diésel 3T", type: "Mitsubishi", why: "Fiabilidad Mitsubishi para exteriores. Robusto y bajo mantenimiento." },
+  "exterior-medio-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Balance perfecto entre potencia y economía. Ideal para patios y exteriores." },
+  "exterior-medio-premium": { name: "Contrabalanceado Diésel 5T", type: "Mitsubishi", why: "Motor Mitsubishi de alta durabilidad. Para operaciones exigentes." },
+  "exterior-pesado-economico": { name: "Contrabalanceado Diésel 5T", type: "Mitsubishi", why: "Potencia bruta para cargas pesadas. Rendimiento comprobado en campo." },
+  "exterior-pesado-premium": { name: "Contrabalanceado Diésel 7T", type: "Mitsubishi", why: "El más potente de la línea. Para las operaciones más demandantes." },
+  "mixto-ligero-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Dual combustible funciona en interiores y exteriores. Muy versátil." },
+  "mixto-ligero-premium": { name: "Contrabalanceado Eléctrico 2.5T", type: "Megalift", why: "Litio de carga rápida. Funciona en cualquier ambiente sin emisiones." },
+  "mixto-medio-economico": { name: "Contrabalanceado GLP 3T", type: "Doosan", why: "Buena potencia para uso mixto. Económico en combustible." },
+  "mixto-medio-premium": { name: "Contrabalanceado Diésel 5T", type: "Mitsubishi", why: "Versatilidad premium. Funciona bien en cualquier terreno." },
+  "mixto-pesado-economico": { name: "Contrabalanceado Diésel 5T", type: "Mitsubishi", why: "Resistente y potente para uso intensivo en cualquier ambiente." },
+  "mixto-pesado-premium": { name: "Contrabalanceado Diésel 7T", type: "Mitsubishi", why: "Máxima potencia y versatilidad. Sin límites de terreno o carga." },
 };
 
 export default function EquipmentChatbot() {
@@ -55,15 +55,15 @@ export default function EquipmentChatbot() {
       setMessages([
         {
           from: "bot",
-          text: "Hola! Soy el asistente de Grupo RCA. Te ayudo a encontrar el montacargas ideal para tu operacion. Empecemos con unas preguntas rapidas.",
+          text: "¡Hola! Soy el asistente de Grupo RCA. Te ayudo a encontrar el montacargas ideal para tu operación. Empecemos con unas preguntas rápidas.",
         },
         {
           from: "bot",
-          text: "Para que necesitas el equipo principalmente?",
+          text: "¿Para qué necesitas el equipo principalmente?",
           options: [
-            { label: "Almacen / Distribucion", value: "almacen" },
+            { label: "Almacén / Distribución", value: "almacen" },
             { label: "Manufactura / Planta", value: "manufactura" },
-            { label: "Construccion", value: "construccion" },
+            { label: "Construcción", value: "construccion" },
             { label: "Puerto / Carga pesada", value: "puerto" },
             { label: "Otro / No estoy seguro", value: "otro" },
           ],
@@ -81,12 +81,12 @@ export default function EquipmentChatbot() {
         setAnswers((a) => ({ ...a, use: value }));
         setTimeout(() => {
           addMessages([
-            { from: "bot", text: "Perfecto. Donde operara el equipo la mayor parte del tiempo?" },
+            { from: "bot", text: "Perfecto. ¿Dónde operará el equipo la mayor parte del tiempo?" },
             {
               from: "bot",
               text: "",
               options: [
-                { label: "Interior (almacen cerrado)", value: "interior" },
+                { label: "Interior (almacén cerrado)", value: "interior" },
                 { label: "Exterior (patio, obra)", value: "exterior" },
                 { label: "Ambos (mixto)", value: "mixto" },
               ],
@@ -100,14 +100,14 @@ export default function EquipmentChatbot() {
         setAnswers((a) => ({ ...a, environment: value }));
         setTimeout(() => {
           addMessages([
-            { from: "bot", text: "Que tan intenso sera el uso diario?" },
+            { from: "bot", text: "¿Qué tan intenso será el uso diario?" },
             {
               from: "bot",
               text: "",
               options: [
-                { label: "Ligero (< 4 horas/dia)", value: "ligero" },
-                { label: "Medio (4-8 horas/dia)", value: "medio" },
-                { label: "Pesado (8+ horas/dia)", value: "pesado" },
+                { label: "Ligero (< 4 horas/día)", value: "ligero" },
+                { label: "Medio (4-8 horas/día)", value: "medio" },
+                { label: "Pesado (8+ horas/día)", value: "pesado" },
               ],
             },
           ]);
@@ -119,12 +119,12 @@ export default function EquipmentChatbot() {
         setAnswers((a) => ({ ...a, capacity: value }));
         setTimeout(() => {
           addMessages([
-            { from: "bot", text: "Cual es tu rango de presupuesto?" },
+            { from: "bot", text: "¿Cuál es tu rango de presupuesto?" },
             {
               from: "bot",
               text: "",
               options: [
-                { label: "Economico (busco lo mejor por el precio)", value: "economico" },
+                { label: "Económico (busco lo mejor por el precio)", value: "economico" },
                 { label: "Premium (priorizo calidad y durabilidad)", value: "premium" },
               ],
             },
@@ -137,14 +137,14 @@ export default function EquipmentChatbot() {
         setAnswers((a) => ({ ...a, budget: value }));
         setTimeout(() => {
           addMessages([
-            { from: "bot", text: "Prefieres equipo nuevo o usado certificado?" },
+            { from: "bot", text: "¿Prefieres equipo nuevo o usado certificado?" },
             {
               from: "bot",
               text: "",
               options: [
-                { label: "Nuevo (con garantia de fabrica)", value: "nuevo" },
-                { label: "Usado certificado (mas economico)", value: "usado" },
-                { label: "Me da igual, recomiendame", value: "cualquiera" },
+                { label: "Nuevo (con garantía de fábrica)", value: "nuevo" },
+                { label: "Usado certificado (más económico)", value: "usado" },
+                { label: "Me da igual, recomiéndame", value: "cualquiera" },
               ],
             },
           ]);
@@ -162,13 +162,13 @@ export default function EquipmentChatbot() {
           addMessages([
             {
               from: "bot",
-              text: `Basado en tu operacion, te recomiendo:\n\n**${rec.name}** (${rec.type})\n\n${rec.why}\n\nCondicion: ${value === "nuevo" ? "Nuevo" : value === "usado" ? "Usado certificado" : "Disponible en ambas opciones"}`,
+              text: `Basado en tu operación, te recomiendo:\n\n**${rec.name}** (${rec.type})\n\n${rec.why}\n\nCondición: ${value === "nuevo" ? "Nuevo" : value === "usado" ? "Usado certificado" : "Disponible en ambas opciones"}`,
             },
             {
               from: "bot",
-              text: "Quieres que un asesor te contacte con precio y disponibilidad?",
+              text: "¿Quieres que un asesor te contacte con precio y disponibilidad?",
               options: [
-                { label: "Si, por WhatsApp", value: "whatsapp" },
+                { label: "Sí, por WhatsApp", value: "whatsapp" },
                 { label: "Empezar de nuevo", value: "restart" },
               ],
             },
@@ -181,7 +181,7 @@ export default function EquipmentChatbot() {
       case "result":
         if (value === "whatsapp") {
           const rec = recommendations[`${answers.environment}-${answers.capacity}-${answers.budget}`] || recommendations["mixto-medio-economico"];
-          const msg = `Hola, el chatbot me recomendo un ${rec.name} (${rec.type}) para mi operacion. Me interesa recibir cotizacion. Condicion preferida: ${answers.condition}`;
+          const msg = `Hola, el chatbot me recomendó un ${rec.name} (${rec.type}) para mi operación. Me interesa recibir cotización. Condición preferida: ${answers.condition}`;
           window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
         } else {
           setMessages([]);
@@ -216,7 +216,7 @@ export default function EquipmentChatbot() {
               </div>
               <div>
                 <p className="text-white text-sm font-bold">Asesor Virtual RCA</p>
-                <p className="text-white/50 text-xs">Seleccion de equipos</p>
+                <p className="text-white/50 text-xs">Selección de equipos</p>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-white/50 hover:text-white transition-colors">

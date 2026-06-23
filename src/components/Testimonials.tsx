@@ -4,22 +4,22 @@ import { useInView } from "@/hooks/useInView";
 
 const testimonials = [
   {
-    quote: "Grupo RCA nos resolvio una emergencia operativa en menos de 48 horas. Su respuesta y profesionalismo son de otro nivel.",
-    name: "Carlos Mendez",
+    quote: "Grupo RCA nos resolvió una emergencia operativa en menos de 48 horas. Su respuesta y profesionalismo son de otro nivel.",
+    name: "Carlos Méndez",
     role: "Gerente de Operaciones",
     company: "Sector Alimentos",
     initials: "CM",
   },
   {
-    quote: "Llevamos mas de 10 anos trabajando con ellos. Los montacargas Megalift de litio nos ahorraron un 40% en costos operativos.",
-    name: "Maria Rodriguez",
-    role: "Directora de Logistica",
-    company: "Sector Farmaceutico",
+    quote: "Llevamos más de 10 años trabajando con ellos. Los montacargas Megalift de litio nos ahorraron un 40% en costos operativos.",
+    name: "María Rodríguez",
+    role: "Directora de Logística",
+    company: "Sector Farmacéutico",
     initials: "MR",
   },
   {
-    quote: "El servicio tecnico es impecable. Tienen repuestos para todo y sus tecnicos conocen cada modelo a fondo.",
-    name: "Jose Hernandez",
+    quote: "El servicio técnico es impecable. Tienen repuestos para todo y sus técnicos conocen cada modelo a fondo.",
+    name: "José Hernández",
     role: "Jefe de Mantenimiento",
     company: "Sector Manufactura",
     initials: "JH",
@@ -47,7 +47,7 @@ export default function Testimonials() {
             <h2 className="text-3xl sm:text-4xl font-black text-brand-navy leading-tight">
               Lo que dicen nuestros clientes
             </h2>
-            <p className="text-brand-muted mt-3">Mas de 200 empresas confian en nosotros para mantener sus operaciones funcionando.</p>
+            <p className="text-brand-muted mt-3">Más de 200 empresas confían en nosotros para mantener sus operaciones funcionando.</p>
 
             {/* Navigation dots — vertical for RCA */}
             <div className="flex lg:flex-col gap-3 mt-8">

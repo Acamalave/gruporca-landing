@@ -7,7 +7,7 @@ const departments = [
   { label: "Ventas de Equipos", msg: "Hola, estoy interesado en comprar un equipo" },
   { label: "Alquiler", msg: "Hola, necesito cotizar alquiler de montacargas" },
   { label: "Repuestos", msg: "Hola, necesito cotizar repuestos" },
-  { label: "Servicio Tecnico", msg: "Hola, necesito servicio tecnico para mi montacargas" },
+  { label: "Servicio Técnico", msg: "Hola, necesito servicio técnico para mi montacargas" },
 ];
 
 export default function WhatsAppFloat() {
@@ -29,7 +29,7 @@ export default function WhatsAppFloat() {
                 </div>
                 <div>
                   <p className="font-semibold text-sm text-brand-navy">{d.label}</p>
-                  <p className="text-xs text-brand-muted">Respuesta rapida</p>
+                  <p className="text-xs text-brand-muted">Respuesta rápida</p>
                 </div>
               </a>
             ))}

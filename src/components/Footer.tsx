@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <Image src="/logo-gruporca-full.png" alt="Grupo RCA" width={160} height={60} className="h-10 w-auto mb-4" />
-            <p className="text-white/35 text-sm leading-relaxed">Soluciones logisticas integrales desde 1991. Venta, alquiler y servicio tecnico de montacargas en America Latina.</p>
+            <p className="text-white/35 text-sm leading-relaxed">Soluciones logísticas integrales desde 1991. Venta, alquiler y servicio técnico de montacargas en América Latina.</p>
             <p className="text-white/15 text-xs mt-3">RIF: J-29825618-5</p>
           </div>
           <div>
@@ -22,7 +22,7 @@ export default function Footer() {
               Equipos
             </h4>
             <ul className="space-y-2 text-white/40 text-sm">
-              {["Montacargas Electricos", "Montacargas Diesel", "Apiladores", "Transpaletas", "Pasillo Angosto", "Equipos Usados"].map((l) => (
+              {["Montacargas Eléctricos", "Montacargas Diésel", "Apiladores", "Transpaletas", "Pasillo Angosto", "Equipos Usados"].map((l) => (
                 <li key={l}><a href="#equipos" className="hover:text-brand-gold transition-colors">{l}</a></li>
               ))}
             </ul>
@@ -33,7 +33,7 @@ export default function Footer() {
               Servicios
             </h4>
             <ul className="space-y-2 text-white/40 text-sm">
-              {["Venta de Equipos", "Alquiler", "Servicio Tecnico", "Repuestos", "Capacitacion", "Consultoria"].map((l) => (
+              {["Venta de Equipos", "Alquiler", "Servicio Técnico", "Repuestos", "Capacitación", "Consultoría"].map((l) => (
                 <li key={l}><a href="#servicios" className="hover:text-brand-gold transition-colors">{l}</a></li>
               ))}
             </ul>
@@ -50,7 +50,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <svg className="w-4 h-4 text-brand-gold shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                (0241) 700-6000
+                0241-412.00.80
               </li>
               <li className="flex items-center gap-2">
                 <svg className="w-4 h-4 text-brand-gold shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>

@@ -6,7 +6,7 @@ const WA = "584241700600";
 
 const steps = [
   {
-    question: "Que tipo de equipo necesitas?",
+    question: "¿Qué tipo de equipo necesitas?",
     options: [
       { label: "Montacargas", value: "montacargas", icon: "M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.18L18 8v8l-6 3.82L6 16V8l6-3.82z" },
       { label: "Apilador", value: "apilador", icon: "M7 2v11h3v9l7-12h-4l4-8H7z" },
@@ -15,20 +15,20 @@ const steps = [
     ],
   },
   {
-    question: "Condicion del equipo?",
+    question: "¿Condición del equipo?",
     options: [
       { label: "Nuevo", value: "nuevo", icon: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" },
       { label: "Usado certificado", value: "usado", icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" },
       { label: "Alquiler", value: "alquiler", icon: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" },
-      { label: "Cualquier opcion", value: "cualquiera", icon: "M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" },
+      { label: "Cualquier opción", value: "cualquiera", icon: "M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" },
     ],
   },
   {
-    question: "Capacidad de carga?",
+    question: "¿Capacidad de carga?",
     options: [
       { label: "Hasta 2.5 ton", value: "hasta-2.5t", icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" },
       { label: "2.5 a 5 ton", value: "2.5-5t", icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" },
-      { label: "Mas de 5 ton", value: "mas-5t", icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" },
+      { label: "Más de 5 ton", value: "mas-5t", icon: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" },
       { label: "Por definir", value: "por-definir", icon: "M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" },
     ],
   },
@@ -50,7 +50,7 @@ export default function EquipmentFinder() {
   const reset = () => { setStep(0); setAnswers([]); setDone(false); };
 
   const waMsg = () => encodeURIComponent(
-    `Hola! Busco:\n- Equipo: ${answers[0]}\n- Condicion: ${answers[1]}\n- Capacidad: ${answers[2]}\n\nMe pueden asesorar?`
+    `¡Hola! Busco:\n- Equipo: ${answers[0]}\n- Condición: ${answers[1]}\n- Capacidad: ${answers[2]}\n\n¿Me pueden asesorar?`
   );
 
   return (
@@ -59,7 +59,7 @@ export default function EquipmentFinder() {
         <div className="mb-12">
           <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Asesor virtual</div>
           <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Encuentra tu equipo ideal</h2>
-          <p className="text-brand-muted mt-3 max-w-lg">Responde 3 preguntas y te conectamos con la solucion perfecta para tu operacion</p>
+          <p className="text-brand-muted mt-3 max-w-lg">Responde 3 preguntas y te conectamos con la solución perfecta para tu operación</p>
         </div>
 
         <div className="rca-card bg-white rounded-2xl shadow-xl shadow-black/5 p-6 sm:p-10 border border-gray-100">
@@ -100,11 +100,11 @@ export default function EquipmentFinder() {
                 <svg className="w-10 h-10 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
               </div>
               <h3 className="text-2xl font-bold text-brand-navy mb-3">Tenemos opciones para ti</h3>
-              <p className="text-brand-muted mb-8 max-w-md mx-auto">Un asesor especializado te contactara con las mejores opciones, precios y condiciones.</p>
+              <p className="text-brand-muted mb-8 max-w-md mx-auto">Un asesor especializado te contactará con las mejores opciones, precios y condiciones.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href={`https://wa.me/${WA}?text=${waMsg()}`} target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#1fb855] text-white font-bold px-8 py-4 rounded-xl transition-all inline-flex items-center justify-center gap-2">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                  Recibir asesoria por WhatsApp
+                  Recibir asesoría por WhatsApp
                 </a>
                 <button onClick={reset} className="text-brand-muted hover:text-brand-gold font-medium px-6 py-4 rounded-xl transition-colors">Buscar otro equipo</button>
               </div>

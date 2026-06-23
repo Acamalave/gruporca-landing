@@ -5,24 +5,24 @@ import { useInView } from "@/hooks/useInView";
 const WA = "584241700600";
 
 const allEquipment = [
-  { id: 1, name: "Contrabalanceado Litio 2.5T", brand: "Megalift", capacity: "2,500 kg", liftHeight: "4.5 m", engine: "Electrico Litio", weight: "3,800 kg", speed: "17 km/h", forkLength: "1,070 mm", turnRadius: "2,100 mm", condition: "Nuevo", image: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=400&q=80" },
-  { id: 2, name: "Montacargas Diesel 5T", brand: "Mitsubishi", capacity: "5,000 kg", liftHeight: "6.0 m", engine: "Diesel", weight: "5,200 kg", speed: "22 km/h", forkLength: "1,220 mm", turnRadius: "2,800 mm", condition: "Usado", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=400&q=80" },
-  { id: 3, name: "Apilador Electrico 1.6T", brand: "Megalift", capacity: "1,600 kg", liftHeight: "5.5 m", engine: "Electrico", weight: "1,900 kg", speed: "8 km/h", forkLength: "1,150 mm", turnRadius: "1,600 mm", condition: "Nuevo", image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=400&q=80" },
-  { id: 4, name: "Contrabalanceado GLP 3T", brand: "Doosan", capacity: "3,000 kg", liftHeight: "5.0 m", engine: "GLP / Dual", weight: "4,100 kg", speed: "20 km/h", forkLength: "1,070 mm", turnRadius: "2,300 mm", condition: "Usado", image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=400&q=80" },
-  { id: 5, name: "Transpaleta Electrica 2T", brand: "Megalift", capacity: "2,000 kg", liftHeight: "0.2 m", engine: "Electrica", weight: "800 kg", speed: "6 km/h", forkLength: "1,150 mm", turnRadius: "1,400 mm", condition: "Nuevo", image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=400&q=80" },
-  { id: 6, name: "Reach Truck 1.5T", brand: "Narrow Aisle", capacity: "1,500 kg", liftHeight: "10.0 m", engine: "Electrico", weight: "2,600 kg", speed: "12 km/h", forkLength: "1,070 mm", turnRadius: "1,700 mm", condition: "Nuevo", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=400&q=80" },
+  { id: 1, name: "Contrabalanceado Litio 2.5T", brand: "Megalift", capacity: "2,500 kg", liftHeight: "4.5 m", engine: "Eléctrico Litio", weight: "3,800 kg", speed: "17 km/h", forkLength: "1,070 mm", turnRadius: "2,100 mm", condition: "Nuevo", image: "/img/equipment/ec20-litio-4w.png" },
+  { id: 2, name: "Montacargas Diésel 5T", brand: "Andino", capacity: "5,000 kg", liftHeight: "6.0 m", engine: "Diésel", weight: "5,200 kg", speed: "22 km/h", forkLength: "1,220 mm", turnRadius: "2,800 mm", condition: "Usado", image: "/img/equipment/diesel-andino.jpg" },
+  { id: 3, name: "Apilador Eléctrico 1.6T", brand: "Megalift", capacity: "1,600 kg", liftHeight: "5.5 m", engine: "Eléctrico", weight: "1,900 kg", speed: "8 km/h", forkLength: "1,150 mm", turnRadius: "1,600 mm", condition: "Nuevo", image: "/img/equipment/apilador-litio.jpg" },
+  { id: 4, name: "Contrabalanceado Diésel 4x4", brand: "Andino", capacity: "3,000 kg", liftHeight: "5.0 m", engine: "Diésel 4x4", weight: "4,100 kg", speed: "20 km/h", forkLength: "1,070 mm", turnRadius: "2,300 mm", condition: "Usado", image: "/img/equipment/diesel-4x4.jpg" },
+  { id: 5, name: "Transpaleta Eléctrica 2T", brand: "Megalift", capacity: "2,000 kg", liftHeight: "0.2 m", engine: "Eléctrica", weight: "800 kg", speed: "6 km/h", forkLength: "1,150 mm", turnRadius: "1,400 mm", condition: "Nuevo", image: "/img/equipment/transpaleta-litio.jpg" },
+  { id: 6, name: "Reach Truck 1.5T", brand: "Narrow Aisle", capacity: "1,500 kg", liftHeight: "10.0 m", engine: "Eléctrico", weight: "2,600 kg", speed: "12 km/h", forkLength: "1,070 mm", turnRadius: "1,700 mm", condition: "Nuevo", image: "/img/equipment/reach-truck.jpg" },
 ];
 
 const specs: { key: keyof typeof allEquipment[0]; label: string }[] = [
   { key: "brand", label: "Marca" },
   { key: "capacity", label: "Capacidad" },
-  { key: "liftHeight", label: "Altura de elevacion" },
+  { key: "liftHeight", label: "Altura de elevación" },
   { key: "engine", label: "Motor / Tipo" },
   { key: "weight", label: "Peso operativo" },
-  { key: "speed", label: "Velocidad max." },
+  { key: "speed", label: "Velocidad máx." },
   { key: "forkLength", label: "Largo de horquillas" },
   { key: "turnRadius", label: "Radio de giro" },
-  { key: "condition", label: "Condicion" },
+  { key: "condition", label: "Condición" },
 ];
 
 export default function EquipmentCompare() {
@@ -40,15 +40,15 @@ export default function EquipmentCompare() {
 
   const compared = allEquipment.filter((e) => selected.includes(e.id));
 
-  const waMsg = `Hola, estoy comparando estos equipos y me gustaria recibir cotizacion:\n${compared.map((e) => `- ${e.name} (${e.brand})`).join("\n")}`;
+  const waMsg = `Hola, estoy comparando estos equipos y me gustaría recibir cotización:\n${compared.map((e) => `- ${e.name} (${e.brand})`).join("\n")}`;
 
   return (
     <section id="comparador" className="py-20 bg-brand-cream rca-blueprint">
       <div ref={ref} className={`max-w-7xl mx-auto px-4 sm:px-6 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <div className="mb-10">
-          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Herramienta de comparacion</div>
+          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Herramienta de comparación</div>
           <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Compara equipos lado a lado</h2>
-          <p className="text-brand-muted mt-3 max-w-lg">Selecciona hasta 3 equipos para comparar sus especificaciones tecnicas</p>
+          <p className="text-brand-muted mt-3 max-w-lg">Selecciona hasta 3 equipos para comparar sus especificaciones técnicas</p>
         </div>
 
         {/* Equipment selector */}
@@ -84,7 +84,7 @@ export default function EquipmentCompare() {
           <div className="text-center mb-8">
             <button onClick={() => setShowTable(!showTable)} className="bg-brand-navy text-brand-gold font-bold px-8 py-3.5 rounded-xl text-sm hover:bg-brand-navy-light transition-all inline-flex items-center gap-2">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-              {showTable ? "Ocultar comparacion" : `Comparar ${selected.length} equipos`}
+              {showTable ? "Ocultar comparación" : `Comparar ${selected.length} equipos`}
             </button>
           </div>
         )}
@@ -95,7 +95,7 @@ export default function EquipmentCompare() {
             <table className="w-full min-w-[600px]">
               <thead>
                 <tr className="border-b border-gray-100">
-                  <th className="p-4 text-left text-sm font-bold text-brand-navy w-44">Especificacion</th>
+                  <th className="p-4 text-left text-sm font-bold text-brand-navy w-44">Especificación</th>
                   {compared.map((e) => (
                     <th key={e.id} className="p-4 text-center">
                       <div className="h-24 w-24 mx-auto bg-gray-100 rounded-xl overflow-hidden mb-2">
@@ -138,7 +138,7 @@ export default function EquipmentCompare() {
           <p className="text-center text-brand-muted text-sm">Selecciona al menos 2 equipos para compararlos</p>
         )}
         {selected.length === 1 && (
-          <p className="text-center text-brand-muted text-sm">Selecciona 1 equipo mas para iniciar la comparacion</p>
+          <p className="text-center text-brand-muted text-sm">Selecciona 1 equipo más para iniciar la comparación</p>
         )}
       </div>
     </section>

@@ -6,87 +6,87 @@ const articles = [
   {
     id: 1,
     category: "Mantenimiento",
-    title: "5 senales de que tu montacargas necesita servicio urgente",
-    excerpt: "Aprende a identificar problemas antes de que se conviertan en paradas costosas. Desde ruidos inusuales hasta fugas hidraulicas.",
+    title: "5 señales de que tu montacargas necesita servicio urgente",
+    excerpt: "Aprende a identificar problemas antes de que se conviertan en paradas costosas. Desde ruidos inusuales hasta fugas hidráulicas.",
     readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
+    image: "/img/company/servicio.jpg",
     content: [
-      { subtitle: "1. Ruidos inusuales en el mastil", text: "Si escuchas chirridos, golpes o zumbidos al elevar carga, puede indicar cadenas desgastadas, rodillos danados o falta de lubricacion. Ignoring these sounds can lead to catastrophic failure during operation." },
-      { subtitle: "2. Fugas de aceite hidraulico", text: "Manchas de aceite debajo del equipo o en el mastil son senal de sellos danados. Un sistema hidraulico con fugas pierde presion progresivamente, reduciendo la capacidad de carga segura." },
-      { subtitle: "3. Direccion dura o imprecisa", text: "Dificultad para girar puede indicar problemas en la bomba de direccion, bajo nivel de fluido o desgaste en los componentes del sistema. Esto es un riesgo de seguridad inmediato." },
-      { subtitle: "4. Humo excesivo (diesel/GLP)", text: "Humo negro indica mezcla rica o filtro de aire obstruido. Humo blanco puede ser agua en el combustible. Humo azul es aceite quemandose en la camara de combustion." },
-      { subtitle: "5. Frenos blandos o lentos", text: "Si el equipo no frena con la misma eficacia, revisa inmediatamente. Pastillas desgastadas, fluido de frenos bajo o aire en las lineas son causas comunes. Nunca operates un equipo con frenos deficientes." },
+      { subtitle: "1. Ruidos inusuales en el mástil", text: "Si escuchas chirridos, golpes o zumbidos al elevar carga, puede indicar cadenas desgastadas, rodillos dañados o falta de lubricación. Ignorar estos sonidos puede derivar en una falla catastrófica durante la operación." },
+      { subtitle: "2. Fugas de aceite hidráulico", text: "Manchas de aceite debajo del equipo o en el mástil son señal de sellos dañados. Un sistema hidráulico con fugas pierde presión progresivamente, reduciendo la capacidad de carga segura." },
+      { subtitle: "3. Dirección dura o imprecisa", text: "Dificultad para girar puede indicar problemas en la bomba de dirección, bajo nivel de fluido o desgaste en los componentes del sistema. Esto es un riesgo de seguridad inmediato." },
+      { subtitle: "4. Humo excesivo (diésel/GLP)", text: "Humo negro indica mezcla rica o filtro de aire obstruido. Humo blanco puede ser agua en el combustible. Humo azul es aceite quemándose en la cámara de combustión." },
+      { subtitle: "5. Frenos blandos o lentos", text: "Si el equipo no frena con la misma eficacia, revisa inmediatamente. Pastillas desgastadas, fluido de frenos bajo o aire en las líneas son causas comunes. Nunca operes un equipo con frenos deficientes." },
     ],
   },
   {
     id: 2,
-    category: "Guia de compra",
-    title: "Montacargas electrico vs diesel: cual conviene en 2024?",
-    excerpt: "Analisis completo de costos, rendimiento y aplicaciones. Te ayudamos a elegir el motor correcto para tu operacion.",
+    category: "Guía de compra",
+    title: "Montacargas eléctrico vs diésel: ¿cuál conviene en 2024?",
+    excerpt: "Análisis completo de costos, rendimiento y aplicaciones. Te ayudamos a elegir el motor correcto para tu operación.",
     readTime: "6 min",
-    image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80",
+    image: "/img/equipment/ec20-litio-3w.png",
     content: [
-      { subtitle: "Costo de operacion", text: "Un montacargas electrico cuesta aproximadamente $0.85/hora en energia, vs $2.40/hora para diesel. En una operacion de 8h/dia, 22 dias/mes, la diferencia es de $273/mes por equipo." },
-      { subtitle: "Ambiente de trabajo", text: "Electricos son obligatorios en espacios cerrados (cero emisiones). Diesel es ideal para exteriores, terrenos irregulares y condiciones donde necesitas potencia bruta." },
-      { subtitle: "Mantenimiento", text: "Electricos tienen 60% menos piezas moviles = menos mantenimiento. Sin cambios de aceite, filtros de combustible ni ajustes de motor. Baterias de litio duran 3,000+ ciclos." },
-      { subtitle: "Inversion inicial", text: "Electricos cuestan 20-30% mas de entrada, pero el TCO a 5 anos suele ser menor. Usa nuestra calculadora TCO para comparar con tus numeros reales." },
-      { subtitle: "Nuestra recomendacion", text: "Para almacenes, centros de distribucion y trabajo en interiores: electrico siempre. Para construccion, puertos y trabajo exterior pesado: diesel o GLP." },
+      { subtitle: "Costo de operación", text: "Un montacargas eléctrico cuesta aproximadamente $0.85/hora en energía, vs $2.40/hora para diésel. En una operación de 8h/día, 22 días/mes, la diferencia es de $273/mes por equipo." },
+      { subtitle: "Ambiente de trabajo", text: "Los eléctricos son obligatorios en espacios cerrados (cero emisiones). El diésel es ideal para exteriores, terrenos irregulares y condiciones donde necesitas potencia bruta." },
+      { subtitle: "Mantenimiento", text: "Los eléctricos tienen 60% menos piezas móviles = menos mantenimiento. Sin cambios de aceite, filtros de combustible ni ajustes de motor. Las baterías de litio duran 3,000+ ciclos." },
+      { subtitle: "Inversión inicial", text: "Los eléctricos cuestan 20-30% más de entrada, pero el TCO a 5 años suele ser menor. Usa nuestra calculadora TCO para comparar con tus números reales." },
+      { subtitle: "Nuestra recomendación", text: "Para almacenes, centros de distribución y trabajo en interiores: eléctrico siempre. Para construcción, puertos y trabajo exterior pesado: diésel o GLP." },
     ],
   },
   {
     id: 3,
     category: "Seguridad",
     title: "LOPCYMAT: requisitos legales para operadores de montacargas",
-    excerpt: "Lo que toda empresa venezolana debe cumplir segun la ley. Certificaciones, inspecciones y responsabilidades.",
+    excerpt: "Lo que toda empresa venezolana debe cumplir según la ley. Certificaciones, inspecciones y responsabilidades.",
     readTime: "5 min",
-    image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=600&q=80",
+    image: "/img/company/operaciones-3.jpg",
     content: [
-      { subtitle: "Certificacion del operador", text: "Todo operador debe estar certificado por un ente reconocido. La empresa es responsable de garantizar que solo personal capacitado opere el equipo." },
-      { subtitle: "Inspecciones diarias", text: "La LOPCYMAT exige una inspeccion pre-operacional diaria documentada. Incluye revision de frenos, direccion, mastil, horquillas, luces y alarmas." },
-      { subtitle: "Mantenimiento preventivo", text: "Debe existir un programa documentado de mantenimiento preventivo. Las horas de servicio deben registrarse y los trabajos realizados deben quedar en bitacora." },
-      { subtitle: "Senalizacion y areas de trabajo", text: "Zonas de transito de montacargas deben estar debidamente senalizadas. Limites de velocidad, pasos peatonales y areas de carga deben estar demarcados." },
-      { subtitle: "Sanciones", text: "El incumplimiento puede resultar en multas de 26 a 75 Unidades Tributarias por trabajador expuesto, ademas de responsabilidad penal en caso de accidentes." },
+      { subtitle: "Certificación del operador", text: "Todo operador debe estar certificado por un ente reconocido. La empresa es responsable de garantizar que solo personal capacitado opere el equipo." },
+      { subtitle: "Inspecciones diarias", text: "La LOPCYMAT exige una inspección pre-operacional diaria documentada. Incluye revisión de frenos, dirección, mástil, horquillas, luces y alarmas." },
+      { subtitle: "Mantenimiento preventivo", text: "Debe existir un programa documentado de mantenimiento preventivo. Las horas de servicio deben registrarse y los trabajos realizados deben quedar en bitácora." },
+      { subtitle: "Señalización y áreas de trabajo", text: "Las zonas de tránsito de montacargas deben estar debidamente señalizadas. Límites de velocidad, pasos peatonales y áreas de carga deben estar demarcados." },
+      { subtitle: "Sanciones", text: "El incumplimiento puede resultar en multas de 26 a 75 Unidades Tributarias por trabajador expuesto, además de responsabilidad penal en caso de accidentes." },
     ],
   },
   {
     id: 4,
     category: "Tips",
-    title: "Como extender la vida util de las baterias de litio",
-    excerpt: "Mejores practicas para maximizar los ciclos de carga y mantener el rendimiento optimo de tus equipos electricos.",
+    title: "Cómo extender la vida útil de las baterías de litio",
+    excerpt: "Mejores prácticas para maximizar los ciclos de carga y mantener el rendimiento óptimo de tus equipos eléctricos.",
     readTime: "3 min",
-    image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=600&q=80",
+    image: "/img/equipment/apilador-litio.jpg",
     content: [
-      { subtitle: "Carga oportunista", text: "Las baterias de litio se benefician de cargas parciales frecuentes. No esperes a que se descarguen completamente. Aprovechar pausas y almuerzos para cargar." },
-      { subtitle: "Temperatura", text: "Mantener las baterias entre 15-35°C. El calor excesivo reduce la vida util. En climas calidos, asegurar ventilacion adecuada en la zona de carga." },
-      { subtitle: "Cargador correcto", text: "Usar siempre el cargador especificado por el fabricante. Cargadores inadecuados pueden danar las celdas y anular la garantia." },
-      { subtitle: "Almacenamiento", text: "Si el equipo no se usara por tiempo prolongado, mantener la bateria entre 40-60% de carga. Nunca almacenar completamente descargada." },
+      { subtitle: "Carga oportunista", text: "Las baterías de litio se benefician de cargas parciales frecuentes. No esperes a que se descarguen completamente. Aprovecha pausas y almuerzos para cargar." },
+      { subtitle: "Temperatura", text: "Mantén las baterías entre 15-35°C. El calor excesivo reduce la vida útil. En climas cálidos, asegura ventilación adecuada en la zona de carga." },
+      { subtitle: "Cargador correcto", text: "Usa siempre el cargador especificado por el fabricante. Cargadores inadecuados pueden dañar las celdas y anular la garantía." },
+      { subtitle: "Almacenamiento", text: "Si el equipo no se usará por tiempo prolongado, mantén la batería entre 40-60% de carga. Nunca la almacenes completamente descargada." },
     ],
   },
   {
     id: 5,
     category: "Industria",
-    title: "Tendencias en logistica de almacen para LATAM",
-    excerpt: "Automatizacion, equipos autonomos y tecnologia IoT: que viene para la industria de manejo de materiales.",
+    title: "Tendencias en logística de almacén para LATAM",
+    excerpt: "Automatización, equipos autónomos y tecnología IoT: qué viene para la industria de manejo de materiales.",
     readTime: "5 min",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80",
+    image: "/img/company/operaciones-4.jpg",
     content: [
-      { subtitle: "Electrificacion acelerada", text: "La tendencia global hacia montacargas electricos se acelera. En 2024, mas del 65% de montacargas vendidos globalmente son electricos. LATAM va en la misma direccion." },
-      { subtitle: "IoT y telemetria", text: "Sensores conectados permiten monitorear el uso, estado de bateria, impactos y mantenimiento en tiempo real. Grupo RCA ya ofrece estas soluciones." },
-      { subtitle: "Automatizacion gradual", text: "AGVs (vehiculos guiados automaticamente) crecen 15% anual. Aunque aun premium para LATAM, las primeras implementaciones estan llegando." },
-      { subtitle: "Seguridad aumentada", text: "Camaras, sensores de proximidad y sistemas de alerta estan siendo adoptados como estandar en nuevos equipos." },
+      { subtitle: "Electrificación acelerada", text: "La tendencia global hacia montacargas eléctricos se acelera. En 2024, más del 65% de los montacargas vendidos globalmente son eléctricos. LATAM va en la misma dirección." },
+      { subtitle: "IoT y telemetría", text: "Sensores conectados permiten monitorear el uso, estado de batería, impactos y mantenimiento en tiempo real. Grupo RCA ya ofrece estas soluciones." },
+      { subtitle: "Automatización gradual", text: "Los AGV (vehículos guiados automáticamente) crecen 15% anual. Aunque aún premium para LATAM, las primeras implementaciones están llegando." },
+      { subtitle: "Seguridad aumentada", text: "Cámaras, sensores de proximidad y sistemas de alerta están siendo adoptados como estándar en nuevos equipos." },
     ],
   },
   {
     id: 6,
-    category: "Caso de exito",
+    category: "Caso de éxito",
     title: "Distribuidora Oriental: 40% menos downtime con mantenimiento preventivo",
-    excerpt: "Como un programa de servicio planificado transformo la operacion logistica de uno de nuestros clientes.",
+    excerpt: "Cómo un programa de servicio planificado transformó la operación logística de uno de nuestros clientes.",
     readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=600&q=80",
+    image: "/img/company/alquiler.jpg",
     content: [
       { subtitle: "El problema", text: "Distribuidora Oriental operaba 12 montacargas con mantenimiento reactivo. En promedio, 3 equipos estaban fuera de servicio al mismo tiempo, generando $15,000/mes en costos por downtime." },
-      { subtitle: "La solucion", text: "Implementamos un contrato de servicio preventivo con visitas cada 250 horas. Incluye revision completa, cambio de filtros, ajustes y reporte digital." },
-      { subtitle: "Resultados", text: "En 6 meses: downtime reducido de 25% a 8%, costo de mantenimiento reducido 35%, vida util de equipos extendida un estimado de 2 anos." },
+      { subtitle: "La solución", text: "Implementamos un contrato de servicio preventivo con visitas cada 250 horas. Incluye revisión completa, cambio de filtros, ajustes y reporte digital." },
+      { subtitle: "Resultados", text: "En 6 meses: downtime reducido de 25% a 8%, costo de mantenimiento reducido 35%, vida útil de equipos extendida un estimado de 2 años." },
       { subtitle: "Testimonio", text: "\"Antes perdíamos días enteros esperando repuestos. Ahora todo está planificado y nuestros equipos siempre están operativos\" — Gerente de Operaciones, Distribuidora Oriental." },
     ],
   },
@@ -107,8 +107,8 @@ export default function KnowledgeCenter() {
       <div ref={ref} className={`max-w-7xl mx-auto px-4 sm:px-6 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <div className="mb-10">
           <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Centro de conocimiento</div>
-          <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Recursos y guias</h2>
-          <p className="text-brand-muted mt-3 max-w-lg">Informacion practica para tomar mejores decisiones sobre tu flota de montacargas</p>
+          <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Recursos y guías</h2>
+          <p className="text-brand-muted mt-3 max-w-lg">Información práctica para tomar mejores decisiones sobre tu flota de montacargas</p>
         </div>
 
         {/* Article modal */}
@@ -134,8 +134,8 @@ export default function KnowledgeCenter() {
                   </div>
                 ))}
                 <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-                  <p className="text-brand-muted text-sm mb-3">Necesitas asesoria personalizada?</p>
-                  <a href={`https://wa.me/584241700600?text=${encodeURIComponent(`Hola, lei el articulo "${article.title}" y tengo algunas preguntas`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
+                  <p className="text-brand-muted text-sm mb-3">¿Necesitas asesoría personalizada?</p>
+                  <a href={`https://wa.me/584241700600?text=${encodeURIComponent(`Hola, leí el artículo "${article.title}" y tengo algunas preguntas`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
                     Hablar con un experto
                   </a>
                 </div>
@@ -167,7 +167,7 @@ export default function KnowledgeCenter() {
                 <div className="flex items-center justify-between mt-4">
                   <span className="text-xs text-brand-muted">{a.readTime} de lectura</span>
                   <span className="text-brand-gold text-xs font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                    Leer mas
+                    Leer más
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                   </span>
                 </div>

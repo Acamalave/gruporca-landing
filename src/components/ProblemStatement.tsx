@@ -30,7 +30,7 @@ export default function ProblemStatement() {
 
             <div className="rca-card bg-brand-cream rounded-xl p-6 border border-gray-100">
               <p className="rca-stat text-brand-navy">{hours}h</p>
-              <p className="text-brand-muted text-sm mt-1">Horas de inactividad al ano por falta de servicio adecuado</p>
+              <p className="text-brand-muted text-sm mt-1">Horas de inactividad al año por falta de servicio adecuado</p>
               <div className="h-1.5 bg-gray-100 rounded-full mt-4 overflow-hidden">
                 <div className="h-full bg-orange-500 rounded-full transition-all duration-1000 delay-300" style={{ width: visible ? "62%" : "0%" }} />
               </div>
@@ -38,7 +38,7 @@ export default function ProblemStatement() {
 
             <div className="rca-card bg-brand-cream rounded-xl p-6 border border-gray-100">
               <p className="rca-stat text-brand-navy">7x</p>
-              <p className="text-brand-muted text-sm mt-1">Mas caro el mantenimiento correctivo vs. el preventivo</p>
+              <p className="text-brand-muted text-sm mt-1">Más caro el mantenimiento correctivo vs. el preventivo</p>
               <div className="h-1.5 bg-gray-100 rounded-full mt-4 overflow-hidden">
                 <div className="h-full bg-brand-gold rounded-full transition-all duration-1000 delay-500" style={{ width: visible ? "85%" : "0%" }} />
               </div>
@@ -48,18 +48,18 @@ export default function ProblemStatement() {
           {/* Right — solution message */}
           <div className={`lg:col-span-3 transition-all duration-800 delay-200 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-navy leading-tight">
-              Tu operacion <span className="text-gold-gradient">no puede parar.</span>
+              Tu operación <span className="text-gold-gradient">no puede parar.</span>
               <br />Nosotros lo garantizamos.
             </h2>
             <p className="text-brand-muted text-lg mt-6 leading-relaxed max-w-xl">
-              Con 34 anos de experiencia, Grupo RCA asegura la continuidad de tu flota con equipos confiables, repuestos en stock permanente y servicio tecnico que responde en menos de 2 horas.
+              Con 34 años de experiencia, Grupo RCA asegura la continuidad de tu flota con equipos confiables, repuestos en stock permanente y servicio técnico que responde en menos de 2 horas.
             </p>
 
             {/* Solution cards — horizontal layout */}
             <div className="grid sm:grid-cols-3 gap-4 mt-8">
               {[
-                { icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", title: "Garantia total", sub: "En equipos nuevos y usados" },
-                { icon: "M13 10V3L4 14h7v7l9-11h-7z", title: "Respuesta < 2h", sub: "Servicio tecnico inmediato" },
+                { icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z", title: "Garantía total", sub: "En equipos nuevos y usados" },
+                { icon: "M13 10V3L4 14h7v7l9-11h-7z", title: "Respuesta < 2h", sub: "Servicio técnico inmediato" },
                 { icon: "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15", title: "Stock permanente", sub: "Repuestos disponibles 24/7" },
               ].map((s, i) => (
                 <div key={i} className="bg-brand-navy rounded-xl p-5 text-white">

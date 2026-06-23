@@ -1,0 +1,36 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Cotizaciones del formulario de contacto: el publico solo puede crear.
+    match /leads/{leadId} {
+      allow create: if request.resource.data.nombre is string
+                    && request.resource.data.nombre.size() > 0
+                    && request.resource.data.whatsapp is string
+                    && request.resource.data.whatsapp.size() > 0;
+      allow read, update, delete: if false;
+    }
+
+    // Cotizaciones de repuestos: el publico solo puede crear.
+    match /partsQuotes/{quoteId} {
+      allow create: if request.resource.data.nombre is string
+                    && request.resource.data.nombre.size() > 0
+                    && request.resource.data.whatsapp is string
+                    && request.resource.data.whatsapp.size() > 0;
+      allow read, update, delete: if false;
+    }
+
+    // Ordenes de servicio: el publico puede consultar una orden por su ID,
+    // pero no listar todas ni escribir.
+    match /serviceOrders/{orderId} {
+      allow get: if true;
+      allow list, write: if false;
+    }
+
+    // Todo lo demas queda bloqueado.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

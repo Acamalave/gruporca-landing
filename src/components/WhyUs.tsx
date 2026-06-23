@@ -9,10 +9,10 @@ export default function WhyUs() {
   const clients = useCountUp(200, 2000, visible);
 
   const reasons = [
-    { title: "34+ anos de experiencia", desc: "Desde 1991 dedicados exclusivamente a soluciones logisticas y manejo de materiales en America Latina." },
-    { title: "Presencia multinacional", desc: "Operaciones en Venezuela, Colombia, Panama, Costa Rica, Honduras y Estados Unidos." },
-    { title: "Pioneros en electrico", desc: "Liderando la transicion a montacargas electricos de litio en LATAM con tecnologia Megalift." },
-    { title: "Servicio integral", desc: "Venta, alquiler, servicio tecnico, repuestos y capacitacion. Todo bajo un mismo grupo." },
+    { title: "34+ años de experiencia", desc: "Desde 1991 dedicados exclusivamente a soluciones logísticas y manejo de materiales en América Latina." },
+    { title: "Presencia multinacional", desc: "Operaciones en Venezuela, Colombia, Panamá, Costa Rica, Honduras y Estados Unidos." },
+    { title: "Pioneros en eléctrico", desc: "Liderando la transición a montacargas eléctricos de litio en LATAM con tecnología Megalift." },
+    { title: "Servicio integral", desc: "Venta, alquiler, servicio técnico, repuestos y capacitación. Todo bajo un mismo grupo." },
   ];
 
   return (
@@ -24,8 +24,8 @@ export default function WhyUs() {
         {/* Stats — horizontal bar style (unique to RCA) */}
         <div className={`grid grid-cols-3 gap-4 sm:gap-6 mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           {[
-            { n: years, suffix: "+", label: "Anos de experiencia" },
-            { n: countries, suffix: "", label: "Paises con presencia" },
+            { n: years, suffix: "+", label: "Años de experiencia" },
+            { n: countries, suffix: "", label: "Países con presencia" },
             { n: clients, suffix: "+", label: "Clientes activos" },
           ].map((s, i) => (
             <div key={i} className="border-l-4 border-brand-gold pl-4 sm:pl-6 py-2">
@@ -39,10 +39,10 @@ export default function WhyUs() {
         <div className={`grid lg:grid-cols-5 gap-12 items-start transition-all duration-700 delay-200 ${visible ? "opacity-100" : "opacity-0"}`}>
           <div className="lg:col-span-3">
             <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-4">
-              Por que Grupo RCA
+              Por qué Grupo RCA
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-8 leading-tight">
-              El holding logistico mas completo de Latinoamerica
+              El holding logístico más completo de Latinoamérica
             </h2>
             <div className="space-y-4">
               {reasons.map((r, i) => (
@@ -63,12 +63,12 @@ export default function WhyUs() {
 
           <div className="lg:col-span-2 relative">
             <div className="rounded-2xl overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80" alt="Operaciones Grupo RCA" className="w-full aspect-[3/4] object-cover" />
+              <img src="/img/company/operaciones-2.jpg" alt="Operaciones Grupo RCA" className="w-full aspect-[3/4] object-cover" />
             </div>
             {/* Floating slogan card */}
             <div className="absolute -bottom-4 -left-4 bg-brand-gold rounded-xl p-5 max-w-[200px] shadow-xl">
               <p className="text-brand-navy text-sm font-black uppercase tracking-wide leading-tight">Presentes en el futuro</p>
-              <p className="text-brand-navy/60 text-xs mt-1">Innovacion y sostenibilidad</p>
+              <p className="text-brand-navy/60 text-xs mt-1">Innovación y sostenibilidad</p>
             </div>
           </div>
         </div>

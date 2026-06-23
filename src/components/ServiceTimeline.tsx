@@ -2,11 +2,11 @@
 import { useInView } from "@/hooks/useInView";
 
 const steps = [
-  { title: "Contacto", desc: "Nos escribes por WhatsApp, telefono o formulario", icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z", time: "Inmediato" },
-  { title: "Diagnostico", desc: "Evaluamos tu necesidad operativa con precision", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4", time: "< 2 horas" },
-  { title: "Cotizacion", desc: "Propuesta detallada con opciones y disponibilidad", icon: "M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z", time: "Mismo dia" },
-  { title: "Ejecucion", desc: "Entrega, instalacion o servicio en sitio", icon: "M5 13l4 4L19 7", time: "Segun acuerdo" },
-  { title: "Seguimiento", desc: "Acompanamiento post-venta y soporte continuo", icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z", time: "Permanente" },
+  { title: "Contacto", desc: "Nos escribes por WhatsApp, teléfono o formulario", icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z", time: "Inmediato" },
+  { title: "Diagnóstico", desc: "Evaluamos tu necesidad operativa con precisión", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4", time: "< 2 horas" },
+  { title: "Cotización", desc: "Propuesta detallada con opciones y disponibilidad", icon: "M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z", time: "Mismo día" },
+  { title: "Ejecución", desc: "Entrega, instalación o servicio en sitio", icon: "M5 13l4 4L19 7", time: "Según acuerdo" },
+  { title: "Seguimiento", desc: "Acompañamiento post-venta y soporte continuo", icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z", time: "Permanente" },
 ];
 
 export default function ServiceTimeline() {
@@ -19,8 +19,8 @@ export default function ServiceTimeline() {
           <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-4">
             Nuestro proceso
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Asi trabajamos contigo</h2>
-          <p className="text-brand-muted mt-3">De la necesidad a la solucion, en el menor tiempo posible</p>
+          <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Así trabajamos contigo</h2>
+          <p className="text-brand-muted mt-3">De la necesidad a la solución, en el menor tiempo posible</p>
         </div>
 
         {/* Steps — numbered card layout (unique to RCA) */}

@@ -12,16 +12,16 @@ const cities = [
   { name: "Maracaibo", distance: 530, baseRate: 1400 },
   { name: "Puerto La Cruz / Barcelona", distance: 450, baseRate: 1200 },
   { name: "Ciudad Guayana", distance: 680, baseRate: 1800 },
-  { name: "Merida", distance: 450, baseRate: 1300 },
-  { name: "San Cristobal", distance: 550, baseRate: 1500 },
+  { name: "Mérida", distance: 450, baseRate: 1300 },
+  { name: "San Cristóbal", distance: 550, baseRate: 1500 },
   { name: "Margarita (+ ferry)", distance: 500, baseRate: 2200 },
-  { name: "Bogota, Colombia", distance: 1500, baseRate: 3500 },
-  { name: "Panama City, Panama", distance: 2800, baseRate: 5500 },
+  { name: "Bogotá, Colombia", distance: 1500, baseRate: 3500 },
+  { name: "Ciudad de Panamá, Panamá", distance: 2800, baseRate: 5500 },
 ];
 
 const equipmentSizes = [
-  { label: "Transpaleta / Equipo pequeno", weightMultiplier: 0.6, weight: "500 - 1,200 kg" },
-  { label: "Apilador electrico", weightMultiplier: 0.8, weight: "1,200 - 2,500 kg" },
+  { label: "Transpaleta / Equipo pequeño", weightMultiplier: 0.6, weight: "500 - 1,200 kg" },
+  { label: "Apilador eléctrico", weightMultiplier: 0.8, weight: "1,200 - 2,500 kg" },
   { label: "Montacargas < 3T", weightMultiplier: 1.0, weight: "2,500 - 4,500 kg" },
   { label: "Montacargas 3-5T", weightMultiplier: 1.3, weight: "4,500 - 6,000 kg" },
   { label: "Montacargas > 5T", weightMultiplier: 1.6, weight: "6,000+ kg" },
@@ -50,15 +50,15 @@ export default function FreightEstimator() {
     };
   }, [cityIdx, sizeIdx, quantity]);
 
-  const waMsg = `Hola, necesito un estimado de flete:\n- Destino: ${estimate.city}\n- Equipo: ${estimate.size} (${estimate.weight})\n- Cantidad: ${quantity}\n- Estimado web: $${estimate.total.toLocaleString()}\nMe pueden confirmar precio y disponibilidad?`;
+  const waMsg = `Hola, necesito un estimado de flete:\n- Destino: ${estimate.city}\n- Equipo: ${estimate.size} (${estimate.weight})\n- Cantidad: ${quantity}\n- Estimado web: $${estimate.total.toLocaleString()}\n¿Me pueden confirmar precio y disponibilidad?`;
 
   return (
     <section id="flete" className="py-20 bg-white rca-stripe">
       <div ref={ref} className={`max-w-7xl mx-auto px-4 sm:px-6 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <div className="mb-12">
-          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Planifica tu envio</div>
+          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Planifica tu envío</div>
           <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Estimador de flete</h2>
-          <p className="text-brand-muted mt-3 max-w-lg">Calcula el costo aproximado de envio de tu equipo a cualquier destino</p>
+          <p className="text-brand-muted mt-3 max-w-lg">Calcula el costo aproximado de envío de tu equipo a cualquier destino</p>
         </div>
 
         <div className="max-w-3xl mx-auto">
@@ -114,7 +114,7 @@ export default function FreightEstimator() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-white/30 text-xs">* Precio referencial. Sujeto a confirmacion segun peso exacto y condiciones de ruta.</p>
+              <p className="text-white/30 text-xs">* Precio referencial. Sujeto a confirmación según peso exacto y condiciones de ruta.</p>
               <a
                 href={`https://wa.me/${WA}?text=${encodeURIComponent(waMsg)}`}
                 target="_blank"

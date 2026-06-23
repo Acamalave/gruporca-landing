@@ -7,20 +7,20 @@ const WA = "584241700600";
 type Mode = "compra" | "alquiler" | "leasing";
 
 const equipmentTypes = [
-  { label: "Contrabalanceado Electrico", basePrice: 28000, rentalMonth: 1800, leasingMonth: 950 },
-  { label: "Contrabalanceado Diesel", basePrice: 22000, rentalMonth: 1500, leasingMonth: 780 },
+  { label: "Contrabalanceado Eléctrico", basePrice: 28000, rentalMonth: 1800, leasingMonth: 950 },
+  { label: "Contrabalanceado Diésel", basePrice: 22000, rentalMonth: 1500, leasingMonth: 780 },
   { label: "Contrabalanceado GLP", basePrice: 20000, rentalMonth: 1400, leasingMonth: 720 },
-  { label: "Apilador Electrico", basePrice: 12000, rentalMonth: 900, leasingMonth: 450 },
-  { label: "Transpaleta Electrica", basePrice: 5500, rentalMonth: 450, leasingMonth: 220 },
+  { label: "Apilador Eléctrico", basePrice: 12000, rentalMonth: 900, leasingMonth: 450 },
+  { label: "Transpaleta Eléctrica", basePrice: 5500, rentalMonth: 450, leasingMonth: 220 },
   { label: "Reach Truck", basePrice: 35000, rentalMonth: 2200, leasingMonth: 1200 },
 ];
 
 const periods = [
   { label: "6 meses", months: 6 },
-  { label: "1 ano", months: 12 },
-  { label: "2 anos", months: 24 },
-  { label: "3 anos", months: 36 },
-  { label: "5 anos", months: 60 },
+  { label: "1 año", months: 12 },
+  { label: "2 años", months: 24 },
+  { label: "3 años", months: 36 },
+  { label: "5 años", months: 60 },
 ];
 
 export default function CostCalculator() {
@@ -36,17 +36,17 @@ export default function CostCalculator() {
     compra: {
       total: equip.basePrice,
       monthly: Math.round(equip.basePrice / period.months),
-      includes: ["Equipo 100% tuyo", "Garantia de fabrica", "Soporte tecnico 1 ano", "Valor residual al final"],
+      includes: ["Equipo 100% tuyo", "Garantía de fábrica", "Soporte técnico 1 año", "Valor residual al final"],
     },
     alquiler: {
       total: equip.rentalMonth * period.months,
       monthly: equip.rentalMonth,
-      includes: ["Sin inversion inicial", "Mantenimiento incluido", "Reemplazo por averia", "Flexibilidad de devolucion"],
+      includes: ["Sin inversión inicial", "Mantenimiento incluido", "Reemplazo por avería", "Flexibilidad de devolución"],
     },
     leasing: {
       total: equip.leasingMonth * period.months,
       monthly: equip.leasingMonth,
-      includes: ["Cuota fija mensual", "Opcion de compra al final", "Beneficio fiscal", "Mantenimiento basico incluido"],
+      includes: ["Cuota fija mensual", "Opción de compra al final", "Beneficio fiscal", "Mantenimiento básico incluido"],
     },
   };
 
@@ -58,7 +58,7 @@ export default function CostCalculator() {
 
   const best = (Object.keys(costs) as Mode[]).reduce((a, b) => costs[a].total < costs[b].total ? a : b);
 
-  const waMsg = `Hola, estoy interesado en ${activeMode || "cotizar"} un ${equip.label} por ${period.label}. El estimado de la calculadora fue $${activeMode ? costs[activeMode].total.toLocaleString() : "---"} total. Me pueden dar una cotizacion formal?`;
+  const waMsg = `Hola, estoy interesado en ${activeMode || "cotizar"} un ${equip.label} por ${period.label}. El estimado de la calculadora fue $${activeMode ? costs[activeMode].total.toLocaleString() : "---"} total. ¿Me pueden dar una cotización formal?`;
 
   return (
     <section id="calculadora" className="py-20 bg-brand-navy">
@@ -66,7 +66,7 @@ export default function CostCalculator() {
         <div className="mb-12">
           <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Herramienta exclusiva</div>
           <h2 className="text-3xl sm:text-4xl font-black text-white">Calculadora: Compra vs Alquiler vs Leasing</h2>
-          <p className="text-white/50 mt-3 max-w-xl">Compara costos reales y elige la modalidad que mas le conviene a tu operacion</p>
+          <p className="text-white/50 mt-3 max-w-xl">Compara costos reales y elige la modalidad que más le conviene a tu operación</p>
         </div>
 
         {/* Selectors */}
@@ -80,7 +80,7 @@ export default function CostCalculator() {
             </select>
           </div>
           <div>
-            <label className="block text-white/60 text-sm mb-2 font-medium">Periodo de uso</label>
+            <label className="block text-white/60 text-sm mb-2 font-medium">Período de uso</label>
             <div className="flex gap-2 flex-wrap">
               {periods.map((p, i) => (
                 <button key={i} onClick={() => setPeriodIdx(i)} className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${periodIdx === i ? "bg-brand-gold text-brand-navy" : "bg-white/[0.06] text-white/60 hover:bg-white/[0.1]"}`}>
@@ -110,7 +110,7 @@ export default function CostCalculator() {
                 }`}
               >
                 {isBest && !isActive && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-navy text-xs font-bold px-3 py-1 rounded-full">MAS ECONOMICO</span>
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-gold text-brand-navy text-xs font-bold px-3 py-1 rounded-full">MÁS ECONÓMICO</span>
                 )}
                 <div className="flex items-center gap-3 mb-5">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isActive ? "bg-brand-navy/20" : "bg-brand-gold/10"}`}>
@@ -140,7 +140,7 @@ export default function CostCalculator() {
 
         {/* CTA */}
         <div className="text-center mt-10">
-          <p className="text-white/40 text-xs mb-4">* Precios referenciales en USD. La cotizacion final depende de especificaciones, disponibilidad y condiciones comerciales.</p>
+          <p className="text-white/40 text-xs mb-4">* Precios referenciales en USD. La cotización final depende de especificaciones, disponibilidad y condiciones comerciales.</p>
           <a
             href={`https://wa.me/${WA}?text=${encodeURIComponent(waMsg)}`}
             target="_blank"
@@ -148,7 +148,7 @@ export default function CostCalculator() {
             className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-8 py-4 rounded-xl text-base transition-all"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" /></svg>
-            Solicitar cotizacion formal
+            Solicitar cotización formal
           </a>
         </div>
       </div>

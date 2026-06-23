@@ -10,8 +10,8 @@ type ServiceStatus = "recibido" | "diagnostico" | "cotizacion" | "aprobado" | "e
 
 const statusSteps: { key: ServiceStatus; label: string; icon: string }[] = [
   { key: "recibido", label: "Recibido", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
-  { key: "diagnostico", label: "Diagnostico", icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" },
-  { key: "cotizacion", label: "Cotizacion", icon: "M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" },
+  { key: "diagnostico", label: "Diagnóstico", icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" },
+  { key: "cotizacion", label: "Cotización", icon: "M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" },
   { key: "aprobado", label: "Aprobado", icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" },
   { key: "en-proceso", label: "En proceso", icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" },
   { key: "completado", label: "Completado", icon: "M5 13l4 4L19 7" },
@@ -34,30 +34,30 @@ const demoOrders: Record<string, ServiceOrder> = {
   "SRV-2024-001": {
     orderNumber: "SRV-2024-001",
     clientName: "Distribuidora Oriental",
-    equipment: "Montacargas Diesel 5T - Mitsubishi FD50",
+    equipment: "Montacargas Diésel 5T - Mitsubishi FD50",
     status: "en-proceso",
-    description: "Mantenimiento preventivo 4000 horas + cambio de cadenas de elevacion",
+    description: "Mantenimiento preventivo 4000 horas + cambio de cadenas de elevación",
     estimatedDate: "2024-04-05",
-    technician: "Carlos Mendez",
+    technician: "Carlos Méndez",
     updates: [
       { date: "2024-03-28", note: "Equipo recibido en taller" },
-      { date: "2024-03-29", note: "Diagnostico completado. Se identificaron cadenas con desgaste y filtros vencidos" },
-      { date: "2024-03-30", note: "Cotizacion enviada y aprobada por cliente" },
+      { date: "2024-03-29", note: "Diagnóstico completado. Se identificaron cadenas con desgaste y filtros vencidos" },
+      { date: "2024-03-30", note: "Cotización enviada y aprobada por cliente" },
       { date: "2024-04-01", note: "Repuestos recibidos. Inicio de trabajos" },
     ],
   },
   "SRV-2024-002": {
     orderNumber: "SRV-2024-002",
     clientName: "Almacenes Premium",
-    equipment: "Apilador Electrico 1.6T - Megalift",
+    equipment: "Apilador Eléctrico 1.6T - Megalift",
     status: "cotizacion",
-    description: "Reparacion sistema hidraulico - fuga en cilindro de elevacion",
+    description: "Reparación sistema hidráulico - fuga en cilindro de elevación",
     estimatedDate: "2024-04-10",
-    technician: "Jose Rodriguez",
+    technician: "José Rodríguez",
     updates: [
       { date: "2024-04-01", note: "Equipo recibido" },
-      { date: "2024-04-02", note: "Diagnostico: cilindro de elevacion requiere cambio de sellos y revision de bomba" },
-      { date: "2024-04-03", note: "Cotizacion enviada al cliente - pendiente aprobacion" },
+      { date: "2024-04-02", note: "Diagnóstico: cilindro de elevación requiere cambio de sellos y revisión de bomba" },
+      { date: "2024-04-03", note: "Cotización enviada al cliente - pendiente aprobación" },
     ],
   },
 };
@@ -111,7 +111,7 @@ export default function ServiceTracker() {
         <div className="mb-12">
           <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Portal de cliente</div>
           <h2 className="text-3xl sm:text-4xl font-black text-white">Seguimiento de servicio</h2>
-          <p className="text-white/50 mt-3 max-w-lg">Consulta el estado de tu equipo en tiempo real. Ingresa tu numero de orden.</p>
+          <p className="text-white/50 mt-3 max-w-lg">Consulta el estado de tu equipo en tiempo real. Ingresa tu número de orden.</p>
         </div>
 
         {/* Search */}
@@ -145,8 +145,8 @@ export default function ServiceTracker() {
         {notFound && (
           <div className="max-w-xl mx-auto text-center bg-white/[0.04] rounded-2xl p-8 border border-white/10">
             <svg className="w-12 h-12 text-white/20 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <p className="text-white/60 mb-4">No encontramos una orden con ese numero.</p>
-            <a href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hola, quiero consultar el estado de mi servicio. Mi numero de orden es: ${orderNumber}`)}`} target="_blank" rel="noopener noreferrer" className="text-brand-gold text-sm font-semibold hover:underline">
+            <p className="text-white/60 mb-4">No encontramos una orden con ese número.</p>
+            <a href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hola, quiero consultar el estado de mi servicio. Mi número de orden es: ${orderNumber}`)}`} target="_blank" rel="noopener noreferrer" className="text-brand-gold text-sm font-semibold hover:underline">
               Contactar por WhatsApp
             </a>
           </div>
@@ -164,7 +164,7 @@ export default function ServiceTracker() {
                   <p className="text-white/50 text-sm mt-1">{order.clientName}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-white/40 text-xs">Tecnico asignado</p>
+                  <p className="text-white/40 text-xs">Técnico asignado</p>
                   <p className="text-white font-semibold text-sm">{order.technician}</p>
                   <p className="text-white/40 text-xs mt-2">Fecha estimada</p>
                   <p className="text-brand-gold font-semibold text-sm">{order.estimatedDate}</p>
@@ -226,7 +226,7 @@ export default function ServiceTracker() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-brand-gold text-sm font-semibold hover:underline"
               >
-                Consultar con servicio tecnico
+                Consultar con servicio técnico
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </a>
             </div>

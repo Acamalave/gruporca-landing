@@ -7,7 +7,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 const WA = "584241700600";
 
 const brands = ["Megalift", "Mitsubishi", "Doosan", "Bobcat", "Narrow Aisle", "Clark", "Hyster", "Yale", "Toyota", "Otra marca"];
-const partCategories = ["Cauchos y Llantas", "Baterias y Cargadores", "Sistema Hidraulico", "Motor y Transmision", "Sistema Electrico", "Cadenas y Rodillos", "Frenos", "Filtros", "No estoy seguro"];
+const partCategories = ["Cauchos y Llantas", "Baterías y Cargadores", "Sistema Hidráulico", "Motor y Transmisión", "Sistema Eléctrico", "Cadenas y Rodillos", "Frenos", "Filtros", "No estoy seguro"];
 
 export default function PartsQuoter() {
   const [step, setStep] = useState(0);
@@ -40,25 +40,25 @@ export default function PartsQuoter() {
       setStatus("sent");
     } catch {
       // Fallback: send via WhatsApp
-      const msg = `Cotizacion de repuesto:\n- Marca: ${form.brand}\n- Modelo: ${form.model}\n- Serial: ${form.serial || "N/A"}\n- Categoria: ${form.category}\n- Descripcion: ${form.description}\n- N° Parte: ${form.partNumber || "N/A"}\n- Urgencia: ${form.urgencia}\n- Contacto: ${form.nombre}, ${form.whatsapp}`;
+      const msg = `Cotización de repuesto:\n- Marca: ${form.brand}\n- Modelo: ${form.model}\n- Serial: ${form.serial || "N/A"}\n- Categoría: ${form.category}\n- Descripción: ${form.description}\n- N° Parte: ${form.partNumber || "N/A"}\n- Urgencia: ${form.urgencia}\n- Contacto: ${form.nombre}, ${form.whatsapp}`;
       window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
       setStatus("sent");
     }
   };
 
   const steps = [
-    { title: "Tu equipo", subtitle: "Identificacion del montacargas" },
-    { title: "El repuesto", subtitle: "Que pieza necesitas" },
-    { title: "Tus datos", subtitle: "Para enviarte la cotizacion" },
+    { title: "Tu equipo", subtitle: "Identificación del montacargas" },
+    { title: "El repuesto", subtitle: "Qué pieza necesitas" },
+    { title: "Tus datos", subtitle: "Para enviarte la cotización" },
   ];
 
   return (
     <section id="cotizador-repuestos" className="py-20 bg-brand-cream rca-blueprint">
       <div ref={ref} className={`max-w-7xl mx-auto px-4 sm:px-6 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <div className="mb-12">
-          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Cotizacion en 2 horas</div>
-          <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Cotizador rapido de repuestos</h2>
-          <p className="text-brand-muted mt-3 max-w-lg">Identifica tu equipo, describe la pieza y recibe cotizacion por WhatsApp en tiempo record</p>
+          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Cotización en 2 horas</div>
+          <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Cotizador rápido de repuestos</h2>
+          <p className="text-brand-muted mt-3 max-w-lg">Identifica tu equipo, describe la pieza y recibe cotización por WhatsApp en tiempo récord</p>
         </div>
 
         <div className="max-w-2xl mx-auto">
@@ -89,7 +89,7 @@ export default function PartsQuoter() {
                 <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
               </div>
               <h3 className="text-xl font-bold text-green-700 mb-2">Solicitud enviada</h3>
-              <p className="text-green-600 text-sm">Te enviaremos la cotizacion por WhatsApp en menos de 2 horas.</p>
+              <p className="text-green-600 text-sm">Te enviaremos la cotización por WhatsApp en menos de 2 horas.</p>
               <button onClick={() => { setStatus("idle"); setStep(0); setForm({ brand: "", model: "", serial: "", category: "", description: "", partNumber: "", nombre: "", whatsapp: "", urgencia: "normal" }); }} className="mt-4 text-green-700 underline text-sm">Cotizar otro repuesto</button>
             </div>
           ) : (
@@ -109,7 +109,7 @@ export default function PartsQuoter() {
                     <input type="text" name="model" value={form.model} onChange={handleChange} placeholder="Ej: FD50, CPC30, etc." className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-brand-navy mb-1">Numero de serie (opcional)</label>
+                    <label className="block text-sm font-medium text-brand-navy mb-1">Número de serie (opcional)</label>
                     <input type="text" name="serial" value={form.serial} onChange={handleChange} placeholder="Lo encuentras en la placa del equipo" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all" />
                   </div>
                   <button onClick={() => form.brand && setStep(1)} disabled={!form.brand} className="w-full bg-brand-navy disabled:bg-gray-300 text-brand-gold font-bold py-3.5 rounded-xl text-sm transition-all hover:bg-brand-navy-light">
@@ -122,22 +122,22 @@ export default function PartsQuoter() {
               {step === 1 && (
                 <div className="space-y-4 animate-fade-in">
                   <div>
-                    <label className="block text-sm font-medium text-brand-navy mb-1">Categoria del repuesto *</label>
+                    <label className="block text-sm font-medium text-brand-navy mb-1">Categoría del repuesto *</label>
                     <select name="category" required value={form.category} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all bg-white">
-                      <option value="">Selecciona una categoria</option>
+                      <option value="">Selecciona una categoría</option>
                       {partCategories.map((c) => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-brand-navy mb-1">Descripcion de la pieza *</label>
-                    <textarea name="description" required value={form.description} onChange={handleChange} rows={3} placeholder="Describe la pieza que necesitas, incluyendo cualquier detalle visible (tamano, ubicacion, sintoma de falla...)" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all resize-none" />
+                    <label className="block text-sm font-medium text-brand-navy mb-1">Descripción de la pieza *</label>
+                    <textarea name="description" required value={form.description} onChange={handleChange} rows={3} placeholder="Describe la pieza que necesitas, incluyendo cualquier detalle visible (tamaño, ubicación, síntoma de falla...)" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all resize-none" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-brand-navy mb-1">Numero de parte (si lo tienes)</label>
+                    <label className="block text-sm font-medium text-brand-navy mb-1">Número de parte (si lo tienes)</label>
                     <input type="text" name="partNumber" value={form.partNumber} onChange={handleChange} placeholder="Ej: 91A14-00200" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all" />
                   </div>
                   <div className="flex gap-3">
-                    <button onClick={() => setStep(0)} className="px-6 py-3.5 rounded-xl text-sm font-semibold text-brand-navy border border-gray-200 hover:bg-gray-50 transition-all">Atras</button>
+                    <button onClick={() => setStep(0)} className="px-6 py-3.5 rounded-xl text-sm font-semibold text-brand-navy border border-gray-200 hover:bg-gray-50 transition-all">Atrás</button>
                     <button onClick={() => form.category && form.description && setStep(2)} disabled={!form.category || !form.description} className="flex-1 bg-brand-navy disabled:bg-gray-300 text-brand-gold font-bold py-3.5 rounded-xl text-sm transition-all hover:bg-brand-navy-light">Siguiente</button>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ export default function PartsQuoter() {
                     <div className="grid grid-cols-3 gap-2">
                       {[
                         { key: "urgente", label: "Urgente", sub: "< 24h" },
-                        { key: "normal", label: "Normal", sub: "1-3 dias" },
+                        { key: "normal", label: "Normal", sub: "1-3 días" },
                         { key: "planificando", label: "Sin prisa", sub: "1 semana+" },
                       ].map((u) => (
                         <button key={u.key} type="button" onClick={() => setForm({ ...form, urgencia: u.key })} className={`px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${form.urgencia === u.key ? "bg-brand-navy text-brand-gold" : "bg-gray-100 text-brand-navy hover:bg-gray-200"}`}>
@@ -179,7 +179,7 @@ export default function PartsQuoter() {
                   </div>
 
                   <div className="flex gap-3">
-                    <button onClick={() => setStep(1)} className="px-6 py-3.5 rounded-xl text-sm font-semibold text-brand-navy border border-gray-200 hover:bg-gray-50 transition-all">Atras</button>
+                    <button onClick={() => setStep(1)} className="px-6 py-3.5 rounded-xl text-sm font-semibold text-brand-navy border border-gray-200 hover:bg-gray-50 transition-all">Atrás</button>
                     <button
                       onClick={handleSubmit}
                       disabled={!form.nombre || !form.whatsapp || status === "sending"}
@@ -187,7 +187,7 @@ export default function PartsQuoter() {
                     >
                       {status === "sending" ? (
                         <><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Enviando...</>
-                      ) : "Enviar solicitud de cotizacion"}
+                      ) : "Enviar solicitud de cotización"}
                     </button>
                   </div>
                 </div>

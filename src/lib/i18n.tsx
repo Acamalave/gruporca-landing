@@ -14,9 +14,9 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.cta": "Cotizar Ahora",
 
     // Hero
-    "hero.badge": "34+ anos de experiencia",
+    "hero.badge": "34+ años de experiencia",
     "hero.headline": "Montacargas nuevos y usados para toda LATAM",
-    "hero.sub": "Venta, alquiler y servicio tecnico de montacargas. Distribuidor autorizado de Megalift, Mitsubishi, Doosan y mas marcas lideres.",
+    "hero.sub": "Venta, alquiler y servicio técnico de montacargas. Distribuidor autorizado de Megalift, Mitsubishi, Doosan y más marcas líderes.",
     "hero.cta1": "Explorar equipos",
     "hero.cta2": "Hablar con asesor",
 
@@ -26,9 +26,9 @@ const translations: Record<Locale, Record<string, string>> = {
     "problem.stat1": "$47K",
     "problem.stat1label": "costo promedio anual por equipo parado",
     "problem.stat2": "250h",
-    "problem.stat2label": "de productividad perdida al ano",
+    "problem.stat2label": "de productividad perdida al año",
     "problem.stat3": "7x",
-    "problem.stat3label": "mas caro reparar que prevenir",
+    "problem.stat3label": "más caro reparar que prevenir",
 
     // Equipment
     "equip.label": "Inventario",
@@ -46,7 +46,7 @@ const translations: Record<Locale, Record<string, string>> = {
     // Calculator
     "calc.label": "Herramienta exclusiva",
     "calc.headline": "Calculadora: Compra vs Alquiler vs Leasing",
-    "calc.sub": "Compara costos reales y elige la modalidad que mas le conviene a tu operacion",
+    "calc.sub": "Compara costos reales y elige la modalidad que más le conviene a tu operación",
 
     // TCO
     "tco.label": "Para directores de planta",
@@ -62,20 +62,20 @@ const translations: Record<Locale, Record<string, string>> = {
 
     // Blog
     "blog.label": "Centro de conocimiento",
-    "blog.headline": "Recursos y guias",
+    "blog.headline": "Recursos y guías",
 
     // Contact
-    "contact.label": "Cotizacion rapida",
-    "contact.headline": "Solicita tu cotizacion",
+    "contact.label": "Cotización rápida",
+    "contact.headline": "Solicita tu cotización",
     "contact.sub": "Completa el formulario y te respondemos en menos de 2 horas en horario laboral.",
-    "contact.send": "Enviar cotizacion",
+    "contact.send": "Enviar cotización",
 
     // Footer
     "footer.copyright": "Todos los derechos reservados.",
 
     // Common
-    "common.readMore": "Leer mas",
-    "common.back": "Atras",
+    "common.readMore": "Leer más",
+    "common.back": "Atrás",
     "common.next": "Siguiente",
     "common.close": "Cerrar",
   },
@@ -143,64 +143,64 @@ const translations: Record<Locale, Record<string, string>> = {
   },
   pt: {
     "nav.equipos": "Equipamentos",
-    "nav.servicios": "Servicos",
-    "nav.repuestos": "Pecas",
+    "nav.servicios": "Serviços",
+    "nav.repuestos": "Peças",
     "nav.herramientas": "Ferramentas",
     "nav.contacto": "Contato",
-    "nav.cta": "Pedir Orcamento",
+    "nav.cta": "Pedir Orçamento",
 
-    "hero.badge": "34+ anos de experiencia",
+    "hero.badge": "34+ anos de experiência",
     "hero.headline": "Empilhadeiras novas e usadas para toda LATAM",
-    "hero.sub": "Venda, aluguel e assistencia tecnica de empilhadeiras. Distribuidor autorizado de Megalift, Mitsubishi, Doosan e mais marcas lideres.",
+    "hero.sub": "Venda, aluguel e assistência técnica de empilhadeiras. Distribuidor autorizado de Megalift, Mitsubishi, Doosan e mais marcas líderes.",
     "hero.cta1": "Explorar equipamentos",
     "hero.cta2": "Falar com consultor",
 
     "problem.label": "O custo do tempo parado",
     "problem.headline": "Cada hora de equipamento parado custa a sua empresa",
     "problem.stat1": "$47K",
-    "problem.stat1label": "custo medio anual por equipamento parado",
+    "problem.stat1label": "custo médio anual por equipamento parado",
     "problem.stat2": "250h",
     "problem.stat2label": "de produtividade perdida por ano",
     "problem.stat3": "7x",
     "problem.stat3label": "mais caro reparar do que prevenir",
 
-    "equip.label": "Inventario",
-    "equip.headline": "Equipamentos disponiveis",
+    "equip.label": "Inventário",
+    "equip.headline": "Equipamentos disponíveis",
     "equip.sub": "Novos e usados certificados. Prontos para entrega.",
     "equip.filter.all": "Todos",
     "equip.filter.new": "Novo",
     "equip.filter.used": "Usado",
-    "equip.cta": "Consultar preco",
+    "equip.cta": "Consultar preço",
 
-    "compare.label": "Solucoes flexiveis",
-    "compare.headline": "Compre, alugue ou servico",
+    "compare.label": "Soluções flexíveis",
+    "compare.headline": "Compre, alugue ou serviço",
 
     "calc.label": "Ferramenta exclusiva",
     "calc.headline": "Calculadora: Compra vs Aluguel vs Leasing",
-    "calc.sub": "Compare custos reais e escolha a melhor opcao para sua operacao",
+    "calc.sub": "Compare custos reais e escolha a melhor opção para sua operação",
 
     "tco.label": "Para diretores de planta",
     "tco.headline": "Calculadora de Custo Total (TCO)",
 
     "parts.label": "Estoque permanente",
-    "parts.headline": "Pecas e componentes",
+    "parts.headline": "Peças e componentes",
 
     "service.label": "Portal do cliente",
-    "service.headline": "Acompanhamento de servico",
+    "service.headline": "Acompanhamento de serviço",
 
     "blog.label": "Centro de conhecimento",
     "blog.headline": "Recursos e guias",
 
-    "contact.label": "Orcamento rapido",
-    "contact.headline": "Solicite seu orcamento",
-    "contact.sub": "Preencha o formulario e respondemos em menos de 2 horas em horario comercial.",
-    "contact.send": "Enviar solicitacao",
+    "contact.label": "Orçamento rápido",
+    "contact.headline": "Solicite seu orçamento",
+    "contact.sub": "Preencha o formulário e respondemos em menos de 2 horas em horário comercial.",
+    "contact.send": "Enviar solicitação",
 
     "footer.copyright": "Todos os direitos reservados.",
 
     "common.readMore": "Ler mais",
     "common.back": "Voltar",
-    "common.next": "Proximo",
+    "common.next": "Próximo",
     "common.close": "Fechar",
   },
 };
@@ -237,9 +237,9 @@ export function LanguageSwitcher() {
   const { locale, setLocale } = useI18n();
 
   const locales: { code: Locale; flag: string; label: string }[] = [
-    { code: "es", flag: "ES", label: "Espanol" },
+    { code: "es", flag: "ES", label: "Español" },
     { code: "en", flag: "EN", label: "English" },
-    { code: "pt", flag: "PT", label: "Portugues" },
+    { code: "pt", flag: "PT", label: "Português" },
   ];
 
   return (
