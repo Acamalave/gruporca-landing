@@ -71,7 +71,7 @@ export default function Hero() {
             <div className="mt-12 overflow-hidden">
               <p className="text-brand-muted/50 text-xs uppercase tracking-widest mb-3">Marcas que distribuimos</p>
               <div className="flex items-center gap-10 text-brand-navy/30 font-black text-lg uppercase tracking-wider">
-                {["Megalift", "Mitsubishi", "Doosan", "Bobcat", "Narrow Aisle", "Clark", "Hyster"].map((b) => (
+                {["Megalift", "Mitsubishi", "Doosan", "Bobcat", "Clark"].map((b) => (
                   <span key={b} className="whitespace-nowrap">{b}</span>
                 ))}
               </div>
