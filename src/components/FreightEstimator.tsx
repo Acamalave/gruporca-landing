@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react";
 import { useInView } from "@/hooks/useInView";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 const cities = [
   { name: "Valencia (Local)", distance: 0, baseRate: 150 },

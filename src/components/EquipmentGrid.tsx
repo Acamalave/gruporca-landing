@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 const equipment = [
   { name: "Contrabalanceado Litio 2.5T", brand: "Megalift", capacity: "2.5 Ton", type: "Eléctrico Litio", condition: "Nuevo", image: "/img/equipment/ec20-litio-4w.png", badge: "NUEVO", features: ["Batería de litio", "Carga rápida 1.5h", "Cero emisiones"] },

@@ -135,7 +135,7 @@ export default function KnowledgeCenter() {
                 ))}
                 <div className="mt-8 pt-6 border-t border-gray-100 text-center">
                   <p className="text-brand-muted text-sm mb-3">¿Necesitas asesoría personalizada?</p>
-                  <a href={`https://wa.me/584241700600?text=${encodeURIComponent(`Hola, leí el artículo "${article.title}" y tengo algunas preguntas`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
+                  <a href={`https://wa.me/584244013250?text=${encodeURIComponent(`Hola, leí el artículo "${article.title}" y tengo algunas preguntas`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
                     Hablar con un experto
                   </a>
                 </div>

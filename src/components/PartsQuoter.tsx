@@ -4,7 +4,7 @@ import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 const brands = ["Megalift", "Mitsubishi", "Doosan", "Bobcat", "Narrow Aisle", "Clark", "Hyster", "Yale", "Toyota", "Otra marca"];
 const partCategories = ["Cauchos y Llantas", "Baterías y Cargadores", "Sistema Hidráulico", "Motor y Transmisión", "Sistema Eléctrico", "Cadenas y Rodillos", "Frenos", "Filtros", "No estoy seguro"];
@@ -31,19 +31,20 @@ export default function PartsQuoter() {
 
   const handleSubmit = async () => {
     setStatus("sending");
+    // Mensaje con todo el contexto del repuesto para que el vendedor atienda de inmediato
+    const msg = `¡Hola! Quiero cotizar un repuesto:\n\n- Marca: ${form.brand}\n- Modelo: ${form.model || "N/A"}\n- Serial: ${form.serial || "N/A"}\n- Categoría: ${form.category}\n- Descripción: ${form.description}\n- N° Parte: ${form.partNumber || "N/A"}\n- Urgencia: ${form.urgencia}\n- Contacto: ${form.nombre}, ${form.whatsapp}`;
+    // Guarda el lead (best-effort) y redirige a WhatsApp con el contexto
     try {
       await addDoc(collection(db, "partsQuotes"), {
         ...form,
         createdAt: serverTimestamp(),
         status: "pendiente",
       });
-      setStatus("sent");
     } catch {
-      // Fallback: send via WhatsApp
-      const msg = `Cotización de repuesto:\n- Marca: ${form.brand}\n- Modelo: ${form.model}\n- Serial: ${form.serial || "N/A"}\n- Categoría: ${form.category}\n- Descripción: ${form.description}\n- N° Parte: ${form.partNumber || "N/A"}\n- Urgencia: ${form.urgencia}\n- Contacto: ${form.nombre}, ${form.whatsapp}`;
-      window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
-      setStatus("sent");
+      // Aunque falle el guardado, igual abrimos WhatsApp para no perder la solicitud
     }
+    window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
+    setStatus("sent");
   };
 
   const steps = [

@@ -4,7 +4,7 @@ import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 type ServiceStatus = "recibido" | "diagnostico" | "cotizacion" | "aprobado" | "en-proceso" | "completado" | "entregado";
 

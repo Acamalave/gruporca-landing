@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 const departments = [
   { label: "Ventas de Equipos", msg: "Hola, estoy interesado en comprar un equipo" },

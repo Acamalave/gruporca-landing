@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 const allEquipment = [
   { id: 1, name: "Contrabalanceado Litio 2.5T", brand: "Megalift", capacity: "2,500 kg", liftHeight: "4.5 m", engine: "Eléctrico Litio", weight: "3,800 kg", speed: "17 km/h", forkLength: "1,070 mm", turnRadius: "2,100 mm", condition: "Nuevo", image: "/img/equipment/ec20-litio-4w.png" },

@@ -1,7 +1,7 @@
 "use client";
 import { useCountUp } from "@/hooks/useCountUp";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 export default function Hero() {
   const yearsCount = useCountUp(34, 2000, true);

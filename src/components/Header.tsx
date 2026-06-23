@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const WA = "584241700600";
+const WA = "584244013250";
 
 const navLinks = [
   { label: "Inicio", href: "#hero" },
