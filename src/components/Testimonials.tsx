@@ -103,6 +103,24 @@ export default function Testimonials() {
             </div>
           </div>
         </div>
+
+        {/* Video testimonial */}
+        <div className="mt-16">
+          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-4">
+            Testimonios en video
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-black text-brand-navy mb-6">Lo que dicen de nosotros</h3>
+          <div className="relative w-full max-w-3xl aspect-video rounded-2xl overflow-hidden shadow-xl shadow-brand-navy/10 border border-gray-100 bg-black">
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/sa2iWJIXq7E"
+              title="Testimonio de cliente - Grupo RCA"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
