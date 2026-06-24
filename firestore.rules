@@ -34,6 +34,15 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Busquedas / interes (buscador de equipos y chatbot): el publico crea,
+    // el equipo (admin) lee. No guardan datos personales.
+    match /searches/{searchId} {
+      allow create: if request.resource.data.type is string
+                    && request.resource.data.type.size() > 0;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
     // Ordenes de servicio: el publico puede consultar una orden por su ID,
     // pero no listar todas ni escribir.
     match /serviceOrders/{orderId} {

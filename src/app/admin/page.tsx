@@ -27,6 +27,22 @@ type Lead = {
   createdAt?: Timestamp | null;
 };
 
+type Search = {
+  id: string;
+  type?: string; // "finder" | "chatbot"
+  // finder
+  equipo?: string;
+  opcion?: string;
+  capacidad?: string;
+  // chatbot
+  uso?: string;
+  ambiente?: string;
+  presupuesto?: string;
+  condicion?: string;
+  recomendado?: string;
+  createdAt?: Timestamp | null;
+};
+
 const necesidadLabels: Record<string, string> = {
   "montacargas-nuevo": "Montacargas nuevo",
   "montacargas-usado": "Montacargas usado",
@@ -67,9 +83,10 @@ export default function AdminPage() {
 
   const [leads, setLeads] = useState<Lead[]>([]);
   const [parts, setParts] = useState<Lead[]>([]);
+  const [searches, setSearches] = useState<Search[]>([]);
   const [loadingData, setLoadingData] = useState(false);
   const [dataError, setDataError] = useState("");
-  const [tab, setTab] = useState<"leads" | "parts">("leads");
+  const [tab, setTab] = useState<"leads" | "parts" | "searches">("leads");
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
@@ -83,12 +100,14 @@ export default function AdminPage() {
     setLoadingData(true);
     setDataError("");
     try {
-      const [leadsSnap, partsSnap] = await Promise.all([
+      const [leadsSnap, partsSnap, searchesSnap] = await Promise.all([
         getDocs(query(collection(db, "leads"), orderBy("createdAt", "desc"))),
         getDocs(query(collection(db, "partsQuotes"), orderBy("createdAt", "desc"))),
+        getDocs(query(collection(db, "searches"), orderBy("createdAt", "desc"))),
       ]);
       setLeads(leadsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead)));
       setParts(partsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead)));
+      setSearches(searchesSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Search)));
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       setDataError("No se pudieron cargar los datos. " + msg);
@@ -113,17 +132,14 @@ export default function AdminPage() {
   };
 
   const stats = useMemo(() => {
-    const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-    const recent = (arr: Lead[]) =>
-      arr.filter((l) => l.createdAt?.toDate && l.createdAt.toDate().getTime() > weekAgo).length;
     const urgentLeads = leads.filter((l) => l.urgencia === "inmediato").length;
     return {
       totalLeads: leads.length,
       totalParts: parts.length,
-      recentLeads: recent(leads),
+      totalSearches: searches.length,
       urgentLeads,
     };
-  }, [leads, parts]);
+  }, [leads, parts, searches]);
 
   // --- Login screen ---
   if (!authReady) {
@@ -172,7 +188,7 @@ export default function AdminPage() {
   }
 
   // --- Dashboard ---
-  const rows = tab === "leads" ? leads : parts;
+  const rows: (Lead | Search)[] = tab === "leads" ? leads : tab === "parts" ? parts : searches;
 
   return (
     <div className="min-h-screen bg-brand-cream">
@@ -203,8 +219,8 @@ export default function AdminPage() {
           {[
             { label: "Cotizaciones", value: stats.totalLeads },
             { label: "Solicitudes de repuestos", value: stats.totalParts },
-            { label: "Cotizaciones (últimos 7 días)", value: stats.recentLeads },
-            { label: "Marcadas como urgentes", value: stats.urgentLeads },
+            { label: "Búsquedas / interés", value: stats.totalSearches },
+            { label: "Cotizaciones urgentes", value: stats.urgentLeads },
           ].map((s, i) => (
             <div key={i} className="bg-white rounded-xl border border-gray-100 p-5">
               <p className="text-3xl font-black text-brand-navy">{s.value}</p>
@@ -227,6 +243,12 @@ export default function AdminPage() {
           >
             Repuestos ({parts.length})
           </button>
+          <button
+            onClick={() => setTab("searches")}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${tab === "searches" ? "bg-brand-navy text-brand-gold" : "bg-white border border-gray-200 text-brand-navy"}`}
+          >
+            Búsquedas ({searches.length})
+          </button>
         </div>
 
         {dataError && <p className="text-red-500 text-sm mb-4">{dataError}</p>}
@@ -235,6 +257,39 @@ export default function AdminPage() {
         ) : rows.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-100 p-10 text-center text-brand-muted text-sm">
             Aún no hay registros en esta sección.
+          </div>
+        ) : tab === "searches" ? (
+          <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="border-b border-gray-100 text-left text-brand-muted">
+                  <th className="p-3 font-semibold">Fecha</th>
+                  <th className="p-3 font-semibold">Origen</th>
+                  <th className="p-3 font-semibold">Detalle</th>
+                  <th className="p-3 font-semibold">Recomendado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {searches.map((s) => {
+                  const detalle = (s.type === "chatbot"
+                    ? [["Uso", s.uso], ["Ambiente", s.ambiente], ["Capacidad", s.capacidad], ["Presupuesto", s.presupuesto], ["Condición", s.condicion]]
+                    : [["Equipo", s.equipo], ["Opción", s.opcion], ["Capacidad", s.capacidad]]
+                  ).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join(" · ");
+                  return (
+                    <tr key={s.id} className="border-b border-gray-50 hover:bg-brand-cream/40">
+                      <td className="p-3 text-brand-muted whitespace-nowrap">{fmtDate(s.createdAt)}</td>
+                      <td className="p-3">
+                        <span className={`px-2 py-0.5 rounded text-xs font-semibold ${s.type === "chatbot" ? "bg-blue-100 text-blue-700" : "bg-brand-gold/20 text-brand-navy"}`}>
+                          {s.type === "chatbot" ? "Asesor virtual" : "Buscador"}
+                        </span>
+                      </td>
+                      <td className="p-3 text-brand-navy">{detalle || "—"}</td>
+                      <td className="p-3 text-brand-muted">{s.recomendado || "—"}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         ) : (
           <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto">
@@ -259,7 +314,7 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((r) => {
+                {(rows as Lead[]).map((r) => {
                   const wa = waLink(r.whatsapp);
                   return (
                     <tr key={r.id} className="border-b border-gray-50 hover:bg-brand-cream/40">

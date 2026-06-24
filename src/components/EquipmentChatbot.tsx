@@ -1,5 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const WA = "584244013250";
 
@@ -157,6 +159,18 @@ export default function EquipmentChatbot() {
         setAnswers(newAnswers);
         const key = `${newAnswers.environment}-${newAnswers.capacity}-${newAnswers.budget}`;
         const rec = recommendations[key] || recommendations["mixto-medio-economico"];
+
+        // Registra la recomendación (best-effort) para verla en el panel
+        addDoc(collection(db, "searches"), {
+          type: "chatbot",
+          uso: newAnswers.use,
+          ambiente: newAnswers.environment,
+          capacidad: newAnswers.capacity,
+          presupuesto: newAnswers.budget,
+          condicion: value,
+          recomendado: `${rec.name} (${rec.type})`,
+          createdAt: serverTimestamp(),
+        }).catch(() => {});
 
         setTimeout(() => {
           addMessages([

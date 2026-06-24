@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const WA = "584244013250";
 
@@ -91,8 +93,19 @@ export default function EquipmentFinder() {
   const select = (v: string) => {
     const next = [...answers, v];
     setAnswers(next);
-    if (step < steps.length - 1) setStep(step + 1);
-    else setDone(true);
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      setDone(true);
+      // Registra la búsqueda (best-effort) para verla en el panel
+      addDoc(collection(db, "searches"), {
+        type: "finder",
+        equipo: next[0] || "",
+        opcion: next[1] || "",
+        capacidad: next[2] || "",
+        createdAt: serverTimestamp(),
+      }).catch(() => {});
+    }
   };
 
   const reset = () => { setStep(0); setAnswers([]); setDone(false); };
