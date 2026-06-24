@@ -21,7 +21,7 @@ export default function Repuestos() {
         <div className="mb-14">
           <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Stock permanente</div>
           <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Repuestos y partes</h2>
-          <p className="text-brand-muted mt-3 max-w-lg">Originales y alternativos para todas las marcas. Cotiza en menos de 2 horas.</p>
+          <p className="text-brand-muted mt-3 max-w-lg">Originales y alternativos para todas las marcas. Encuéntralos en nuestra tienda Uniparts.</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

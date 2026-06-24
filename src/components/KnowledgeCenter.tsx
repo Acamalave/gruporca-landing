@@ -2,7 +2,20 @@
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 
-const articles = [
+const LINKEDIN = "https://ve.linkedin.com/company/gruporcave";
+
+type Article = {
+  id: number;
+  category: string;
+  title: string;
+  excerpt: string;
+  readTime: string;
+  image: string;
+  source?: string;
+  content: { subtitle: string; text: string }[];
+};
+
+const articles: Article[] = [
   {
     id: 1,
     category: "Mantenimiento",
@@ -90,6 +103,86 @@ const articles = [
       { subtitle: "Testimonio", text: "\"Antes perdíamos días enteros esperando repuestos. Ahora todo está planificado y nuestros equipos siempre están operativos\" — Gerente de Operaciones, Distribuidora Oriental." },
     ],
   },
+  {
+    id: 7,
+    category: "Novedades",
+    title: "MEGALIFT Plus: el montacargas eléctrico de alto voltaje",
+    excerpt: "Nuestro nuevo montacargas eléctrico con batería de litio de alto voltaje: carga completa en aproximadamente 1 hora y hasta 90% de ahorro frente a equipos de combustión.",
+    readTime: "2 min",
+    image: "/img/equipment/ec20-litio-4w.png",
+    source: LINKEDIN,
+    content: [
+      { subtitle: "Potencia eléctrica de nueva generación", text: "El MEGALIFT Plus incorpora una batería de litio de alto voltaje que ofrece el rendimiento de un equipo de combustión sin emisiones, ideal para operaciones exigentes en interiores y exteriores." },
+      { subtitle: "Carga ultrarrápida", text: "Alcanza carga completa en aproximadamente 1 hora, lo que permite operar en varios turnos sin tiempos muertos prolongados." },
+      { subtitle: "Ahorro real", text: "Frente a un montacargas de combustión, el ahorro en costo de ciclo de vida puede llegar al 90%, considerando combustible, mantenimiento y repuestos." },
+    ],
+  },
+  {
+    id: 8,
+    category: "Novedades",
+    title: "NART20Li: reach truck de pasillo angosto",
+    excerpt: "Equipo retráctil para almacenamiento vertical de alta densidad, con mástil que alcanza grandes alturas de elevación en pasillos estrechos.",
+    readTime: "2 min",
+    image: "/img/equipment/narrow-aisle.jpg",
+    source: LINKEDIN,
+    content: [
+      { subtitle: "Máximo aprovechamiento del espacio", text: "El NART20Li está diseñado para pasillos angostos, permitiendo aumentar la capacidad de almacenamiento sin ampliar la nave." },
+      { subtitle: "Elevación de gran altura", text: "Su mástil retráctil llega a alturas elevadas, ideal para racks de alta densidad y centros de distribución." },
+      { subtitle: "Tecnología de litio", text: "Funciona con batería de litio, con la eficiencia, baja necesidad de mantenimiento y operación silenciosa que caracteriza a la línea Megalift." },
+    ],
+  },
+  {
+    id: 9,
+    category: "Novedades",
+    title: "Serie MESR: apiladores eléctricos de litio",
+    excerpt: "Apiladores eléctricos con batería de litio en capacidades de 1.600 a 2.000 kg, pensados para operaciones de almacén.",
+    readTime: "2 min",
+    image: "/img/equipment/apilador-litio.jpg",
+    source: LINKEDIN,
+    content: [
+      { subtitle: "Versátiles para almacén", text: "La serie MESR ofrece apiladores eléctricos en capacidades de 1.600 a 2.000 kg, ideales para movimiento y estiba de cargas en interiores." },
+      { subtitle: "Batería de litio", text: "Con tecnología de litio aprovechan cargas parciales, no requieren mantenimiento de batería y mantienen un rendimiento constante durante el turno." },
+    ],
+  },
+  {
+    id: 10,
+    category: "Novedades",
+    title: "Transpaletas eléctricas Megalift de litio",
+    excerpt: "Transpaletas eléctricas con tecnología de litio para agilizar la operación en centros de distribución.",
+    readTime: "1 min",
+    image: "/img/equipment/transpaleta-litio.jpg",
+    source: LINKEDIN,
+    content: [
+      { subtitle: "Eficiencia en distribución", text: "Las transpaletas eléctricas Megalift facilitan el movimiento de pallets en centros de distribución, reduciendo el esfuerzo del operador y aumentando la productividad." },
+      { subtitle: "Tecnología de litio", text: "La batería de litio permite carga oportunista y bajo mantenimiento, manteniendo el equipo disponible la mayor parte del día." },
+    ],
+  },
+  {
+    id: 11,
+    category: "Novedades",
+    title: "Cuida la batería de litio de tu Megalift",
+    excerpt: "Recomendación clave: nunca descargues tu montacargas eléctrico Megalift por debajo del 25% para proteger el sistema BMS y mantener la garantía.",
+    readTime: "1 min",
+    image: "/img/company/servicio.jpg",
+    source: LINKEDIN,
+    content: [
+      { subtitle: "No bajes del 25%", text: "Para proteger el sistema de gestión de batería (BMS) y mantener la cobertura de garantía, nunca descargues la batería de litio de tu Megalift por debajo del 25% de su capacidad." },
+      { subtitle: "Carga oportunista", text: "Aprovecha pausas y descansos para cargar parcialmente. Las baterías de litio se benefician de cargas frecuentes y no necesitan descargarse por completo." },
+    ],
+  },
+  {
+    id: 12,
+    category: "Novedades",
+    title: "Equipos de limpieza industrial Eureka",
+    excerpt: "Sumamos a nuestro portafolio las barredoras y fregadoras Eureka (Italia), incluyendo la barredora manual Picobello.",
+    readTime: "1 min",
+    image: "/img/company/operaciones-1.jpg",
+    source: LINKEDIN,
+    content: [
+      { subtitle: "Nueva alianza", text: "Incorporamos equipos de limpieza industrial de la marca italiana Eureka: barredoras y fregadoras para mantener tus instalaciones impecables." },
+      { subtitle: "Picobello y más", text: "Entre las opciones está la barredora manual Picobello, ideal para espacios donde se necesita limpieza ágil y eficiente. Consúltanos por el modelo que mejor se adapta a tu operación." },
+    ],
+  },
 ];
 
 const categories = ["Todos", ...Array.from(new Set(articles.map((a) => a.category)))];
@@ -108,7 +201,11 @@ export default function KnowledgeCenter() {
         <div className="mb-10">
           <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-3">Centro de conocimiento</div>
           <h2 className="text-3xl sm:text-4xl font-black text-brand-navy">Recursos y guías</h2>
-          <p className="text-brand-muted mt-3 max-w-lg">Información práctica para tomar mejores decisiones sobre tu flota de montacargas</p>
+          <p className="text-brand-muted mt-3 max-w-lg">Información práctica y novedades de nuestra operación. Mira lo que compartimos en nuestro LinkedIn.</p>
+          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-[#0a66c2] hover:underline text-sm font-semibold">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+            Síguenos en LinkedIn
+          </a>
         </div>
 
         {/* Article modal */}
@@ -135,9 +232,17 @@ export default function KnowledgeCenter() {
                 ))}
                 <div className="mt-8 pt-6 border-t border-gray-100 text-center">
                   <p className="text-brand-muted text-sm mb-3">¿Necesitas asesoría personalizada?</p>
-                  <a href={`https://wa.me/584244013250?text=${encodeURIComponent(`Hola, leí el artículo "${article.title}" y tengo algunas preguntas`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
-                    Hablar con un experto
-                  </a>
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    <a href={`https://wa.me/584244013250?text=${encodeURIComponent(`Hola, leí el artículo "${article.title}" y tengo algunas preguntas`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
+                      Hablar con un experto
+                    </a>
+                    {article.source && (
+                      <a href={article.source} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#0a66c2] hover:bg-[#004182] text-white font-bold px-6 py-3 rounded-xl text-sm transition-all">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                        Ver en LinkedIn
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
