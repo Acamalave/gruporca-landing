@@ -5,6 +5,7 @@ import { collection, query, orderBy, onSnapshot, Timestamp } from "firebase/fire
 import { ensureVisitor } from "@/lib/visitor";
 import { sendVisitorMessage } from "@/lib/chat";
 import { useChatAvailability } from "@/hooks/useChatAvailability";
+import { beep } from "@/lib/notify";
 
 type Msg = { id: string; from?: string; text?: string; createdAt?: Timestamp };
 
@@ -14,20 +15,40 @@ export default function LiveChat() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [text, setText] = useState("");
   const [started, setStarted] = useState(false);
+  const [unread, setUnread] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const seenAgent = useRef(-1);
 
+  // Escucha los mensajes mientras el chat esté disponible o abierto (así recibe
+  // respuestas aunque tenga la ventana cerrada).
   useEffect(() => {
-    if (!open) return;
+    if (!available && !open) return;
     let unsub = () => {};
     ensureVisitor().then((id) => {
       if (!id) return;
       const q = query(collection(db, "chats", id, "messages"), orderBy("createdAt", "asc"));
       unsub = onSnapshot(q, (snap) => {
-        setMessages(snap.docs.map((d) => ({ id: d.id, ...d.data() } as Msg)));
+        const msgs = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Msg));
+        setMessages(msgs);
         setStarted(true);
+        const agentCount = msgs.filter((m) => m.from === "agent").length;
+        if (seenAgent.current < 0) {
+          seenAgent.current = agentCount; // base inicial, sin avisar
+        } else if (agentCount > seenAgent.current) {
+          if (!open) {
+            setUnread((u) => u + (agentCount - seenAgent.current));
+            beep();
+          }
+          seenAgent.current = agentCount;
+        }
       });
     });
     return () => unsub();
+  }, [available, open]);
+
+  // Al abrir, marca como leído
+  useEffect(() => {
+    if (open) setUnread(0);
   }, [open]);
 
   useEffect(() => {
@@ -57,6 +78,11 @@ export default function LiveChat() {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
           </span>
           <span className="hidden sm:inline text-sm font-semibold">Chat en vivo</span>
+          {unread > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+              {unread}
+            </span>
+          )}
         </button>
       )}
 

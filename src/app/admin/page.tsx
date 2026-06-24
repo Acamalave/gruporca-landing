@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { auth, db } from "@/lib/firebase";
 import {
   signInWithEmailAndPassword,
@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { collection, getDocs, orderBy, query, limit, onSnapshot, doc, Timestamp } from "firebase/firestore";
 import { setChatAvailable, chatHeartbeat } from "@/lib/chat";
+import { beep, osNotify, primeAudio, requestNotifyPermission } from "@/lib/notify";
 import AdminChat, { type ChatConv } from "@/components/AdminChat";
 
 type Lead = {
@@ -179,19 +180,49 @@ export default function AdminPage() {
     return () => clearInterval(t);
   }, [chatAvailable]);
 
-  // Suscripción en tiempo real a las conversaciones
+  // Suscripción en tiempo real a las conversaciones + notificación de mensajes nuevos
+  const chatBaseline = useRef(0);
+  const chatInit = useRef(false);
   useEffect(() => {
     if (!user || user.isAnonymous) return;
     const q = query(collection(db, "chats"), orderBy("lastAt", "desc"));
     const unsub = onSnapshot(q, (snap) => {
-      setChats(snap.docs.map((d) => ({ id: d.id, ...d.data() } as ChatConv)));
+      const list = snap.docs.map((d) => ({ id: d.id, ...d.data() } as ChatConv));
+      // El mensaje entrante (de un visitante) más reciente
+      const newestUser = list.reduce((max, c) => {
+        const t = c.lastFrom === "user" && c.lastAt?.toMillis ? c.lastAt.toMillis() : 0;
+        return t > max ? t : max;
+      }, 0);
+      if (!chatInit.current) {
+        chatInit.current = true;
+        chatBaseline.current = newestUser;
+      } else if (newestUser > chatBaseline.current) {
+        chatBaseline.current = newestUser;
+        beep();
+        osNotify("Nuevo mensaje de chat", "Un visitante te escribió en el chat en vivo.");
+        if (typeof document !== "undefined" && document.hidden) {
+          document.title = "💬 Nuevo mensaje — Grupo RCA";
+        }
+      }
+      setChats(list);
     }, () => {});
     return () => unsub();
   }, [user]);
 
+  // Restaura el título al volver a la pestaña
+  useEffect(() => {
+    const onFocus = () => { document.title = "Panel — Grupo RCA"; };
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
+
   const toggleAvailable = async () => {
     const next = !chatAvailable;
     setChatAvailableState(next);
+    if (next) {
+      primeAudio();
+      requestNotifyPermission();
+    }
     await setChatAvailable(next);
   };
 
