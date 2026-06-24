@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="border-t border-white/10 pt-6 pb-28 sm:pb-24 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-white/20 text-xs">
             &copy; {new Date().getFullYear()} Grupo RCA Montacargas C.A. Todos los derechos reservados.
             <span className="mx-2 text-white/10">|</span>
