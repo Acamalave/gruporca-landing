@@ -149,10 +149,19 @@ export default function QuoteForm() {
           <div className="space-y-6">
             <div className="rounded-2xl overflow-hidden h-64 lg:h-80">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.1!2d-68.01!3d10.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDEwJzQ4LjAiTiA2OMKwMDAnMzYuMCJX!5e0!3m2!1ses!2sve!4v1"
+                src="https://maps.google.com/maps?q=10.1384659,-68.0484373&z=17&hl=es&output=embed"
                 width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Ubicación Grupo RCA"
               />
             </div>
+            <a
+              href="https://maps.app.goo.gl/ctTmyHSGDZmWL3t9A"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-brand-gold hover:text-brand-navy text-sm font-semibold transition-colors"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
+              Cómo llegar (Google Maps)
+            </a>
             <div className="grid sm:grid-cols-2 gap-4">
               {[
                 { icon: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z", title: "Dirección", lines: ["Autopista Valencia - Campo Carabobo", "Vía de Servicio San Luis, Valencia"] },
