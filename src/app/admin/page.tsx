@@ -7,7 +7,9 @@ import {
   onAuthStateChanged,
   type User,
 } from "firebase/auth";
-import { collection, getDocs, orderBy, query, limit, Timestamp } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit, onSnapshot, doc, Timestamp } from "firebase/firestore";
+import { setChatAvailable, chatHeartbeat } from "@/lib/chat";
+import AdminChat, { type ChatConv } from "@/components/AdminChat";
 
 type Lead = {
   id: string;
@@ -121,7 +123,9 @@ export default function AdminPage() {
   const [events, setEvents] = useState<VisitEvent[]>([]);
   const [loadingData, setLoadingData] = useState(false);
   const [dataError, setDataError] = useState("");
-  const [tab, setTab] = useState<"visitors" | "leads" | "parts" | "searches" | "events">("visitors");
+  const [tab, setTab] = useState<"visitors" | "leads" | "parts" | "searches" | "events" | "chat">("visitors");
+  const [chatAvailable, setChatAvailableState] = useState(false);
+  const [chats, setChats] = useState<ChatConv[]>([]);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
@@ -157,6 +161,39 @@ export default function AdminPage() {
   useEffect(() => {
     if (user) loadData();
   }, [user]);
+
+  // Refleja la disponibilidad guardada del chat
+  useEffect(() => {
+    if (!user || user.isAnonymous) return;
+    const unsub = onSnapshot(doc(db, "settings", "chat"), (snap) => {
+      setChatAvailableState(!!snap.data()?.available);
+    }, () => {});
+    return () => unsub();
+  }, [user]);
+
+  // Mantiene "vivo" el estado disponible (heartbeat) mientras el panel esté abierto
+  useEffect(() => {
+    if (!chatAvailable) return;
+    chatHeartbeat();
+    const t = setInterval(() => chatHeartbeat(), 45_000);
+    return () => clearInterval(t);
+  }, [chatAvailable]);
+
+  // Suscripción en tiempo real a las conversaciones
+  useEffect(() => {
+    if (!user || user.isAnonymous) return;
+    const q = query(collection(db, "chats"), orderBy("lastAt", "desc"));
+    const unsub = onSnapshot(q, (snap) => {
+      setChats(snap.docs.map((d) => ({ id: d.id, ...d.data() } as ChatConv)));
+    }, () => {});
+    return () => unsub();
+  }, [user]);
+
+  const toggleAvailable = async () => {
+    const next = !chatAvailable;
+    setChatAvailableState(next);
+    await setChatAvailable(next);
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -243,6 +280,14 @@ export default function AdminPage() {
             <p className="text-white/50 text-xs">{user.email}</p>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={toggleAvailable}
+              title="Cuando está disponible, los visitantes pueden chatear en vivo contigo"
+              className={`flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-lg transition-all ${chatAvailable ? "bg-green-500/20 text-green-300" : "bg-white/10 text-white/60 hover:bg-white/20"}`}
+            >
+              <span className={`w-2.5 h-2.5 rounded-full ${chatAvailable ? "bg-green-400" : "bg-white/40"}`} />
+              {chatAvailable ? "Disponible" : "No disponible"}
+            </button>
             <button onClick={loadData} className="text-brand-gold text-sm font-semibold hover:underline">
               Actualizar
             </button>
@@ -274,6 +319,15 @@ export default function AdminPage() {
 
         {/* Tabs */}
         <div className="flex gap-2 mb-4 flex-wrap">
+          <button
+            onClick={() => setTab("chat")}
+            className={`relative px-5 py-2 rounded-lg text-sm font-semibold transition-all ${tab === "chat" ? "bg-brand-navy text-brand-gold" : "bg-white border border-gray-200 text-brand-navy"}`}
+          >
+            Chat en vivo ({chats.length})
+            {chats.some((c) => c.lastFrom === "user") && (
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full ring-2 ring-brand-cream" />
+            )}
+          </button>
           <button
             onClick={() => setTab("visitors")}
             className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${tab === "visitors" ? "bg-brand-navy text-brand-gold" : "bg-white border border-gray-200 text-brand-navy"}`}
@@ -307,7 +361,16 @@ export default function AdminPage() {
         </div>
 
         {dataError && <p className="text-red-500 text-sm mb-4">{dataError}</p>}
-        {loadingData ? (
+        {tab === "chat" ? (
+          <>
+            {!chatAvailable && (
+              <p className="mb-3 text-sm text-brand-muted bg-brand-gold/10 border border-brand-gold/30 rounded-lg px-4 py-2">
+                Estás <b>No disponible</b>: el chat en vivo no aparece en el sitio. Actívalo con el botón <b>Disponible</b> de arriba para atender en tiempo real.
+              </p>
+            )}
+            <AdminChat chats={chats} />
+          </>
+        ) : loadingData ? (
           <p className="text-brand-muted text-sm">Cargando datos…</p>
         ) : rows.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-100 p-10 text-center text-brand-muted text-sm">

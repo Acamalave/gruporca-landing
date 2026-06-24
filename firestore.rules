@@ -60,6 +60,29 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Configuracion publica (ej. disponibilidad del chat en vivo).
+    // Lectura publica; solo el admin escribe.
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Chat en vivo: cada visitante (uid anonimo) gestiona SU conversacion.
+    // El admin gestiona todas.
+    match /chats/{cid} {
+      allow read: if (request.auth != null && request.auth.uid == cid) || isAdmin();
+      allow create, update: if (request.auth != null && request.auth.uid == cid) || isAdmin();
+      allow delete: if false;
+
+      match /messages/{msgId} {
+        allow read: if (request.auth != null && request.auth.uid == cid) || isAdmin();
+        allow create: if isAdmin()
+                      || (request.auth != null && request.auth.uid == cid
+                          && request.resource.data.from == "user");
+        allow update, delete: if false;
+      }
+    }
+
     // Ordenes de servicio: el publico puede consultar una orden por su ID,
     // pero no listar todas ni escribir.
     match /serviceOrders/{orderId} {

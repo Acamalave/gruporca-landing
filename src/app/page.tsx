@@ -20,6 +20,7 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ScrollToTop from "@/components/ScrollToTop";
 import EquipmentChatbot from "@/components/EquipmentChatbot";
+import LiveChat from "@/components/LiveChat";
 import VisitorTracker from "@/components/VisitorTracker";
 import PrivacyNotice from "@/components/PrivacyNotice";
 
@@ -51,6 +52,7 @@ export default function Home() {
       <WhatsAppFloat />
       <ScrollToTop />
       <EquipmentChatbot />
+      <LiveChat />
       <VisitorTracker />
       <PrivacyNotice />
     </>

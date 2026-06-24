@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { currentVisitorId } from "@/lib/visitor";
+import { useChatAvailability } from "@/hooks/useChatAvailability";
 
 const WA = "584244013250";
 
@@ -41,6 +42,7 @@ export default function EquipmentChatbot() {
   const [state, setState] = useState<ConversationState>("start");
   const [answers, setAnswers] = useState({ use: "", environment: "", capacity: "", budget: "", condition: "" });
   const chatRef = useRef<HTMLDivElement>(null);
+  const liveAvailable = useChatAvailability();
 
   useEffect(() => {
     if (chatRef.current) {
@@ -207,6 +209,9 @@ export default function EquipmentChatbot() {
         break;
     }
   };
+
+  // Si hay un asesor disponible en vivo, el chat en vivo toma este lugar.
+  if (liveAvailable) return null;
 
   return (
     <>
