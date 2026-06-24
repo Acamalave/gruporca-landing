@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { isValidPhone } from "@/lib/validators";
 
 const UNIPARTS = "https://upandina.com/";
 
@@ -23,13 +24,21 @@ export default function PartsQuoter() {
     urgencia: "normal",
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [phoneError, setPhoneError] = useState("");
   const { ref, visible } = useInView();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    if (e.target.name === "whatsapp" && phoneError) setPhoneError("");
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
+    // Comprobación de número real antes de continuar
+    if (!isValidPhone(form.whatsapp)) {
+      setPhoneError("Ingresa un número de WhatsApp válido (ej. 0424-1234567).");
+      return;
+    }
+    setPhoneError("");
     setStatus("sending");
     // Guarda el lead (best-effort) y redirige a la tienda de repuestos Uniparts
     try {
@@ -151,7 +160,8 @@ export default function PartsQuoter() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brand-navy mb-1">WhatsApp *</label>
-                    <input type="tel" name="whatsapp" required value={form.whatsapp} onChange={handleChange} placeholder="04XX-XXXXXXX" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all" />
+                    <input type="tel" name="whatsapp" required value={form.whatsapp} onChange={handleChange} onBlur={() => { if (form.whatsapp && !isValidPhone(form.whatsapp)) setPhoneError("Ingresa un número de WhatsApp válido (ej. 0424-1234567)."); }} placeholder="04XX-XXXXXXX" aria-invalid={!!phoneError} className={`w-full px-4 py-3 rounded-xl border outline-none text-sm transition-all ${phoneError ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-200" : "border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20"}`} />
+                    {phoneError && <p className="text-red-500 text-xs mt-1">{phoneError}</p>}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-brand-navy mb-1">Urgencia</label>
