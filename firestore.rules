@@ -3,22 +3,35 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Correos del equipo autorizados a ver los leads en el panel /admin.
+    // Para agregar a alguien, añade su correo a esta lista.
+    function isAdmin() {
+      return request.auth != null
+             && request.auth.token.email in [
+                  "malave.acacio@gmail.com"
+                ];
+    }
+
     // Cotizaciones del formulario de contacto: el publico solo puede crear.
+    // El equipo (admin) puede leer desde el panel.
     match /leads/{leadId} {
       allow create: if request.resource.data.nombre is string
                     && request.resource.data.nombre.size() > 0
                     && request.resource.data.whatsapp is string
                     && request.resource.data.whatsapp.size() > 0;
-      allow read, update, delete: if false;
+      allow read: if isAdmin();
+      allow update, delete: if false;
     }
 
     // Cotizaciones de repuestos: el publico solo puede crear.
+    // El equipo (admin) puede leer desde el panel.
     match /partsQuotes/{quoteId} {
       allow create: if request.resource.data.nombre is string
                     && request.resource.data.nombre.size() > 0
                     && request.resource.data.whatsapp is string
                     && request.resource.data.whatsapp.size() > 0;
-      allow read, update, delete: if false;
+      allow read: if isAdmin();
+      allow update, delete: if false;
     }
 
     // Ordenes de servicio: el publico puede consultar una orden por su ID,
