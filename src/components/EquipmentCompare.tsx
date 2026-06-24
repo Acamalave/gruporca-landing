@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
+import { logEvent } from "@/lib/visitor";
 
 const WA = "584244013250";
 
@@ -125,6 +126,7 @@ export default function EquipmentCompare() {
                 href={`https://wa.me/${WA}?text=${encodeURIComponent(waMsg)}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => logEvent("compare", { equipos: compared.map((e) => e.name) })}
                 className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all"
               >
                 Cotizar estos equipos

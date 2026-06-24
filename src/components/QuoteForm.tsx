@@ -4,6 +4,7 @@ import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { isValidPhone } from "@/lib/validators";
+import { identifyVisitor, logEvent } from "@/lib/visitor";
 
 const WA = "584244013250";
 
@@ -61,10 +62,17 @@ export default function QuoteForm() {
     }
     setPhoneError("");
     setStatus("sending");
+    // Asocia el contacto al visitante (enlaza su navegación anónima con la persona)
+    const visitorId = await identifyVisitor({
+      nombre: form.nombre,
+      whatsapp: form.whatsapp,
+      empresa: form.empresa,
+    });
     // Guarda el lead (best-effort) y redirige a WhatsApp con el contexto del cliente
     try {
       await addDoc(collection(db, "leads"), {
         ...form,
+        visitorId,
         createdAt: serverTimestamp(),
         source: "landing-cotizacion",
         status: "nuevo",
@@ -72,6 +80,7 @@ export default function QuoteForm() {
     } catch {
       // Aunque falle el guardado, igual abrimos WhatsApp para no perder la solicitud
     }
+    logEvent("lead", { necesidad: form.necesidad, urgencia: form.urgencia });
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(buildWaMessage())}`, "_blank");
     setStatus("sent");
     setForm({ nombre: "", empresa: "", whatsapp: "", necesidad: "", urgencia: "" });

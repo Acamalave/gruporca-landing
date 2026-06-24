@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   type User,
 } from "firebase/auth";
-import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit, Timestamp } from "firebase/firestore";
 
 type Lead = {
   id: string;
@@ -41,6 +41,39 @@ type Search = {
   condicion?: string;
   recomendado?: string;
   createdAt?: Timestamp | null;
+};
+
+type Visitor = {
+  id: string;
+  nombre?: string;
+  whatsapp?: string;
+  empresa?: string;
+  identified?: boolean;
+  visitCount?: number;
+  referrer?: string;
+  utmSource?: string;
+  firstSeen?: Timestamp | null;
+  lastSeen?: Timestamp | null;
+};
+
+type VisitEvent = {
+  id: string;
+  visitorId?: string;
+  type?: string;
+  detail?: Record<string, unknown>;
+  createdAt?: Timestamp | null;
+};
+
+const eventLabels: Record<string, string> = {
+  lead: "Cotización enviada",
+  parts: "Solicitud de repuesto",
+  search_finder: "Usó el buscador",
+  search_chatbot: "Usó el asesor virtual",
+  equipment_click: "Consultó precio de equipo",
+  compare: "Comparó equipos",
+  calc_tco: "Usó calculadora TCO",
+  freight: "Estimó flete",
+  service_lookup: "Consultó seguimiento",
 };
 
 const necesidadLabels: Record<string, string> = {
@@ -84,9 +117,11 @@ export default function AdminPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [parts, setParts] = useState<Lead[]>([]);
   const [searches, setSearches] = useState<Search[]>([]);
+  const [visitors, setVisitors] = useState<Visitor[]>([]);
+  const [events, setEvents] = useState<VisitEvent[]>([]);
   const [loadingData, setLoadingData] = useState(false);
   const [dataError, setDataError] = useState("");
-  const [tab, setTab] = useState<"leads" | "parts" | "searches">("leads");
+  const [tab, setTab] = useState<"visitors" | "leads" | "parts" | "searches" | "events">("visitors");
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
@@ -100,14 +135,18 @@ export default function AdminPage() {
     setLoadingData(true);
     setDataError("");
     try {
-      const [leadsSnap, partsSnap, searchesSnap] = await Promise.all([
+      const [leadsSnap, partsSnap, searchesSnap, visitorsSnap, eventsSnap] = await Promise.all([
         getDocs(query(collection(db, "leads"), orderBy("createdAt", "desc"))),
         getDocs(query(collection(db, "partsQuotes"), orderBy("createdAt", "desc"))),
         getDocs(query(collection(db, "searches"), orderBy("createdAt", "desc"))),
+        getDocs(query(collection(db, "visitors"), orderBy("lastSeen", "desc"))),
+        getDocs(query(collection(db, "events"), orderBy("createdAt", "desc"), limit(200))),
       ]);
       setLeads(leadsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead)));
       setParts(partsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead)));
       setSearches(searchesSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Search)));
+      setVisitors(visitorsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as Visitor)));
+      setEvents(eventsSnap.docs.map((d) => ({ id: d.id, ...d.data() } as VisitEvent)));
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       setDataError("No se pudieron cargar los datos. " + msg);
@@ -132,14 +171,13 @@ export default function AdminPage() {
   };
 
   const stats = useMemo(() => {
-    const urgentLeads = leads.filter((l) => l.urgencia === "inmediato").length;
     return {
+      totalVisitors: visitors.length,
+      identified: visitors.filter((v) => v.identified).length,
+      returning: visitors.filter((v) => (v.visitCount || 0) > 1).length,
       totalLeads: leads.length,
-      totalParts: parts.length,
-      totalSearches: searches.length,
-      urgentLeads,
     };
-  }, [leads, parts, searches]);
+  }, [visitors, leads]);
 
   // --- Login screen ---
   if (!authReady) {
@@ -150,7 +188,7 @@ export default function AdminPage() {
     );
   }
 
-  if (!user) {
+  if (!user || user.isAnonymous) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-brand-navy px-4">
         <form onSubmit={handleLogin} className="w-full max-w-sm bg-white rounded-2xl p-8 shadow-2xl">
@@ -188,7 +226,12 @@ export default function AdminPage() {
   }
 
   // --- Dashboard ---
-  const rows: (Lead | Search)[] = tab === "leads" ? leads : tab === "parts" ? parts : searches;
+  const rows: { id: string }[] =
+    tab === "leads" ? leads
+    : tab === "parts" ? parts
+    : tab === "searches" ? searches
+    : tab === "visitors" ? visitors
+    : events;
 
   return (
     <div className="min-h-screen bg-brand-cream">
@@ -217,10 +260,10 @@ export default function AdminPage() {
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
+            { label: "Visitantes", value: stats.totalVisitors },
+            { label: "Visitantes identificados", value: stats.identified },
+            { label: "Visitantes recurrentes", value: stats.returning },
             { label: "Cotizaciones", value: stats.totalLeads },
-            { label: "Solicitudes de repuestos", value: stats.totalParts },
-            { label: "Búsquedas / interés", value: stats.totalSearches },
-            { label: "Cotizaciones urgentes", value: stats.urgentLeads },
           ].map((s, i) => (
             <div key={i} className="bg-white rounded-xl border border-gray-100 p-5">
               <p className="text-3xl font-black text-brand-navy">{s.value}</p>
@@ -230,7 +273,13 @@ export default function AdminPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-4 flex-wrap">
+          <button
+            onClick={() => setTab("visitors")}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${tab === "visitors" ? "bg-brand-navy text-brand-gold" : "bg-white border border-gray-200 text-brand-navy"}`}
+          >
+            Visitantes ({visitors.length})
+          </button>
           <button
             onClick={() => setTab("leads")}
             className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${tab === "leads" ? "bg-brand-navy text-brand-gold" : "bg-white border border-gray-200 text-brand-navy"}`}
@@ -249,6 +298,12 @@ export default function AdminPage() {
           >
             Búsquedas ({searches.length})
           </button>
+          <button
+            onClick={() => setTab("events")}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${tab === "events" ? "bg-brand-navy text-brand-gold" : "bg-white border border-gray-200 text-brand-navy"}`}
+          >
+            Actividad ({events.length})
+          </button>
         </div>
 
         {dataError && <p className="text-red-500 text-sm mb-4">{dataError}</p>}
@@ -257,6 +312,83 @@ export default function AdminPage() {
         ) : rows.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-100 p-10 text-center text-brand-muted text-sm">
             Aún no hay registros en esta sección.
+          </div>
+        ) : tab === "visitors" ? (
+          <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto">
+            <table className="w-full min-w-[760px] text-sm">
+              <thead>
+                <tr className="border-b border-gray-100 text-left text-brand-muted">
+                  <th className="p-3 font-semibold">Estado</th>
+                  <th className="p-3 font-semibold">Contacto</th>
+                  <th className="p-3 font-semibold">Visitas</th>
+                  <th className="p-3 font-semibold">Primera vez</th>
+                  <th className="p-3 font-semibold">Última vez</th>
+                  <th className="p-3 font-semibold">Origen</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visitors.map((v) => {
+                  const wa = waLink(v.whatsapp);
+                  const origen = v.utmSource || v.referrer || "Directo";
+                  return (
+                    <tr key={v.id} className="border-b border-gray-50 hover:bg-brand-cream/40">
+                      <td className="p-3">
+                        {v.identified ? (
+                          <span className="px-2 py-0.5 rounded text-xs font-semibold bg-green-100 text-green-700">Identificado</span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-brand-muted">Anónimo</span>
+                        )}
+                      </td>
+                      <td className="p-3">
+                        {v.identified ? (
+                          <div>
+                            <span className="font-semibold text-brand-navy">{v.nombre || "—"}</span>
+                            {v.empresa && <span className="block text-brand-muted text-xs">{v.empresa}</span>}
+                            {wa && <a href={wa} target="_blank" rel="noopener noreferrer" className="block text-[#25D366] text-xs font-semibold hover:underline">{v.whatsapp}</a>}
+                          </div>
+                        ) : (
+                          <span className="text-brand-muted text-xs">Sin datos aún</span>
+                        )}
+                      </td>
+                      <td className="p-3">
+                        <span className={`font-bold ${(v.visitCount || 0) > 1 ? "text-brand-gold" : "text-brand-navy"}`}>{v.visitCount || 1}</span>
+                      </td>
+                      <td className="p-3 text-brand-muted whitespace-nowrap">{fmtDate(v.firstSeen)}</td>
+                      <td className="p-3 text-brand-muted whitespace-nowrap">{fmtDate(v.lastSeen)}</td>
+                      <td className="p-3 text-brand-muted text-xs max-w-[200px] truncate" title={origen}>{origen}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : tab === "events" ? (
+          <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="border-b border-gray-100 text-left text-brand-muted">
+                  <th className="p-3 font-semibold">Fecha</th>
+                  <th className="p-3 font-semibold">Acción</th>
+                  <th className="p-3 font-semibold">Detalle</th>
+                  <th className="p-3 font-semibold">Visitante</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.map((ev) => {
+                  const det = ev.detail && typeof ev.detail === "object"
+                    ? Object.entries(ev.detail).filter(([, v]) => v !== undefined && v !== "").map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : String(v)}`).join(" · ")
+                    : "";
+                  return (
+                    <tr key={ev.id} className="border-b border-gray-50 hover:bg-brand-cream/40">
+                      <td className="p-3 text-brand-muted whitespace-nowrap">{fmtDate(ev.createdAt)}</td>
+                      <td className="p-3 font-semibold text-brand-navy">{eventLabels[ev.type || ""] || ev.type || "—"}</td>
+                      <td className="p-3 text-brand-muted">{det || "—"}</td>
+                      <td className="p-3 text-brand-muted text-xs font-mono">{(ev.visitorId || "").slice(0, 8) || "—"}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         ) : tab === "searches" ? (
           <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto">

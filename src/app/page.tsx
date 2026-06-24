@@ -20,6 +20,8 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ScrollToTop from "@/components/ScrollToTop";
 import EquipmentChatbot from "@/components/EquipmentChatbot";
+import VisitorTracker from "@/components/VisitorTracker";
+import PrivacyNotice from "@/components/PrivacyNotice";
 
 export default function Home() {
   return (
@@ -49,6 +51,8 @@ export default function Home() {
       <WhatsAppFloat />
       <ScrollToTop />
       <EquipmentChatbot />
+      <VisitorTracker />
+      <PrivacyNotice />
     </>
   );
 }

@@ -34,6 +34,23 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Perfil de visitante: cada navegador (login anonimo) gestiona SU propio
+    // documento (id = uid anonimo). El equipo (admin) puede leer todos.
+    match /visitors/{visitorId} {
+      allow create, update: if request.auth != null && request.auth.uid == visitorId;
+      allow read: if isAdmin();
+      allow delete: if false;
+    }
+
+    // Eventos de navegacion: el visitante solo crea eventos a su nombre (uid).
+    // El equipo (admin) los lee.
+    match /events/{eventId} {
+      allow create: if request.auth != null
+                    && request.resource.data.visitorId == request.auth.uid;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
     // Busquedas / interes (buscador de equipos y chatbot): el publico crea,
     // el equipo (admin) lee. No guardan datos personales.
     match /searches/{searchId} {

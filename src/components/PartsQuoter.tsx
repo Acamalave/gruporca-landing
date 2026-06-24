@@ -4,6 +4,7 @@ import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { isValidPhone } from "@/lib/validators";
+import { identifyVisitor, logEvent } from "@/lib/visitor";
 
 const UNIPARTS = "https://upandina.com/";
 
@@ -40,16 +41,19 @@ export default function PartsQuoter() {
     }
     setPhoneError("");
     setStatus("sending");
+    const visitorId = await identifyVisitor({ nombre: form.nombre, whatsapp: form.whatsapp });
     // Guarda el lead (best-effort) y redirige a la tienda de repuestos Uniparts
     try {
       await addDoc(collection(db, "partsQuotes"), {
         ...form,
+        visitorId,
         createdAt: serverTimestamp(),
         status: "pendiente",
       });
     } catch {
       // Aunque falle el guardado, igual redirigimos para no perder la solicitud
     }
+    logEvent("parts", { brand: form.brand, category: form.category });
     window.open(UNIPARTS, "_blank");
     setStatus("sent");
   };

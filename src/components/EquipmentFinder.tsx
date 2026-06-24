@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { currentVisitorId, logEvent } from "@/lib/visitor";
 
 const WA = "584244013250";
 
@@ -103,8 +104,10 @@ export default function EquipmentFinder() {
         equipo: next[0] || "",
         opcion: next[1] || "",
         capacidad: next[2] || "",
+        visitorId: currentVisitorId(),
         createdAt: serverTimestamp(),
       }).catch(() => {});
+      logEvent("search_finder", { equipo: next[0], opcion: next[1], capacidad: next[2] });
     }
   };
 

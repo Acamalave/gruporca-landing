@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import { useInView } from "@/hooks/useInView";
+import { logEvent } from "@/lib/visitor";
 
 const WA = "584244013250";
 
@@ -159,6 +160,7 @@ export default function TCOCalculator() {
               href={`https://wa.me/${WA}?text=${encodeURIComponent(waMsg)}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => logEvent("calc_tco", { tipo: fuelData[fuel].label, precio: purchasePrice, anos: years, total: tco.total })}
               className="mt-6 w-full bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold py-4 rounded-xl text-sm transition-all flex items-center justify-center gap-2"
             >
               Validar con un asesor

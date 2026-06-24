@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { currentVisitorId } from "@/lib/visitor";
 
 const WA = "584244013250";
 
@@ -169,6 +170,7 @@ export default function EquipmentChatbot() {
           presupuesto: newAnswers.budget,
           condicion: value,
           recomendado: `${rec.name} (${rec.type})`,
+          visitorId: currentVisitorId(),
           createdAt: serverTimestamp(),
         }).catch(() => {});
 

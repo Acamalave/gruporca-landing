@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
+import { logEvent } from "@/lib/visitor";
 
 const WA = "584244013250";
 
@@ -80,6 +81,7 @@ export default function EquipmentGrid() {
                   href={`https://wa.me/${WA}?text=${encodeURIComponent(`Hola, me interesa el ${item.name} (${item.brand}, ${item.capacity}, ${item.condition}). ¿Me pueden enviar precio y condiciones?`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => logEvent("equipment_click", { equipo: item.name, marca: item.brand, condicion: item.condition })}
                   className="mt-4 w-full bg-brand-navy hover:bg-brand-gold hover:text-brand-navy text-white font-semibold py-2.5 rounded-lg text-sm transition-all flex items-center justify-center gap-2"
                 >
                   Consultar precio

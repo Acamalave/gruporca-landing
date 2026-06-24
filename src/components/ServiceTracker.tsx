@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { logEvent } from "@/lib/visitor";
 
 const WA = "584244013250";
 
@@ -74,6 +75,7 @@ export default function ServiceTracker() {
     setSearching(true);
     setNotFound(false);
     setOrder(null);
+    logEvent("service_lookup", { orden: orderNumber.trim().toUpperCase() });
 
     try {
       // Try Firebase first
