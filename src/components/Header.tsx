@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const WA = "584244013250";
+const UNIPARTS = "https://upandina.com/";
 
 const navLinks = [
   { label: "Inicio", href: "#hero" },
   { label: "Equipos", href: "#equipos" },
   { label: "Servicios", href: "#servicios" },
-  { label: "Herramientas", href: "#calculadora" },
-  { label: "Repuestos", href: "#repuestos" },
+  { label: "Herramientas", href: "#tco" },
+  { label: "Repuestos", href: UNIPARTS },
   { label: "Blog", href: "#blog" },
   { label: "Contacto", href: "#contacto" },
 ];
@@ -71,6 +72,8 @@ export default function Header() {
               <a
                 key={l.href}
                 href={l.href}
+                target={l.href.startsWith("http") ? "_blank" : undefined}
+                rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="rca-link text-brand-navy/70 hover:text-brand-navy px-3 py-2 text-sm font-medium transition-colors"
               >
                 {l.label}
@@ -121,6 +124,8 @@ export default function Header() {
                   <a
                     key={l.href}
                     href={l.href}
+                    target={l.href.startsWith("http") ? "_blank" : undefined}
+                    rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     onClick={() => setMenuOpen(false)}
                     className="block text-brand-navy hover:text-brand-gold py-3 text-base font-medium border-b border-gray-100 transition-colors"
                   >

@@ -1,7 +1,7 @@
 "use client";
 import { useInView } from "@/hooks/useInView";
 
-const WA = "584244013250";
+const UNIPARTS = "https://upandina.com/";
 
 const categories = [
   { name: "Cauchos y Llantas", desc: "Sólidos, neumáticos y de poliuretano", msg: "Hola, necesito cotizar cauchos para montacargas" },
@@ -28,7 +28,7 @@ export default function Repuestos() {
           {categories.map((cat, i) => (
             <a
               key={i}
-              href={`https://wa.me/${WA}?text=${encodeURIComponent(cat.msg)}`}
+              href={UNIPARTS}
               target="_blank"
               rel="noopener noreferrer"
               className="group rca-card flex items-start gap-4 bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-all"
@@ -57,8 +57,8 @@ export default function Repuestos() {
             <h3 className="font-bold text-white text-lg">Garantía en todos nuestros repuestos</h3>
             <p className="text-white/60 text-sm mt-1">Trabajamos con repuestos originales y alternativos certificados. Soporte técnico para instalación y mantenimiento en toda Venezuela.</p>
           </div>
-          <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Hola, necesito cotizar repuestos para mi montacargas")}`} target="_blank" rel="noopener noreferrer" className="shrink-0 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
-            Cotizar repuestos
+          <a href={UNIPARTS} target="_blank" rel="noopener noreferrer" className="shrink-0 bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-bold px-6 py-3 rounded-xl text-sm transition-all">
+            Ir a la tienda de repuestos
           </a>
         </div>
       </div>

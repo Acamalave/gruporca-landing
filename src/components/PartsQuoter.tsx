@@ -4,7 +4,7 @@ import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-const WA = "584244013250";
+const UNIPARTS = "https://upandina.com/";
 
 const brands = ["Megalift", "Mitsubishi", "Doosan", "Bobcat", "Narrow Aisle", "Clark", "Hyster", "Yale", "Toyota", "Otra marca"];
 const partCategories = ["Cauchos y Llantas", "Baterías y Cargadores", "Sistema Hidráulico", "Motor y Transmisión", "Sistema Eléctrico", "Cadenas y Rodillos", "Frenos", "Filtros", "No estoy seguro"];
@@ -31,9 +31,7 @@ export default function PartsQuoter() {
 
   const handleSubmit = async () => {
     setStatus("sending");
-    // Mensaje con todo el contexto del repuesto para que el vendedor atienda de inmediato
-    const msg = `¡Hola! Quiero cotizar un repuesto:\n\n- Marca: ${form.brand}\n- Modelo: ${form.model || "N/A"}\n- Serial: ${form.serial || "N/A"}\n- Categoría: ${form.category}\n- Descripción: ${form.description}\n- N° Parte: ${form.partNumber || "N/A"}\n- Urgencia: ${form.urgencia}\n- Contacto: ${form.nombre}, ${form.whatsapp}`;
-    // Guarda el lead (best-effort) y redirige a WhatsApp con el contexto
+    // Guarda el lead (best-effort) y redirige a la tienda de repuestos Uniparts
     try {
       await addDoc(collection(db, "partsQuotes"), {
         ...form,
@@ -41,9 +39,9 @@ export default function PartsQuoter() {
         status: "pendiente",
       });
     } catch {
-      // Aunque falle el guardado, igual abrimos WhatsApp para no perder la solicitud
+      // Aunque falle el guardado, igual redirigimos para no perder la solicitud
     }
-    window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(UNIPARTS, "_blank");
     setStatus("sent");
   };
 
@@ -89,9 +87,9 @@ export default function PartsQuoter() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
               </div>
-              <h3 className="text-xl font-bold text-green-700 mb-2">Solicitud enviada</h3>
-              <p className="text-green-600 text-sm">Te enviaremos la cotización por WhatsApp en menos de 2 horas.</p>
-              <button onClick={() => { setStatus("idle"); setStep(0); setForm({ brand: "", model: "", serial: "", category: "", description: "", partNumber: "", nombre: "", whatsapp: "", urgencia: "normal" }); }} className="mt-4 text-green-700 underline text-sm">Cotizar otro repuesto</button>
+              <h3 className="text-xl font-bold text-green-700 mb-2">Te llevamos a Uniparts</h3>
+              <p className="text-green-600 text-sm">Abrimos la tienda de repuestos Uniparts en una pestaña nueva. Si no se abrió, <a href={UNIPARTS} target="_blank" rel="noopener noreferrer" className="underline font-semibold">haz clic aquí</a>.</p>
+              <button onClick={() => { setStatus("idle"); setStep(0); setForm({ brand: "", model: "", serial: "", category: "", description: "", partNumber: "", nombre: "", whatsapp: "", urgencia: "normal" }); }} className="mt-4 text-green-700 underline text-sm">Hacer otra búsqueda</button>
             </div>
           ) : (
             <div className="rca-card bg-white rounded-2xl border border-gray-100 p-6 sm:p-8 shadow-sm">
@@ -188,7 +186,7 @@ export default function PartsQuoter() {
                     >
                       {status === "sending" ? (
                         <><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Enviando...</>
-                      ) : "Enviar solicitud de cotización"}
+                      ) : "Buscar en Uniparts"}
                     </button>
                   </div>
                 </div>

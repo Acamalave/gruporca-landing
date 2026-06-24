@@ -33,9 +33,21 @@ export default function Footer() {
               Servicios
             </h4>
             <ul className="space-y-2 text-white/40 text-sm">
-              {["Venta de Equipos", "Alquiler", "Servicio Técnico", "Repuestos", "Capacitación", "Consultoría"].map((l) => (
-                <li key={l}><a href="#servicios" className="hover:text-brand-gold transition-colors">{l}</a></li>
-              ))}
+              {["Venta de Equipos", "Alquiler", "Servicio Técnico", "Repuestos", "Capacitación", "Consultoría"].map((l) => {
+                const isParts = l === "Repuestos";
+                return (
+                  <li key={l}>
+                    <a
+                      href={isParts ? "https://upandina.com/" : "#servicios"}
+                      target={isParts ? "_blank" : undefined}
+                      rel={isParts ? "noopener noreferrer" : undefined}
+                      className="hover:text-brand-gold transition-colors"
+                    >
+                      {l}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <div>

@@ -5,7 +5,7 @@ import EquipmentFinder from "@/components/EquipmentFinder";
 import EquipmentGrid from "@/components/EquipmentGrid";
 import EquipmentCompare from "@/components/EquipmentCompare";
 import CompareOptions from "@/components/CompareOptions";
-import CostCalculator from "@/components/CostCalculator";
+// import CostCalculator from "@/components/CostCalculator"; // oculto temporalmente
 import TCOCalculator from "@/components/TCOCalculator";
 import Repuestos from "@/components/Repuestos";
 import PartsQuoter from "@/components/PartsQuoter";
@@ -32,7 +32,8 @@ export default function Home() {
         <EquipmentGrid />
         <EquipmentCompare />
         <CompareOptions />
-        <CostCalculator />
+        {/* Oculto temporalmente: calculadora Compra vs Alquiler vs Leasing */}
+        {/* <CostCalculator /> */}
         <TCOCalculator />
         <Repuestos />
         <PartsQuoter />
