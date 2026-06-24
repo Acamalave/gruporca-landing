@@ -68,9 +68,9 @@ export default function Hero() {
             </div>
 
             {/* Brand marquee */}
-            <div className="mt-12 overflow-hidden">
+            <div className="mt-12">
               <p className="text-brand-muted/50 text-xs uppercase tracking-widest mb-3">Marcas que distribuimos</p>
-              <div className="flex items-center gap-10 text-brand-navy/30 font-black text-lg uppercase tracking-wider">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-brand-navy/30 font-black text-base sm:text-lg uppercase tracking-wider">
                 {["Megalift", "Mitsubishi", "Doosan", "Bobcat", "Clark"].map((b) => (
                   <span key={b} className="whitespace-nowrap">{b}</span>
                 ))}
