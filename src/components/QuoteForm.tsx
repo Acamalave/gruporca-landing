@@ -100,9 +100,9 @@ export default function QuoteForm() {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 </div>
-                <h3 className="text-xl font-bold text-green-700 mb-2">Cotización enviada</h3>
+                <h3 className="text-xl font-bold text-green-700 mb-2">Solicitud enviada</h3>
                 <p className="text-green-600 text-sm">Te abrimos WhatsApp con tu solicitud para que un asesor te atienda de inmediato. Si no se abrió, escríbenos al +58 424-4013250.</p>
-                <button onClick={() => setStatus("idle")} className="mt-4 text-green-700 underline text-sm">Enviar otra cotización</button>
+                <button onClick={() => setStatus("idle")} className="mt-4 text-green-700 underline text-sm">Enviar otra solicitud</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
