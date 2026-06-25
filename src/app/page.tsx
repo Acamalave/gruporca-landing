@@ -8,7 +8,7 @@ import CompareOptions from "@/components/CompareOptions";
 // import CostCalculator from "@/components/CostCalculator"; // oculto temporalmente
 import TCOCalculator from "@/components/TCOCalculator";
 import Repuestos from "@/components/Repuestos";
-import PartsQuoter from "@/components/PartsQuoter";
+// import PartsQuoter from "@/components/PartsQuoter"; // oculto temporalmente
 import ServiceTimeline from "@/components/ServiceTimeline";
 // import ServiceTracker from "@/components/ServiceTracker"; // oculto temporalmente
 import FreightEstimator from "@/components/FreightEstimator";
@@ -39,7 +39,8 @@ export default function Home() {
         {/* <CostCalculator /> */}
         <TCOCalculator />
         <Repuestos />
-        <PartsQuoter />
+        {/* Oculto temporalmente: cotizador rápido de repuestos */}
+        {/* <PartsQuoter /> */}
         <ServiceTimeline />
         {/* Oculto temporalmente: seguimiento de servicio */}
         {/* <ServiceTracker /> */}
