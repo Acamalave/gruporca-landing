@@ -176,7 +176,7 @@ const articles: Article[] = [
     title: "Equipos de limpieza industrial Eureka",
     excerpt: "Sumamos a nuestro portafolio las barredoras y fregadoras Eureka (Italia), incluyendo la barredora manual Picobello.",
     readTime: "1 min",
-    image: "/img/company/operaciones-1.jpg",
+    image: "/img/equipment/limpieza-eureka.jpg",
     source: LINKEDIN,
     content: [
       { subtitle: "Nueva alianza", text: "Incorporamos equipos de limpieza industrial de la marca italiana Eureka: barredoras y fregadoras para mantener tus instalaciones impecables." },
