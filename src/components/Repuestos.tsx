@@ -4,8 +4,7 @@ import { useInView } from "@/hooks/useInView";
 const UNIPARTS = "https://upandina.com/";
 
 const categories = [
-  { name: "Cauchos y Llantas", desc: "Sólidos, neumáticos y de poliuretano", msg: "Hola, necesito cotizar cauchos para montacargas" },
-  { name: "Baterías y Cargadores", desc: "Litio, ácido-plomo y cargadores industriales", msg: "Hola, necesito cotizar baterías para montacargas" },
+  { name: "Cauchos y Ruedas", desc: "Sólidos, neumáticos y de poliuretano", msg: "Hola, necesito cotizar cauchos para montacargas" },
   { name: "Sistema Hidráulico", desc: "Bombas, cilindros, mangueras y sellos", msg: "Hola, necesito repuestos del sistema hidráulico" },
   { name: "Motor y Transmisión", desc: "Repuestos originales y alternativos", msg: "Hola, necesito repuestos de motor y transmisión" },
   { name: "Sistema Eléctrico", desc: "Contactores, cables, controladores", msg: "Hola, necesito repuestos del sistema eléctrico" },
