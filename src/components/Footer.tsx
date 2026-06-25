@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <Image src="/logo-gruporca-full.png" alt="Grupo RCA" width={160} height={60} className="h-10 w-auto mb-4" />
-            <p className="text-white/35 text-sm leading-relaxed">Soluciones logísticas integrales desde 1991. Venta, alquiler y servicio técnico de montacargas en América Latina.</p>
+            <p className="text-white/35 text-sm leading-relaxed">Soluciones logísticas integrales desde 1990. Venta, alquiler y servicio técnico de montacargas en América Latina.</p>
             <p className="text-white/15 text-xs mt-3">RIF: J-29825618-5</p>
           </div>
           <div>
