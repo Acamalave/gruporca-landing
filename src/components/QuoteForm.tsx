@@ -8,44 +8,60 @@ import { identifyVisitor, logEvent } from "@/lib/visitor";
 
 const WA = "584244013250";
 
-const necesidadLabels: Record<string, string> = {
-  "montacargas-nuevo": "Montacargas nuevo",
-  "montacargas-usado": "Montacargas usado",
-  apilador: "Apilador eléctrico",
-  transpaleta: "Transpaleta",
-  alquiler: "Alquiler de equipo",
-  repuestos: "Repuestos",
-  "servicio-tecnico": "Servicio técnico",
-  otro: "Otro",
+const needsOptions = [
+  { value: "montacargas-nuevo", label: "Montacargas nuevo" },
+  { value: "montacargas-usado", label: "Montacargas usado" },
+  { value: "apilador", label: "Apilador eléctrico" },
+  { value: "transpaleta", label: "Transpaleta" },
+  { value: "alquiler", label: "Alquiler de equipo" },
+  { value: "repuestos", label: "Repuestos" },
+  { value: "servicio-tecnico", label: "Servicio técnico" },
+  { value: "otro", label: "Otro" },
+];
+
+type FormState = {
+  nombre: string;
+  empresa: string;
+  whatsapp: string;
+  necesidades: string[];
+  comentarios: string;
 };
 
-const urgenciaLabels: Record<string, string> = {
-  inmediato: "Inmediato",
-  "1-2-semanas": "1 a 2 semanas",
-  "1-3-meses": "1 a 3 meses",
-  planificando: "Estoy planificando",
-};
+const emptyForm: FormState = { nombre: "", empresa: "", whatsapp: "", necesidades: [], comentarios: "" };
 
 export default function QuoteForm() {
-  const [form, setForm] = useState({ nombre: "", empresa: "", whatsapp: "", necesidad: "", urgencia: "" });
+  const [form, setForm] = useState<FormState>(emptyForm);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [phoneError, setPhoneError] = useState("");
+  const [needError, setNeedError] = useState("");
   const { ref, visible } = useInView();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.name === "whatsapp" && phoneError) setPhoneError("");
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const toggleNeed = (value: string) => {
+    if (needError) setNeedError("");
+    setForm((f) => ({
+      ...f,
+      necesidades: f.necesidades.includes(value)
+        ? f.necesidades.filter((v) => v !== value)
+        : [...f.necesidades, value],
+    }));
+  };
+
+  const needLabels = () =>
+    form.necesidades.map((v) => needsOptions.find((o) => o.value === v)?.label || v).join(", ");
+
   const buildWaMessage = () => {
-    const necesidad = necesidadLabels[form.necesidad] || form.necesidad || "Por definir";
     const lines = [
       "¡Hola! Quiero solicitar una cotización:",
       "",
       `• Nombre: ${form.nombre}`,
       form.empresa ? `• Empresa: ${form.empresa}` : "",
-      `• Necesidad: ${necesidad}`,
-      form.urgencia ? `• Urgencia: ${urgenciaLabels[form.urgencia] || form.urgencia}` : "",
+      `• Interés: ${needLabels() || "Por definir"}`,
+      form.comentarios ? `• Comentarios: ${form.comentarios}` : "",
       form.whatsapp ? `• Mi WhatsApp: ${form.whatsapp}` : "",
       "",
       "Quedo atento a la información. ¡Gracias!",
@@ -55,7 +71,10 @@ export default function QuoteForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Comprobación de número real antes de continuar
+    if (form.necesidades.length === 0) {
+      setNeedError("Selecciona al menos una opción de interés.");
+      return;
+    }
     if (!isValidPhone(form.whatsapp)) {
       setPhoneError("Ingresa un número de WhatsApp válido (ej. 0424-1234567).");
       return;
@@ -80,10 +99,10 @@ export default function QuoteForm() {
     } catch {
       // Aunque falle el guardado, igual abrimos WhatsApp para no perder la solicitud
     }
-    logEvent("lead", { necesidad: form.necesidad, urgencia: form.urgencia });
+    logEvent("lead", { necesidades: form.necesidades });
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(buildWaMessage())}`, "_blank");
     setStatus("sent");
-    setForm({ nombre: "", empresa: "", whatsapp: "", necesidad: "", urgencia: "" });
+    setForm(emptyForm);
   };
 
   return (
@@ -122,33 +141,33 @@ export default function QuoteForm() {
                   {phoneError && <p className="text-red-500 text-xs mt-1">{phoneError}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-brand-navy mb-1">¿Qué necesitas? *</label>
-                  <select name="necesidad" required value={form.necesidad} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all bg-white">
-                    <option value="">Selecciona una opción</option>
-                    <option value="montacargas-nuevo">Montacargas nuevo</option>
-                    <option value="montacargas-usado">Montacargas usado</option>
-                    <option value="apilador">Apilador eléctrico</option>
-                    <option value="transpaleta">Transpaleta</option>
-                    <option value="alquiler">Alquiler de equipo</option>
-                    <option value="repuestos">Repuestos</option>
-                    <option value="servicio-tecnico">Servicio técnico</option>
-                    <option value="otro">Otro</option>
-                  </select>
+                  <label className="block text-sm font-medium text-brand-navy mb-1">¿Qué te interesa? * <span className="font-normal text-brand-muted">(puedes elegir varios)</span></label>
+                  <div className="flex flex-wrap gap-2">
+                    {needsOptions.map((o) => {
+                      const active = form.necesidades.includes(o.value);
+                      return (
+                        <button
+                          type="button"
+                          key={o.value}
+                          onClick={() => toggleNeed(o.value)}
+                          aria-pressed={active}
+                          className={`px-3.5 py-2 rounded-lg text-sm font-medium border transition-all ${active ? "bg-brand-navy text-brand-gold border-brand-navy" : "bg-white text-brand-navy border-gray-200 hover:border-brand-gold/50"}`}
+                        >
+                          {o.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {needError && <p className="text-red-500 text-xs mt-1">{needError}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-brand-navy mb-1">Urgencia</label>
-                  <select name="urgencia" value={form.urgencia} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all bg-white">
-                    <option value="">Selecciona</option>
-                    <option value="inmediato">Inmediato</option>
-                    <option value="1-2-semanas">1 a 2 semanas</option>
-                    <option value="1-3-meses">1 a 3 meses</option>
-                    <option value="planificando">Estoy planificando</option>
-                  </select>
+                  <label className="block text-sm font-medium text-brand-navy mb-1">Comentarios o nota <span className="font-normal text-brand-muted">(opcional)</span></label>
+                  <textarea name="comentarios" value={form.comentarios} onChange={handleChange} rows={3} placeholder="Cuéntanos más sobre lo que necesitas: cantidad, capacidad, marca, plazo, etc." className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all resize-none" />
                 </div>
                 <button type="submit" disabled={status === "sending"} className="w-full bg-brand-gold hover:bg-brand-gold-light disabled:bg-gray-300 text-brand-navy font-bold py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2">
                   {status === "sending" ? (
                     <><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Enviando...</>
-                  ) : "Enviar cotización"}
+                  ) : "Enviar solicitud"}
                 </button>
                 {status === "error" && <p className="text-red-500 text-sm text-center">Error al enviar. Intenta de nuevo o contáctanos por WhatsApp.</p>}
               </form>

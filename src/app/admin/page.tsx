@@ -18,6 +18,8 @@ type Lead = {
   empresa?: string;
   whatsapp?: string;
   necesidad?: string;
+  necesidades?: string[];
+  comentarios?: string;
   urgencia?: string;
   source?: string;
   status?: string;
@@ -549,7 +551,12 @@ export default function AdminPage() {
                       {tab === "leads" ? (
                         <>
                           <td className="p-3 text-brand-muted">{r.empresa || "—"}</td>
-                          <td className="p-3 text-brand-navy">{necesidadLabels[r.necesidad || ""] || r.necesidad || "—"}</td>
+                          <td className="p-3 text-brand-navy">
+                            {r.necesidades && r.necesidades.length
+                              ? r.necesidades.map((v) => necesidadLabels[v] || v).join(", ")
+                              : necesidadLabels[r.necesidad || ""] || r.necesidad || "—"}
+                            {r.comentarios && <span className="block text-brand-muted text-xs mt-0.5">“{r.comentarios}”</span>}
+                          </td>
                         </>
                       ) : (
                         <>
