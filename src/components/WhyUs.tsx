@@ -72,16 +72,6 @@ export default function WhyUs() {
             </div>
           </div>
         </div>
-
-        {/* Brands marquee — horizontal scroll */}
-        <div className="mt-16 overflow-hidden">
-          <p className="text-white/20 text-xs font-medium uppercase tracking-widest mb-4">Marcas que distribuimos</p>
-          <div className="flex gap-4 animate-marquee whitespace-nowrap">
-            {["Megalift", "Andino", "Mitsubishi", "Doosan", "Bobcat", "Flexi", "Megalift", "Andino", "Mitsubishi", "Doosan", "Bobcat", "Flexi"].map((b, i) => (
-              <span key={i} className="text-sm font-bold uppercase tracking-wider px-5 py-2.5 bg-white/[0.04] rounded-lg border border-white/[0.06] text-white/30 hover:text-brand-gold hover:border-brand-gold/30 transition-colors shrink-0">{b}</span>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
