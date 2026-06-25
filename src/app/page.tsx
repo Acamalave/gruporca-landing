@@ -11,7 +11,7 @@ import Repuestos from "@/components/Repuestos";
 // import PartsQuoter from "@/components/PartsQuoter"; // oculto temporalmente
 import ServiceTimeline from "@/components/ServiceTimeline";
 // import ServiceTracker from "@/components/ServiceTracker"; // oculto temporalmente
-import FreightEstimator from "@/components/FreightEstimator";
+// import FreightEstimator from "@/components/FreightEstimator"; // oculto temporalmente
 import WhyUs from "@/components/WhyUs";
 import Testimonials from "@/components/Testimonials";
 import KnowledgeCenter from "@/components/KnowledgeCenter";
@@ -44,7 +44,8 @@ export default function Home() {
         <ServiceTimeline />
         {/* Oculto temporalmente: seguimiento de servicio */}
         {/* <ServiceTracker /> */}
-        <FreightEstimator />
+        {/* Oculto temporalmente: estimador de flete */}
+        {/* <FreightEstimator /> */}
         <WhyUs />
         <Testimonials />
         <KnowledgeCenter />
