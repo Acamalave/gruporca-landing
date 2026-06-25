@@ -17,13 +17,6 @@ const testimonials = [
     company: "Sector Farmacéutico",
     initials: "MR",
   },
-  {
-    quote: "El servicio técnico es impecable. Tienen repuestos para todo y sus técnicos conocen cada modelo a fondo.",
-    name: "José Hernández",
-    role: "Jefe de Mantenimiento",
-    company: "Sector Manufactura",
-    initials: "JH",
-  },
 ];
 
 export default function Testimonials() {
@@ -38,52 +31,44 @@ export default function Testimonials() {
   return (
     <section className="py-20 bg-white">
       <div ref={ref} className={`max-w-7xl mx-auto px-4 sm:px-6 transition-all duration-700 ${visible ? "opacity-100" : "opacity-0"}`}>
-        <div className="grid lg:grid-cols-5 gap-12 items-center">
-          {/* Left label */}
-          <div className="lg:col-span-2">
-            <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-4">
-              Testimonios
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-brand-navy leading-tight">
-              Lo que dicen nuestros clientes
-            </h2>
-            <p className="text-brand-muted mt-3">Más de 200 empresas confían en nosotros para mantener sus operaciones funcionando.</p>
+        {/* Header */}
+        <div className="mb-12">
+          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-4">
+            Testimonios
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-black text-brand-navy leading-tight">
+            Lo que dicen nuestros clientes
+          </h2>
+          <p className="text-brand-muted mt-3 max-w-xl">Más de 200 empresas confían en nosotros para mantener sus operaciones funcionando.</p>
+        </div>
 
-            {/* Navigation dots — vertical for RCA */}
-            <div className="flex lg:flex-col gap-3 mt-8">
-              {testimonials.map((t, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`flex items-center gap-3 text-left transition-all ${i === current ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
-                >
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-all ${
-                    i === current ? "bg-brand-gold text-brand-navy" : "bg-gray-100 text-brand-navy"
-                  }`}>
-                    {t.initials}
-                  </div>
-                  <div className="hidden lg:block">
-                    <p className="text-sm font-semibold text-brand-navy">{t.name}</p>
-                    <p className="text-xs text-brand-muted">{t.company}</p>
-                  </div>
-                </button>
-              ))}
-            </div>
+        {/* Video + testimonios lado a lado */}
+        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+          {/* Video */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl shadow-brand-navy/10 border border-gray-100 bg-black">
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/sa2iWJIXq7E"
+              title="Testimonio de cliente - Grupo RCA"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
           </div>
 
-          {/* Right — testimonial card */}
-          <div className="lg:col-span-3">
-            <div className="relative bg-brand-cream rounded-2xl p-8 sm:p-10 border border-gray-100 min-h-[260px]">
+          {/* Testimonio de texto */}
+          <div className="flex flex-col">
+            <div className="relative bg-brand-cream rounded-2xl p-8 sm:p-10 border border-gray-100 flex-1 flex flex-col justify-center min-h-[260px]">
               {/* Gold accent top border */}
               <div className="absolute top-0 left-8 right-8 h-1 bg-brand-gold rounded-b-full" />
 
               {/* Large quote mark */}
-              <svg className="w-16 h-16 text-brand-gold/10 mb-4" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-14 h-14 text-brand-gold/10 mb-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10H0z" />
               </svg>
 
               {testimonials.map((t, i) => (
-                <div key={i} className={`transition-all duration-500 ${i === current ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"}`}>
+                <div key={i} className={`transition-all duration-500 ${i === current ? "opacity-100" : "opacity-0 absolute inset-0 p-8 sm:p-10 flex flex-col justify-center pointer-events-none"}`}>
                   {i === current && (
                     <>
                       <p className="text-brand-navy text-lg sm:text-xl leading-relaxed font-medium mb-8">&ldquo;{t.quote}&rdquo;</p>
@@ -101,24 +86,18 @@ export default function Testimonials() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
 
-        {/* Video testimonial */}
-        <div className="mt-16">
-          <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-4">
-            Testimonios en video
-          </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-brand-navy mb-6">Lo que dicen de nosotros</h3>
-          <div className="relative w-full max-w-3xl aspect-video rounded-2xl overflow-hidden shadow-xl shadow-brand-navy/10 border border-gray-100 bg-black">
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/sa2iWJIXq7E"
-              title="Testimonio de cliente - Grupo RCA"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
+            {/* Selector */}
+            <div className="flex gap-2 mt-6">
+              {testimonials.map((t, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  aria-label={`Testimonio de ${t.name}`}
+                  className={`h-2.5 rounded-full transition-all ${i === current ? "w-8 bg-brand-gold" : "w-2.5 bg-gray-300 hover:bg-gray-400"}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
