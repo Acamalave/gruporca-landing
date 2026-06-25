@@ -109,7 +109,7 @@ const articles: Article[] = [
     title: "MEGALIFT Plus: el montacargas eléctrico de alto voltaje",
     excerpt: "Nuestro nuevo montacargas eléctrico con batería de litio de alto voltaje: carga completa en aproximadamente 1 hora y hasta 90% de ahorro frente a equipos de combustión.",
     readTime: "2 min",
-    image: "/img/equipment/ec20-litio-4w.png",
+    image: "/img/equipment/megalift-plus-2026.png",
     source: LINKEDIN,
     content: [
       { subtitle: "Potencia eléctrica de nueva generación", text: "El MEGALIFT Plus incorpora una batería de litio de alto voltaje que ofrece el rendimiento de un equipo de combustión sin emisiones, ideal para operaciones exigentes en interiores y exteriores." },
@@ -163,7 +163,7 @@ const articles: Article[] = [
     title: "Cuida la batería de litio de tu Megalift",
     excerpt: "Recomendación clave: nunca descargues tu montacargas eléctrico Megalift por debajo del 25% para proteger el sistema BMS y mantener la garantía.",
     readTime: "1 min",
-    image: "/img/company/servicio.jpg",
+    image: "/img/equipment/bateria-litio-megalift.jpg",
     source: LINKEDIN,
     content: [
       { subtitle: "No bajes del 25%", text: "Para proteger el sistema de gestión de batería (BMS) y mantener la cobertura de garantía, nunca descargues la batería de litio de tu Megalift por debajo del 25% de su capacidad." },
