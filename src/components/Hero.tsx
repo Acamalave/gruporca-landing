@@ -22,7 +22,7 @@ export default function Hero() {
           <div className="animate-slide-in-left">
             {/* Tag with horizontal line */}
             <div className="rca-tag text-brand-gold font-bold text-sm uppercase tracking-widest mb-6">
-              Desde 1991
+              Desde 1990
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-brand-navy leading-[1.08] mb-6 tracking-tight">
