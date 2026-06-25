@@ -14,7 +14,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.cta": "Cotizar Ahora",
 
     // Hero
-    "hero.badge": "34+ años de experiencia",
+    "hero.badge": "36+ años de experiencia",
     "hero.headline": "Montacargas nuevos y usados para toda LATAM",
     "hero.sub": "Venta, alquiler y servicio técnico de montacargas. Distribuidor autorizado de Megalift, Mitsubishi, Doosan y más marcas líderes.",
     "hero.cta1": "Explorar equipos",
@@ -87,7 +87,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.contacto": "Contact",
     "nav.cta": "Get Quote",
 
-    "hero.badge": "34+ years of experience",
+    "hero.badge": "36+ years of experience",
     "hero.headline": "New & used forklifts for all of LATAM",
     "hero.sub": "Sales, rental and technical service of forklifts. Authorized distributor of Megalift, Mitsubishi, Doosan and more leading brands.",
     "hero.cta1": "Explore equipment",
@@ -149,7 +149,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "nav.contacto": "Contato",
     "nav.cta": "Pedir Orçamento",
 
-    "hero.badge": "34+ anos de experiência",
+    "hero.badge": "36+ anos de experiência",
     "hero.headline": "Empilhadeiras novas e usadas para toda LATAM",
     "hero.sub": "Venda, aluguel e assistência técnica de empilhadeiras. Distribuidor autorizado de Megalift, Mitsubishi, Doosan e mais marcas líderes.",
     "hero.cta1": "Explorar equipamentos",

@@ -4,7 +4,7 @@ import { useCountUp } from "@/hooks/useCountUp";
 const WA = "584244013250";
 
 export default function Hero() {
-  const yearsCount = useCountUp(34, 2000, true);
+  const yearsCount = useCountUp(36, 2000, true);
   const countriesCount = useCountUp(6, 2000, true);
 
   return (

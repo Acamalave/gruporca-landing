@@ -4,12 +4,12 @@ import { useCountUp } from "@/hooks/useCountUp";
 
 export default function WhyUs() {
   const { ref, visible } = useInView();
-  const years = useCountUp(34, 2000, visible);
+  const years = useCountUp(36, 2000, visible);
   const countries = useCountUp(6, 2000, visible);
   const clients = useCountUp(200, 2000, visible);
 
   const reasons = [
-    { title: "34+ años de experiencia", desc: "Desde 1991 dedicados exclusivamente a soluciones logísticas y manejo de materiales en América Latina." },
+    { title: "36+ años de experiencia", desc: "Desde 1991 dedicados exclusivamente a soluciones logísticas y manejo de materiales en América Latina." },
     { title: "Presencia multinacional", desc: "Operaciones en Venezuela, Colombia, Panamá, Costa Rica, Honduras y Estados Unidos." },
     { title: "Pioneros en eléctrico", desc: "Liderando la transición a montacargas eléctricos de litio en LATAM con tecnología Megalift." },
     { title: "Servicio integral", desc: "Venta, alquiler, servicio técnico, repuestos y capacitación. Todo bajo un mismo grupo." },

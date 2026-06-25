@@ -52,7 +52,7 @@ export default function ProblemStatement() {
               <br />Nosotros lo garantizamos.
             </h2>
             <p className="text-brand-muted text-lg mt-6 leading-relaxed max-w-xl">
-              Con 34 años de experiencia, Grupo RCA asegura la continuidad de tu flota con equipos confiables, repuestos en stock permanente y servicio técnico que responde en menos de 2 horas.
+              Con 36 años de experiencia, Grupo RCA asegura la continuidad de tu flota con equipos confiables, repuestos en stock permanente y servicio técnico que responde en menos de 2 horas.
             </p>
 
             {/* Solution cards — horizontal layout */}

@@ -15,13 +15,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Grupo RCA | Soluciones Logísticas - Montacargas en Venezuela y LATAM",
   description:
-    "34+ años liderando soluciones logísticas. Venta, alquiler y servicio técnico de montacargas nuevos y usados. Megalift, Mitsubishi, Doosan. Presentes en el futuro.",
+    "36+ años liderando soluciones logísticas. Venta, alquiler y servicio técnico de montacargas nuevos y usados. Megalift, Mitsubishi, Doosan. Presentes en el futuro.",
   keywords:
     "montacargas, montacargas usados, montacargas nuevos, Megalift, alquiler montacargas, Venezuela, Colombia, Panamá, servicio técnico, repuestos, Grupo RCA",
   openGraph: {
     title: "Grupo RCA | Soluciones Logísticas",
     description:
-      "34+ años de experiencia. Montacargas nuevos y usados, alquiler, servicio técnico y repuestos en Venezuela y LATAM.",
+      "36+ años de experiencia. Montacargas nuevos y usados, alquiler, servicio técnico y repuestos en Venezuela y LATAM.",
     type: "website",
     locale: "es_VE",
     siteName: "Grupo RCA",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Grupo RCA | Soluciones Logísticas",
     description:
-      "34+ años de experiencia en montacargas nuevos y usados, alquiler, servicio técnico y repuestos en Venezuela y LATAM.",
+      "36+ años de experiencia en montacargas nuevos y usados, alquiler, servicio técnico y repuestos en Venezuela y LATAM.",
     images: ["/slogan-banner.png"],
   },
 };
