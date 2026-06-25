@@ -92,7 +92,7 @@ export default function Hero() {
               {/* Overlay badge */}
               <div className="absolute bottom-4 left-4 bg-brand-navy/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl">
                 <p className="text-xs text-brand-gold font-bold uppercase tracking-wider">Distribuidor autorizado</p>
-                <p className="text-sm font-semibold mt-0.5">Megalift | Mitsubishi | Doosan</p>
+                <p className="text-sm font-semibold mt-0.5">Megalift</p>
               </div>
             </div>
 
