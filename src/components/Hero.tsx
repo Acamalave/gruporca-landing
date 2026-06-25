@@ -32,7 +32,7 @@ export default function Hero() {
 
             <p className="text-lg text-brand-muted leading-relaxed mb-8 max-w-lg">
               Venta, alquiler y servicio técnico de montacargas nuevos y usados.
-              Distribuidor autorizado de las marcas líderes con presencia en 6 países.
+              Distribuidor autorizado Megalift con presencia en 6 países.
             </p>
 
             {/* Stats row — unique horizontal counters */}
