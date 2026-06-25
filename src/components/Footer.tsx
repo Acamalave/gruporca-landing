@@ -33,7 +33,7 @@ export default function Footer() {
               Servicios
             </h4>
             <ul className="space-y-2 text-white/40 text-sm">
-              {["Venta de Equipos", "Alquiler", "Servicio Técnico", "Repuestos", "Capacitación", "Consultoría"].map((l) => {
+              {["Venta de Equipos", "Alquiler", "Servicio Técnico", "Repuestos", "Consultoría"].map((l) => {
                 const isParts = l === "Repuestos";
                 return (
                   <li key={l}>
