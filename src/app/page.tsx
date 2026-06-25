@@ -10,7 +10,7 @@ import TCOCalculator from "@/components/TCOCalculator";
 import Repuestos from "@/components/Repuestos";
 import PartsQuoter from "@/components/PartsQuoter";
 import ServiceTimeline from "@/components/ServiceTimeline";
-import ServiceTracker from "@/components/ServiceTracker";
+// import ServiceTracker from "@/components/ServiceTracker"; // oculto temporalmente
 import FreightEstimator from "@/components/FreightEstimator";
 import WhyUs from "@/components/WhyUs";
 import Testimonials from "@/components/Testimonials";
@@ -41,7 +41,8 @@ export default function Home() {
         <Repuestos />
         <PartsQuoter />
         <ServiceTimeline />
-        <ServiceTracker />
+        {/* Oculto temporalmente: seguimiento de servicio */}
+        {/* <ServiceTracker /> */}
         <FreightEstimator />
         <WhyUs />
         <Testimonials />

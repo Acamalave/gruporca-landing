@@ -83,13 +83,6 @@ export default function Header() {
 
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="#seguimiento"
-              className="text-brand-navy/60 hover:text-brand-navy text-sm font-medium flex items-center gap-1.5 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-              Seguimiento
-            </a>
-            <a
               href={`https://wa.me/${WA}?text=${encodeURIComponent("Hola, necesito información sobre sus equipos")}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -132,9 +125,6 @@ export default function Header() {
                     {l.label}
                   </a>
                 ))}
-                <a href="#seguimiento" onClick={() => setMenuOpen(false)} className="block text-brand-navy hover:text-brand-gold py-3 text-base font-medium border-b border-gray-100 transition-colors">
-                  Seguimiento
-                </a>
               </div>
               <a
                 href={`https://wa.me/${WA}?text=${encodeURIComponent("Hola, necesito información")}`}
