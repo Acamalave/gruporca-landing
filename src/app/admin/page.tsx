@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   type User,
 } from "firebase/auth";
-import { collection, getDocs, orderBy, query, limit, onSnapshot, doc, Timestamp } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit, onSnapshot, doc, updateDoc, Timestamp } from "firebase/firestore";
 import { setChatAvailable, chatHeartbeat } from "@/lib/chat";
 import { beep, osNotify, primeAudio, requestNotifyPermission } from "@/lib/notify";
 import AdminChat, { type ChatConv } from "@/components/AdminChat";
@@ -92,6 +92,27 @@ const necesidadLabels: Record<string, string> = {
   otro: "Otro",
 };
 
+// Estados de seguimiento de un lead. Los documentos viejos ("pendiente" o sin
+// campo) se tratan como "nuevo".
+const statusOptions = ["nuevo", "contactado", "cerrado"] as const;
+type LeadStatus = (typeof statusOptions)[number];
+
+function normStatus(s?: string): LeadStatus {
+  return s === "contactado" || s === "cerrado" ? s : "nuevo";
+}
+
+const statusStyles: Record<LeadStatus, string> = {
+  nuevo: "bg-amber-100 text-amber-800",
+  contactado: "bg-blue-100 text-blue-700",
+  cerrado: "bg-gray-200 text-gray-600",
+};
+
+const statusLabels: Record<LeadStatus, string> = {
+  nuevo: "Nuevo",
+  contactado: "Contactado",
+  cerrado: "Cerrado",
+};
+
 function fmtDate(ts?: Timestamp | null) {
   if (!ts || typeof ts.toDate !== "function") return "—";
   return ts.toDate().toLocaleString("es-VE", {
@@ -127,6 +148,7 @@ export default function AdminPage() {
   const [loadingData, setLoadingData] = useState(false);
   const [dataError, setDataError] = useState("");
   const [tab, setTab] = useState<"visitors" | "leads" | "parts" | "searches" | "events" | "chat">("visitors");
+  const [statusFilter, setStatusFilter] = useState<"todos" | LeadStatus>("todos");
   const [chatAvailable, setChatAvailableState] = useState(false);
   const [chats, setChats] = useState<ChatConv[]>([]);
 
@@ -228,6 +250,18 @@ export default function AdminPage() {
     await setChatAvailable(next);
   };
 
+  // Cambia el estado de seguimiento de un lead (optimista: actualiza la UI primero)
+  const setLeadStatus = async (coll: "leads" | "partsQuotes", id: string, status: LeadStatus) => {
+    const apply = (list: Lead[]) => list.map((l) => (l.id === id ? { ...l, status } : l));
+    if (coll === "leads") setLeads(apply);
+    else setParts(apply);
+    try {
+      await updateDoc(doc(db, coll, id), { status });
+    } catch {
+      setDataError("No se pudo guardar el cambio de estado. Recarga e intenta de nuevo.");
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
@@ -246,8 +280,9 @@ export default function AdminPage() {
       identified: visitors.filter((v) => v.identified).length,
       returning: visitors.filter((v) => (v.visitCount || 0) > 1).length,
       totalLeads: leads.length,
+      pending: [...leads, ...parts].filter((l) => normStatus(l.status) === "nuevo").length,
     };
-  }, [visitors, leads]);
+  }, [visitors, leads, parts]);
 
   // --- Login screen ---
   if (!authReady) {
@@ -296,9 +331,14 @@ export default function AdminPage() {
   }
 
   // --- Dashboard ---
+  const filterByStatus = (list: Lead[]) =>
+    statusFilter === "todos" ? list : list.filter((l) => normStatus(l.status) === statusFilter);
+  const filteredLeads = filterByStatus(leads);
+  const filteredParts = filterByStatus(parts);
+
   const rows: { id: string }[] =
-    tab === "leads" ? leads
-    : tab === "parts" ? parts
+    tab === "leads" ? filteredLeads
+    : tab === "parts" ? filteredParts
     : tab === "searches" ? searches
     : tab === "visitors" ? visitors
     : events;
@@ -336,12 +376,13 @@ export default function AdminPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {[
             { label: "Visitantes", value: stats.totalVisitors },
             { label: "Visitantes identificados", value: stats.identified },
             { label: "Visitantes recurrentes", value: stats.returning },
             { label: "Cotizaciones", value: stats.totalLeads },
+            { label: "Leads por contactar", value: stats.pending },
           ].map((s, i) => (
             <div key={i} className="bg-white rounded-xl border border-gray-100 p-5">
               <p className="text-3xl font-black text-brand-navy">{s.value}</p>
@@ -394,6 +435,27 @@ export default function AdminPage() {
         </div>
 
         {dataError && <p className="text-red-500 text-sm mb-4">{dataError}</p>}
+
+        {/* Filtro por estado de seguimiento (solo cotizaciones y repuestos) */}
+        {(tab === "leads" || tab === "parts") && (
+          <div className="flex gap-2 mb-4 flex-wrap items-center">
+            <span className="text-brand-muted text-xs font-semibold uppercase tracking-wide mr-1">Estado:</span>
+            {(["todos", ...statusOptions] as const).map((s) => {
+              const list = tab === "leads" ? leads : parts;
+              const count = s === "todos" ? list.length : list.filter((l) => normStatus(l.status) === s).length;
+              return (
+                <button
+                  key={s}
+                  onClick={() => setStatusFilter(s)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${statusFilter === s ? "bg-brand-navy text-brand-gold" : "bg-white border border-gray-200 text-brand-navy hover:border-brand-gold/50"}`}
+                >
+                  {s === "todos" ? "Todos" : statusLabels[s]} ({count})
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {tab === "chat" ? (
           <>
             {!chatAvailable && (
@@ -407,7 +469,9 @@ export default function AdminPage() {
           <p className="text-brand-muted text-sm">Cargando datos…</p>
         ) : rows.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-100 p-10 text-center text-brand-muted text-sm">
-            Aún no hay registros en esta sección.
+            {(tab === "leads" || tab === "parts") && statusFilter !== "todos"
+              ? "No hay leads con este estado."
+              : "Aún no hay registros en esta sección."}
           </div>
         ) : tab === "visitors" ? (
           <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto">
@@ -539,6 +603,7 @@ export default function AdminPage() {
                   )}
                   <th className="p-3 font-semibold">Urgencia</th>
                   <th className="p-3 font-semibold">WhatsApp</th>
+                  <th className="p-3 font-semibold">Estado</th>
                 </tr>
               </thead>
               <tbody>
@@ -581,6 +646,17 @@ export default function AdminPage() {
                         ) : (
                           "—"
                         )}
+                      </td>
+                      <td className="p-3 whitespace-nowrap">
+                        <select
+                          value={normStatus(r.status)}
+                          onChange={(e) => setLeadStatus(tab === "leads" ? "leads" : "partsQuotes", r.id, e.target.value as LeadStatus)}
+                          className={`text-xs font-semibold rounded-lg px-2 py-1.5 border-0 outline-none cursor-pointer ${statusStyles[normStatus(r.status)]}`}
+                        >
+                          {statusOptions.map((s) => (
+                            <option key={s} value={s}>{statusLabels[s]}</option>
+                          ))}
+                        </select>
                       </td>
                     </tr>
                   );

@@ -2,12 +2,28 @@
 import { useState, useEffect, useRef } from "react";
 import { db } from "@/lib/firebase";
 import { collection, query, orderBy, onSnapshot, Timestamp } from "firebase/firestore";
-import { ensureVisitor } from "@/lib/visitor";
+import { ensureVisitor, identifyVisitor } from "@/lib/visitor";
 import { sendVisitorMessage } from "@/lib/chat";
+import { isValidPhone } from "@/lib/validators";
 import { useChatAvailability } from "@/hooks/useChatAvailability";
 import { beep } from "@/lib/notify";
 
 type Msg = { id: string; from?: string; text?: string; createdAt?: Timestamp };
+type Contact = { nombre: string; whatsapp: string };
+
+const CONTACT_KEY = "rca_chat_contact";
+
+function loadContact(): Contact | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(CONTACT_KEY);
+    if (!raw) return null;
+    const c = JSON.parse(raw);
+    return c?.nombre && c?.whatsapp ? c : null;
+  } catch {
+    return null;
+  }
+}
 
 export default function LiveChat() {
   const available = useChatAvailability();
@@ -16,8 +32,16 @@ export default function LiveChat() {
   const [text, setText] = useState("");
   const [started, setStarted] = useState(false);
   const [unread, setUnread] = useState(0);
+  const [contact, setContact] = useState<Contact | null>(null);
+  const [nombre, setNombre] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const seenAgent = useRef(-1);
+
+  useEffect(() => {
+    setContact(loadContact());
+  }, []);
 
   // Escucha los mensajes mientras el chat esté disponible o abierto (así recibe
   // respuestas aunque tenga la ventana cerrada).
@@ -62,8 +86,27 @@ export default function LiveChat() {
     const t = text.trim();
     if (!t) return;
     setText("");
-    await sendVisitorMessage(t);
+    // Adjunta el contacto al doc de la conversación para que el admin sepa quién escribe
+    await sendVisitorMessage(t, contact ?? undefined);
   };
+
+  // El chat pide nombre y WhatsApp antes de la primera conversación,
+  // para poder retomar el contacto si el visitante se va a mitad de chat.
+  const startChat = async () => {
+    if (!nombre.trim()) return;
+    if (!isValidPhone(whatsapp)) {
+      setPhoneError("Ingresa un número de WhatsApp válido (ej. 0424-1234567).");
+      return;
+    }
+    setPhoneError("");
+    const c: Contact = { nombre: nombre.trim(), whatsapp: whatsapp.trim() };
+    try { localStorage.setItem(CONTACT_KEY, JSON.stringify(c)); } catch { /* best-effort */ }
+    setContact(c);
+    identifyVisitor(c);
+  };
+
+  // Pide los datos solo al iniciar una conversación nueva (si ya hay historial, no bloquea)
+  const needsContact = !contact && started && messages.length === 0;
 
   return (
     <>
@@ -110,7 +153,40 @@ export default function LiveChat() {
             </button>
           </div>
 
-          {/* Messages */}
+          {/* Formulario previo: nombre y WhatsApp antes de iniciar el chat */}
+          {needsContact ? (
+            <div className="flex-1 overflow-y-auto p-4 min-h-[180px]">
+              <p className="text-brand-muted text-sm mb-4">Para atenderte mejor, dinos quién eres y un asesor te responderá aquí mismo.</p>
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  placeholder="Tu nombre *"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
+                />
+                <div>
+                  <input
+                    type="tel"
+                    value={whatsapp}
+                    onChange={(e) => { setWhatsapp(e.target.value); if (phoneError) setPhoneError(""); }}
+                    onKeyDown={(e) => e.key === "Enter" && startChat()}
+                    placeholder="Tu WhatsApp * (04XX-XXXXXXX)"
+                    aria-invalid={!!phoneError}
+                    className={`w-full px-4 py-2.5 rounded-xl border outline-none text-sm transition-all ${phoneError ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-200" : "border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20"}`}
+                  />
+                  {phoneError && <p className="text-red-500 text-xs mt-1">{phoneError}</p>}
+                </div>
+                <button
+                  onClick={startChat}
+                  disabled={!nombre.trim() || !whatsapp.trim()}
+                  className="w-full bg-brand-gold hover:bg-brand-gold-light disabled:bg-gray-300 text-brand-navy font-bold py-2.5 rounded-xl text-sm transition-all"
+                >
+                  Iniciar chat
+                </button>
+              </div>
+            </div>
+          ) : (
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[180px]">
             {messages.length === 0 && started && (
               <p className="text-center text-brand-muted text-sm py-6">Escríbenos tu consulta y un asesor te responderá aquí mismo.</p>
@@ -126,8 +202,10 @@ export default function LiveChat() {
               <p className="text-center text-brand-muted text-xs py-2">El asesor se desconectó. Te responderemos en cuanto vuelva, o escríbenos por WhatsApp.</p>
             )}
           </div>
+          )}
 
           {/* Input */}
+          {!needsContact && (
           <div className="p-3 border-t border-gray-100 flex items-center gap-2 shrink-0">
             <input
               type="text"
@@ -141,6 +219,7 @@ export default function LiveChat() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
             </button>
           </div>
+          )}
         </div>
       )}
     </>

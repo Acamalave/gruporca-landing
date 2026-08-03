@@ -61,6 +61,33 @@ Las reglas de seguridad están en `firestore.rules`. Para publicarlas necesitas 
 firebase deploy --only firestore:rules
 ```
 
+## Notificaciones de leads nuevos (Cloud Functions)
+
+En `functions/` hay dos Cloud Functions (`onNewLead` y `onNewPartsQuote`) que
+avisan por Telegram y/o correo cada vez que se crea un documento en `leads` o
+`partsQuotes`, para responder al lead en minutos y no cuando alguien abra el panel.
+
+Para activarlas:
+
+1. El proyecto de Firebase debe estar en el plan **Blaze** (requisito de Cloud
+   Functions; el uso de este volumen entra en la capa gratuita).
+2. Configura los canales:
+
+   ```bash
+   cd functions
+   cp .env.example .env   # rellena Telegram y/o Gmail (instrucciones dentro)
+   npm install
+   ```
+
+3. Despliega:
+
+   ```bash
+   firebase deploy --only functions
+   ```
+
+Los canales sin configurar se omiten sin dar error. El aviso incluye nombre,
+WhatsApp (con enlace directo para responder), interés y comentarios del lead.
+
 ## Estructura
 
 - `src/app/` — layout, página principal, metadatos, `robots.ts` y `sitemap.ts`.

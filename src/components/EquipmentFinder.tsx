@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { currentVisitorId, logEvent } from "@/lib/visitor";
+import { currentVisitorId, identifyVisitor, logEvent } from "@/lib/visitor";
+import { isValidPhone } from "@/lib/validators";
 
 const WA = "584244013250";
 
@@ -73,6 +74,20 @@ const capacityStep = (tons: string[]): Step => ({
   options: tons.map((t) => ({ label: `${t} ton`, value: `${t}t`, icon: CAP_ICON })),
 });
 
+// Traduce la respuesta del buscador a las mismas "necesidades" del formulario
+// de cotización, para que el lead se lea igual en el panel.
+function toNecesidades(equipo: string, opcion: string): string[] {
+  if (opcion === "alquiler") return ["alquiler"];
+  if (equipo === "apilador") return ["apilador"];
+  if (equipo === "transpaleta") return ["transpaleta"];
+  if (equipo === "montacargas") {
+    if (opcion === "nuevo") return ["montacargas-nuevo"];
+    if (opcion === "usado") return ["montacargas-usado"];
+    return ["montacargas-nuevo", "montacargas-usado"];
+  }
+  return ["otro"];
+}
+
 function buildSteps(type?: string): Step[] {
   if (type === "apilador") {
     return [EQUIPMENT_STEP, COND_NO_USED, capacityStep(["1", "1.2", "1.5", "1.6", "2.0"])];
@@ -87,6 +102,10 @@ export default function EquipmentFinder() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [done, setDone] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [sending, setSending] = useState(false);
   const { ref, visible } = useInView();
 
   const steps = buildSteps(answers[0]);
@@ -111,11 +130,44 @@ export default function EquipmentFinder() {
     }
   };
 
-  const reset = () => { setStep(0); setAnswers([]); setDone(false); };
+  const reset = () => {
+    setStep(0); setAnswers([]); setDone(false);
+    setNombre(""); setWhatsapp(""); setPhoneError(""); setSending(false);
+  };
 
   const waMsg = () => encodeURIComponent(
-    `¡Hola! Busco:\n- Equipo: ${answers[0]}\n- Opción: ${answers[1]}\n- Capacidad: ${answers[2]}\n\n¿Me pueden asesorar?`
+    `¡Hola! Soy ${nombre || "un visitante de la web"}. Busco:\n- Equipo: ${answers[0]}\n- Opción: ${answers[1]}\n- Capacidad: ${answers[2]}\n\n¿Me pueden asesorar?`
   );
+
+  // Guarda el lead con el contacto y abre WhatsApp con el resumen de la búsqueda.
+  const submitContact = async () => {
+    if (!nombre.trim()) return;
+    if (!isValidPhone(whatsapp)) {
+      setPhoneError("Ingresa un número de WhatsApp válido (ej. 0424-1234567).");
+      return;
+    }
+    setPhoneError("");
+    setSending(true);
+    const visitorId = await identifyVisitor({ nombre: nombre.trim(), whatsapp: whatsapp.trim() });
+    try {
+      await addDoc(collection(db, "leads"), {
+        nombre: nombre.trim(),
+        empresa: "",
+        whatsapp: whatsapp.trim(),
+        necesidades: toNecesidades(answers[0] || "", answers[1] || ""),
+        comentarios: `Buscador: equipo ${answers[0] || "—"}, opción ${answers[1] || "—"}, capacidad ${answers[2] || "—"}`,
+        visitorId,
+        createdAt: serverTimestamp(),
+        source: "finder",
+        status: "nuevo",
+      });
+    } catch {
+      // Aunque falle el guardado, igual abrimos WhatsApp para no perder la solicitud
+    }
+    logEvent("lead", { source: "finder", equipo: answers[0], opcion: answers[1], capacidad: answers[2] });
+    window.open(`https://wa.me/${WA}?text=${waMsg()}`, "_blank");
+    setSending(false);
+  };
 
   return (
     <section id="buscador" className="py-20 bg-brand-cream rca-blueprint">
@@ -159,18 +211,47 @@ export default function EquipmentFinder() {
               )}
             </>
           ) : (
-            <div className="text-center py-6">
-              <div className="w-20 h-20 bg-brand-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-10 h-10 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+            <div className="py-6 max-w-md mx-auto">
+              <div className="text-center">
+                <div className="w-20 h-20 bg-brand-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-10 h-10 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h3 className="text-2xl font-bold text-brand-navy mb-3">Tenemos opciones para ti</h3>
+                <p className="text-brand-muted mb-6">Déjanos tu nombre y WhatsApp y un asesor especializado te contacta con las mejores opciones, precios y condiciones.</p>
               </div>
-              <h3 className="text-2xl font-bold text-brand-navy mb-3">Tenemos opciones para ti</h3>
-              <p className="text-brand-muted mb-8 max-w-md mx-auto">Un asesor especializado te contactará con las mejores opciones, precios y condiciones.</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href={`https://wa.me/${WA}?text=${waMsg()}`} target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#1fb855] text-white font-bold px-8 py-4 rounded-xl transition-all inline-flex items-center justify-center gap-2">
+              <div className="space-y-3 text-left">
+                <input
+                  type="text"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  placeholder="Tu nombre *"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
+                />
+                <div>
+                  <input
+                    type="tel"
+                    value={whatsapp}
+                    onChange={(e) => { setWhatsapp(e.target.value); if (phoneError) setPhoneError(""); }}
+                    placeholder="Tu WhatsApp * (04XX-XXXXXXX)"
+                    aria-invalid={!!phoneError}
+                    className={`w-full px-4 py-3 rounded-xl border outline-none text-sm transition-all ${phoneError ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-200" : "border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20"}`}
+                  />
+                  {phoneError && <p className="text-red-500 text-xs mt-1">{phoneError}</p>}
+                </div>
+                <button
+                  onClick={submitContact}
+                  disabled={!nombre.trim() || !whatsapp.trim() || sending}
+                  className="w-full bg-[#25D366] hover:bg-[#1fb855] disabled:bg-gray-300 text-white font-bold px-8 py-4 rounded-xl transition-all inline-flex items-center justify-center gap-2"
+                >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                  Recibir asesoría por WhatsApp
-                </a>
-                <button onClick={reset} className="text-brand-muted hover:text-brand-gold font-medium px-6 py-4 rounded-xl transition-colors">Buscar otro equipo</button>
+                  {sending ? "Enviando…" : "Recibir asesoría por WhatsApp"}
+                </button>
+                <div className="flex items-center justify-between pt-1">
+                  <a href={`https://wa.me/${WA}?text=${waMsg()}`} target="_blank" rel="noopener noreferrer" className="text-brand-muted hover:text-brand-gold text-xs underline transition-colors">
+                    Prefiero escribir directo por WhatsApp
+                  </a>
+                  <button onClick={reset} className="text-brand-muted hover:text-brand-gold text-xs font-medium transition-colors">Buscar otro equipo</button>
+                </div>
               </div>
             </div>
           )}

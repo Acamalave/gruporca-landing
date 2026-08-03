@@ -12,26 +12,35 @@ service cloud.firestore {
                 ];
     }
 
+    // El admin solo puede cambiar el campo "status" de un lead
+    // (nuevo / contactado / cerrado); el resto del documento es inmutable.
+    function onlyStatusChanged() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+             && request.resource.data.status in ['nuevo', 'contactado', 'cerrado'];
+    }
+
     // Cotizaciones del formulario de contacto: el publico solo puede crear.
-    // El equipo (admin) puede leer desde el panel.
+    // El equipo (admin) puede leer y actualizar el estado desde el panel.
     match /leads/{leadId} {
       allow create: if request.resource.data.nombre is string
                     && request.resource.data.nombre.size() > 0
                     && request.resource.data.whatsapp is string
                     && request.resource.data.whatsapp.size() > 0;
       allow read: if isAdmin();
-      allow update, delete: if false;
+      allow update: if isAdmin() && onlyStatusChanged();
+      allow delete: if false;
     }
 
     // Cotizaciones de repuestos: el publico solo puede crear.
-    // El equipo (admin) puede leer desde el panel.
+    // El equipo (admin) puede leer y actualizar el estado desde el panel.
     match /partsQuotes/{quoteId} {
       allow create: if request.resource.data.nombre is string
                     && request.resource.data.nombre.size() > 0
                     && request.resource.data.whatsapp is string
                     && request.resource.data.whatsapp.size() > 0;
       allow read: if isAdmin();
-      allow update, delete: if false;
+      allow update: if isAdmin() && onlyStatusChanged();
+      allow delete: if false;
     }
 
     // Perfil de visitante: cada navegador (login anonimo) gestiona SU propio

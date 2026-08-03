@@ -2,7 +2,8 @@
 import { useState, useRef, useEffect } from "react";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { currentVisitorId } from "@/lib/visitor";
+import { currentVisitorId, identifyVisitor, logEvent } from "@/lib/visitor";
+import { isValidPhone } from "@/lib/validators";
 import { useChatAvailability } from "@/hooks/useChatAvailability";
 
 const WA = "584244013250";
@@ -13,7 +14,7 @@ type Message = {
   options?: { label: string; value: string }[];
 };
 
-type ConversationState = "start" | "use" | "environment" | "capacity" | "budget" | "condition" | "result";
+type ConversationState = "start" | "use" | "environment" | "capacity" | "budget" | "condition" | "result" | "contact";
 
 const recommendations: Record<string, { name: string; type: string; why: string }> = {
   "interior-ligero-economico": { name: "Transpaleta Eléctrica 2T", type: "Megalift", why: "Ideal para trabajo ligero en interiores. Bajo costo de operación y fácil manejo." },
@@ -41,6 +42,10 @@ export default function EquipmentChatbot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [state, setState] = useState<ConversationState>("start");
   const [answers, setAnswers] = useState({ use: "", environment: "", capacity: "", budget: "", condition: "" });
+  const [nombre, setNombre] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [sending, setSending] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
   const liveAvailable = useChatAvailability();
 
@@ -198,16 +203,65 @@ export default function EquipmentChatbot() {
 
       case "result":
         if (value === "whatsapp") {
-          const rec = recommendations[`${answers.environment}-${answers.capacity}-${answers.budget}`] || recommendations["mixto-medio-economico"];
-          const msg = `Hola, el chatbot me recomendó un ${rec.name} (${rec.type}) para mi operación. Me interesa recibir cotización. Condición preferida: ${answers.condition}`;
-          window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
+          setTimeout(() => {
+            addMessages([
+              { from: "bot", text: "¡Perfecto! Déjame tu nombre y tu WhatsApp para que un asesor te contacte con precio y disponibilidad." },
+            ]);
+            setState("contact");
+          }, 400);
         } else {
           setMessages([]);
           setAnswers({ use: "", environment: "", capacity: "", budget: "", condition: "" });
+          setNombre(""); setWhatsapp(""); setPhoneError(""); setSending(false);
           startChat();
         }
         break;
     }
+  };
+
+  // Guarda el lead con el contacto y abre WhatsApp con la recomendación.
+  const submitContact = async () => {
+    if (!nombre.trim()) return;
+    if (!isValidPhone(whatsapp)) {
+      setPhoneError("Ingresa un número de WhatsApp válido (ej. 0424-1234567).");
+      return;
+    }
+    setPhoneError("");
+    setSending(true);
+    const rec = recommendations[`${answers.environment}-${answers.capacity}-${answers.budget}`] || recommendations["mixto-medio-economico"];
+    const necesidades =
+      answers.condition === "nuevo" ? ["montacargas-nuevo"]
+      : answers.condition === "usado" ? ["montacargas-usado"]
+      : ["montacargas-nuevo", "montacargas-usado"];
+    const visitorId = await identifyVisitor({ nombre: nombre.trim(), whatsapp: whatsapp.trim() });
+    try {
+      await addDoc(collection(db, "leads"), {
+        nombre: nombre.trim(),
+        empresa: "",
+        whatsapp: whatsapp.trim(),
+        necesidades,
+        comentarios: `Asesor virtual: recomendado ${rec.name} (${rec.type}). Uso: ${answers.use}, ambiente: ${answers.environment}, intensidad: ${answers.capacity}, presupuesto: ${answers.budget}, condición: ${answers.condition}`,
+        visitorId,
+        createdAt: serverTimestamp(),
+        source: "chatbot",
+        status: "nuevo",
+      });
+    } catch {
+      // Aunque falle el guardado, igual abrimos WhatsApp para no perder la solicitud
+    }
+    logEvent("lead", { source: "chatbot", recomendado: rec.name });
+    const msg = `Hola, soy ${nombre.trim()}. El chatbot me recomendó un ${rec.name} (${rec.type}) para mi operación. Me interesa recibir cotización. Condición preferida: ${answers.condition}`;
+    window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank");
+    setSending(false);
+    addMessages([
+      { from: "user", text: `${nombre.trim()} — ${whatsapp.trim()}` },
+      {
+        from: "bot",
+        text: "¡Listo! Registramos tu solicitud y te abrimos WhatsApp para que un asesor te atienda de inmediato. Te contactaremos muy pronto.",
+        options: [{ label: "Empezar de nuevo", value: "restart" }],
+      },
+    ]);
+    setState("result");
   };
 
   // Si hay un asesor disponible en vivo, el chat en vivo toma este lugar.
@@ -277,6 +331,36 @@ export default function EquipmentChatbot() {
               </div>
             ))}
           </div>
+
+          {/* Captura de contacto */}
+          {state === "contact" && (
+            <div className="p-3 border-t border-gray-100 space-y-2 shrink-0">
+              <input
+                type="text"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                placeholder="Tu nombre *"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
+              />
+              <input
+                type="tel"
+                value={whatsapp}
+                onChange={(e) => { setWhatsapp(e.target.value); if (phoneError) setPhoneError(""); }}
+                onKeyDown={(e) => e.key === "Enter" && submitContact()}
+                placeholder="Tu WhatsApp * (04XX-XXXXXXX)"
+                aria-invalid={!!phoneError}
+                className={`w-full px-4 py-2.5 rounded-xl border outline-none text-sm transition-all ${phoneError ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-200" : "border-gray-200 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20"}`}
+              />
+              {phoneError && <p className="text-red-500 text-xs">{phoneError}</p>}
+              <button
+                onClick={submitContact}
+                disabled={!nombre.trim() || !whatsapp.trim() || sending}
+                className="w-full bg-brand-gold hover:bg-brand-gold-light disabled:bg-gray-300 text-brand-navy font-bold py-2.5 rounded-xl text-sm transition-all"
+              >
+                {sending ? "Enviando…" : "Solicitar contacto por WhatsApp"}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>
