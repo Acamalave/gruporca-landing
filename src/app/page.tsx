@@ -23,8 +23,16 @@ import EquipmentChatbot from "@/components/EquipmentChatbot";
 import LiveChat from "@/components/LiveChat";
 import VisitorTracker from "@/components/VisitorTracker";
 import PrivacyNotice from "@/components/PrivacyNotice";
+import MaintenancePage from "@/components/MaintenancePage";
 
 export default function Home() {
+  // Modo pausa: con MAINTENANCE_MODE=1 (variable de entorno en Vercel) el sitio
+  // muestra solo la página de pausa; nada más carga (ni tracking ni chat).
+  // Para reactivar: eliminar la variable y redesplegar.
+  if (process.env.MAINTENANCE_MODE === "1") {
+    return <MaintenancePage />;
+  }
+
   return (
     <>
       <Header />
