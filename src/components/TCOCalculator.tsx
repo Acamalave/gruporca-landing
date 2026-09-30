@@ -57,7 +57,7 @@ export default function TCOCalculator() {
     { label: "Seguro", value: tco.insuranceCost, color: "bg-purple-500", pct: (tco.insuranceCost / tco.total) * 100 },
   ];
 
-  const waMsg = `Hola, usé la calculadora TCO y quiero validar estos números:\n- Equipo: ${fuelData[fuel].label}\n- Precio: $${purchasePrice.toLocaleString()}\n- Uso: ${hoursPerDay}h/día, ${daysPerMonth}d/mes, ${years} años\n- TCO estimado: $${tco.total.toLocaleString()}\n- Costo/hora: $${tco.costPerHour}\n¿Me pueden asesorar?`;
+  const waMsg = `Hola, usé la calculadora TCO y quiero validar estos números:\n- Equipo: ${fuelData[fuel].label}\n- Precio: $${purchasePrice.toLocaleString("es-VE")}\n- Uso: ${hoursPerDay}h/día, ${daysPerMonth}d/mes, ${years} años\n- TCO estimado: $${tco.total.toLocaleString("es-VE")}\n- Costo/hora: $${tco.costPerHour}\n¿Me pueden asesorar?`;
 
   return (
     <section id="tco" className="py-20 bg-white rca-stripe">
@@ -74,7 +74,7 @@ export default function TCOCalculator() {
             <div>
               <label className="flex justify-between text-sm font-medium text-brand-navy mb-2">
                 <span>Precio de compra (USD)</span>
-                <span className="text-brand-gold font-bold">${purchasePrice.toLocaleString()}</span>
+                <span className="text-brand-gold font-bold">${purchasePrice.toLocaleString("es-VE")}</span>
               </label>
               <input type="range" min={5000} max={80000} step={500} value={purchasePrice} onChange={(e) => setPurchasePrice(Number(e.target.value))} className="w-full accent-brand-gold" />
               <div className="flex justify-between text-xs text-brand-muted mt-1"><span>$5,000</span><span>$80,000</span></div>
@@ -118,7 +118,7 @@ export default function TCOCalculator() {
           <div>
             <div className="bg-brand-navy rounded-2xl p-6 sm:p-8 mb-6">
               <h3 className="text-white/60 text-sm font-medium mb-1">Costo Total de Propiedad ({years} años)</h3>
-              <p className="text-4xl font-black text-brand-gold">${tco.total.toLocaleString()}</p>
+              <p className="text-4xl font-black text-brand-gold">${tco.total.toLocaleString("es-VE")}</p>
               <div className="grid grid-cols-2 gap-4 mt-5">
                 <div className="bg-white/[0.06] rounded-xl p-4">
                   <p className="text-white/40 text-xs">Costo por hora</p>
@@ -126,12 +126,12 @@ export default function TCOCalculator() {
                 </div>
                 <div className="bg-white/[0.06] rounded-xl p-4">
                   <p className="text-white/40 text-xs">Promedio mensual</p>
-                  <p className="text-white text-xl font-bold">${tco.monthlyAvg.toLocaleString()}</p>
+                  <p className="text-white text-xl font-bold">${tco.monthlyAvg.toLocaleString("es-VE")}</p>
                 </div>
               </div>
               <div className="mt-5 bg-white/[0.06] rounded-xl p-4">
                 <p className="text-white/40 text-xs mb-1">Valor residual estimado al año {years}</p>
-                <p className="text-green-400 text-lg font-bold">${tco.residualValue.toLocaleString()}</p>
+                <p className="text-green-400 text-lg font-bold">${tco.residualValue.toLocaleString("es-VE")}</p>
               </div>
             </div>
 
@@ -140,7 +140,7 @@ export default function TCOCalculator() {
               <h4 className="font-bold text-brand-navy text-sm mb-4">Desglose de costos</h4>
               <div className="h-6 rounded-full overflow-hidden flex mb-4">
                 {breakdown.map((b, i) => (
-                  <div key={i} className={`${b.color} h-full transition-all`} style={{ width: `${b.pct}%` }} title={`${b.label}: $${b.value.toLocaleString()}`} />
+                  <div key={i} className={`${b.color} h-full transition-all`} style={{ width: `${b.pct}%` }} title={`${b.label}: $${b.value.toLocaleString("es-VE")}`} />
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -149,7 +149,7 @@ export default function TCOCalculator() {
                     <div className={`w-3 h-3 rounded-full ${b.color}`} />
                     <div>
                       <p className="text-xs text-brand-muted">{b.label}</p>
-                      <p className="text-sm font-bold text-brand-navy">${b.value.toLocaleString()} <span className="text-brand-muted font-normal">({b.pct.toFixed(0)}%)</span></p>
+                      <p className="text-sm font-bold text-brand-navy">${b.value.toLocaleString("es-VE")} <span className="text-brand-muted font-normal">({b.pct.toFixed(0)}%)</span></p>
                     </div>
                   </div>
                 ))}

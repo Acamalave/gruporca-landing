@@ -58,7 +58,7 @@ export default function CostCalculator() {
 
   const best = (Object.keys(costs) as Mode[]).reduce((a, b) => costs[a].total < costs[b].total ? a : b);
 
-  const waMsg = `Hola, estoy interesado en ${activeMode || "cotizar"} un ${equip.label} por ${period.label}. El estimado de la calculadora fue $${activeMode ? costs[activeMode].total.toLocaleString() : "---"} total. ¿Me pueden dar una cotización formal?`;
+  const waMsg = `Hola, estoy interesado en ${activeMode || "cotizar"} un ${equip.label} por ${period.label}. El estimado de la calculadora fue $${activeMode ? costs[activeMode].total.toLocaleString("es-VE") : "---"} total. ¿Me pueden dar una cotización formal?`;
 
   return (
     <section id="calculadora" className="py-20 bg-brand-navy">
@@ -121,9 +121,9 @@ export default function CostCalculator() {
 
                 <div className="mb-1">
                   <span className={`text-xs font-medium ${isActive ? "text-brand-navy/60" : "text-white/40"}`}>Costo mensual estimado</span>
-                  <p className="text-3xl font-black">${c.monthly.toLocaleString()}<span className={`text-sm font-medium ${isActive ? "text-brand-navy/60" : "text-white/40"}`}>/mes</span></p>
+                  <p className="text-3xl font-black">${c.monthly.toLocaleString("es-VE")}<span className={`text-sm font-medium ${isActive ? "text-brand-navy/60" : "text-white/40"}`}>/mes</span></p>
                 </div>
-                <p className={`text-sm mb-5 ${isActive ? "text-brand-navy/70" : "text-white/40"}`}>Total en {period.label}: <span className="font-bold">${c.total.toLocaleString()}</span></p>
+                <p className={`text-sm mb-5 ${isActive ? "text-brand-navy/70" : "text-white/40"}`}>Total en {period.label}: <span className="font-bold">${c.total.toLocaleString("es-VE")}</span></p>
 
                 <ul className="space-y-2">
                   {c.includes.map((item, j) => (

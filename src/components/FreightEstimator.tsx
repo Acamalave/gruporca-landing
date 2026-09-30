@@ -51,7 +51,7 @@ export default function FreightEstimator() {
     };
   }, [cityIdx, sizeIdx, quantity]);
 
-  const waMsg = `Hola, necesito un estimado de flete:\n- Destino: ${estimate.city}\n- Equipo: ${estimate.size} (${estimate.weight})\n- Cantidad: ${quantity}\n- Estimado web: $${estimate.total.toLocaleString()}\n¿Me pueden confirmar precio y disponibilidad?`;
+  const waMsg = `Hola, necesito un estimado de flete:\n- Destino: ${estimate.city}\n- Equipo: ${estimate.size} (${estimate.weight})\n- Cantidad: ${quantity}\n- Estimado web: $${estimate.total.toLocaleString("es-VE")}\n¿Me pueden confirmar precio y disponibilidad?`;
 
   return (
     <section id="flete" className="py-20 bg-white rca-stripe">
@@ -105,11 +105,11 @@ export default function FreightEstimator() {
               </div>
               <div>
                 <p className="text-white/40 text-xs mb-1">Costo por unidad</p>
-                <p className="text-white font-bold text-2xl">${estimate.perUnit.toLocaleString()}</p>
+                <p className="text-white font-bold text-2xl">${estimate.perUnit.toLocaleString("es-VE")}</p>
               </div>
               <div>
                 <p className="text-white/40 text-xs mb-1">Total estimado</p>
-                <p className="text-brand-gold font-black text-3xl">${estimate.total.toLocaleString()}</p>
+                <p className="text-brand-gold font-black text-3xl">${estimate.total.toLocaleString("es-VE")}</p>
                 {estimate.discount && <p className="text-green-400 text-xs mt-0.5">15% descuento por volumen aplicado</p>}
               </div>
             </div>
